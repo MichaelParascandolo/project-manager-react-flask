@@ -9,12 +9,12 @@ const getData = async () => {
 };
 
 function App() {
-  const styles = {
+  const styles: { links: string; label: string; input: string } = {
     links:
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full rounded-lg border-2 border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
   };
   return (
     <div className="mt-[250px] flex justify-center">
