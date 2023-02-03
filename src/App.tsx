@@ -12,32 +12,33 @@ function App() {
   const styles = {
     links:
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
+    label: "text-white py-2",
     input:
       "w-full rounded-lg border-2 border-slate-900 p-2 bg-slate-700 text-white",
   };
   return (
-    <div className="mt-[100px] flex justify-center">
+    <div className="mt-[250px] flex justify-center">
       <div>
         <div className="-mb-6">
           <Logo />
         </div>
-        <div className="mt-10 bg-slate-800 shadow-xl shadow-black rounded-xl border-2 border-slate-900 w-[400 py-2px] h-[400px]">
+        <div className="mt-10 bg-slate-800 shadow-xl shadow-black rounded-xl border-2 border-slate-900 h-[400px]">
           <div className="flex justify-center">
             <div className="w-[500px] p-8">
               <h2 className="text-white cap font-bold text-center text-xl tracking-wide">
                 Sign in to your account
               </h2>
-              <p className="text-white py-2">Your email</p>
+              <p className={styles.label}>Your email</p>
               <input
                 type="email"
                 className={styles.input}
                 placeholder="name@company.com"
               />
-              <p className="text-white py-2">Password</p>
+              <p className={styles.label}>Password</p>
               <input
                 type="password"
                 className={styles.input}
-                placeholder="*******"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
               />
               <div className="flex justify-between mt-4">
                 <div className="flex">
@@ -45,7 +46,7 @@ function App() {
                     type="checkbox"
                     className="w-4 h-4 mr-2 mt-1 accent-blue-500"
                   />
-                  <p className="text-gray-400">Remember me</p>
+                  <p className="text-gray-300">Remember me</p>
                 </div>
                 <a href="#" className={styles.links}>
                   Forgot password?
@@ -57,7 +58,7 @@ function App() {
                 </button>
               </div>
               <div className="mt-4">
-                <p className="text-center text-white text-md">
+                <p className="text-center text-gray-300 text-md">
                   Don't have an account?{" "}
                   <a href="#" className={styles.links}>
                     Sign up

@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* maybe slate-600 to 900 instead */
+/* maybe slate-600/700 */
 html {
-  @apply bg-gradient-to-b from-slate-700 to-slate-900 min-h-screen;
+  @apply bg-gradient-to-b from-slate-600 to-slate-900 min-h-screen;
 }
