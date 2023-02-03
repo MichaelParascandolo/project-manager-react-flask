@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-slate-700;
+/* maybe slate-600 to 900 instead */
+html {
+  @apply bg-gradient-to-b from-slate-700 to-slate-900 min-h-screen;
 }
