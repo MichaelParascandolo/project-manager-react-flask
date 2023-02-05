@@ -9,3 +9,13 @@
 ## "yarn vite" starts front-end server
 
 ## "yarn start-backend" starts the back-end server
+
+---
+
+## Python back-end server is not going to run after cloning it will require some setup
+
+### Still trying to get this to work
+
+#### This was the guide I used to get it running on my local machine
+
+https://dev.to/nagatodev/how-to-connect-flask-to-reactjs-1k8i

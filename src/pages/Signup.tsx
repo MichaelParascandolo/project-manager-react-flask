@@ -22,12 +22,18 @@ function Signup() {
         <div className="-mb-6">
           <Logo />
         </div>
-        <div className="mt-10 bg-slate-800 shadow-xl shadow-black rounded-xl border-2 border-slate-900 h-[450px]">
+        <div className="mt-10 bg-slate-800 shadow-xl shadow-black rounded-xl border-2 border-slate-900 h-[530px]">
           <div className="flex justify-center">
             <div className="w-[500px] p-8">
               <h2 className="text-white cap font-bold text-center text-xl tracking-wide">
                 Create an account
               </h2>
+              <p className={styles.label}>Name</p>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="first name"
+              />
               <p className={styles.label}>Your email</p>
               <input
                 type="email"
