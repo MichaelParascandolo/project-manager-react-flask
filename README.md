@@ -10,6 +10,8 @@
 
 ## "yarn start-backend" starts the back-end server
 
+### This might not work for you..otherwise cd into 'backend' and use "flask run" in the terminal
+
 ---
 
 ## Python back-end server is not going to run after cloning it will require some setup
