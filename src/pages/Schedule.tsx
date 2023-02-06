@@ -89,7 +89,7 @@ const Schedule = () => {
             </ul>
           </div>
           <div className="mt-20 text-center">
-            <a href="/">
+            <a href="/calendar">
               <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg w-[90%] hover:bg-blue-700 transition-all ease-in-out duration-300">
                 Sign Out
               </button>
