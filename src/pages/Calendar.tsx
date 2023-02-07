@@ -30,8 +30,8 @@ const Calendar = () => {
   }, [activeMonth]);
 
   return (
-    <div className="p-4 bg-white dark:bg-slate-700 border-2 border-slate-900 mt-20 mx-4">
-      <div className="w-full rounded">
+    <div className="p-4 bg-white  dark:bg-slate-700 border-2 border-slate-900 mt-20 mx-4">
+      <div className="w-full h-[500px] rounded">
         <div className="flex items-center justify-between mb-4">
           <div className="font-bold text-xl text-white">
             {`${activeMonthString} ${activeYear}`}
@@ -89,13 +89,13 @@ const Calendar = () => {
           <table className="w-full dark:text-white">
             <thead>
               <tr>
-                <th className="py-3 px-2 md:px-3 ">S</th>
-                <th className="py-3 px-2 md:px-3 ">M</th>
-                <th className="py-3 px-2 md:px-3 ">T</th>
-                <th className="py-3 px-2 md:px-3 ">W</th>
-                <th className="py-3 px-2 md:px-3 ">T</th>
-                <th className="py-3 px-2 md:px-3 ">F</th>
-                <th className="py-3 px-2 md:px-3 ">S</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">S</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">M</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">T</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">W</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">T</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">F</th>
+                <th className="py-3 px-2 md:px-3 text-lg ">S</th>
               </tr>
             </thead>
             <tbody>
