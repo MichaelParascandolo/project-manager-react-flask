@@ -1,13 +1,11 @@
-import {
-  CgProfile,
-  CgChevronRight,
-  CgChevronDown,
-  CgChevronUp,
-} from "react-icons/cg";
+import { CgProfile, CgChevronRight, CgChevronDown } from "react-icons/cg";
 import { BsPersonFill } from "react-icons/bs";
+import React from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 // import Footer from "../components/Footer";
 
-const Schedule = () => {
+const Customers = () => {
   const customers = [
     {
       firstName: "John",
@@ -32,19 +30,11 @@ const Schedule = () => {
   ];
   return (
     <>
+      <Navbar />
       <div className="flex w-full h-screen">
         {/* sidebar */}
-        <div className="span-cols-1 bg-slate-900 w-[300px] h-screen">
-          <div className="flex justify-center">
-            <div className="mt-6">
-              <div className="flex justify-center">
-                <BsPersonFill className="text-white" size={40} />
-              </div>
-              <p className="text-lg text-white tracking-wider">
-                Hello, Michael
-              </p>
-            </div>
-          </div>
+        {/* <div className="span-cols-1 bg-slate-900 w-[300px] h-screen">
+          <div className="flex justify-center"></div>
           <div className="flex justify-center">
             <input
               className="mt-4 rounded-lg border-2 tracking-wider border-slate-800 p-2 bg-slate-700 text-white w-[90%]"
@@ -75,7 +65,7 @@ const Schedule = () => {
               </button>
             </a>
           </div>
-        </div>
+        </div> */}
         {/* schedule */}
         <div className="span-cols-3 bg-gradient-to-b from-slate-600 to-slate-800 h-screen w-full">
           <div className="pl-5">
@@ -119,4 +109,4 @@ const Schedule = () => {
   );
 };
 
-export default Schedule;
+export default Customers;

@@ -1,22 +1,33 @@
 import Day from "../components/Day";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 const Schedule = () => {
   return (
     <>
       <div>
-        <div className="h-[50px] w-full bg-slate-900 text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
-          <div className="my-auto px-4">
-            <p>Hello, Michael</p>
-          </div>
-          <div className="my-auto px-4">Logout</div>
-        </div>
+        <Navbar />
         <div className="my-4 flex justify-center">
-          <h1 className="text-white text-[30px] font-mono tracking-wide">
-            Weekly Schedule
-          </h1>
+          <div className="text-center">
+            {/* <h1 className="text-white text-[30px] font-mono tracking-wide">
+              Weekly Schedule
+            </h1> */}
+            <div className="flex justify-evenly">
+              <div className=" bg-slate-400 rounded-full mr-2">
+                <MdNavigateBefore size={25} />
+              </div>
+              <h2 className="text-gray-400 font-bold tracking-wider">
+                6th - 10th
+              </h2>
+              <div className=" bg-slate-400 rounded-full ml-2">
+                <MdNavigateNext size={25} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 px-2">
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-2">
           <Day day="Monday" date={6} />
           <Day day="Tuesday" date={7} />
           <Day day="Wednesday" date={8} />

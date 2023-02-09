@@ -17,7 +17,7 @@ function Signup() {
       "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
   };
   return (
-    <div className="mt-[125px] flex justify-center">
+    <div className="mt-[75px] flex justify-center">
       <div>
         <div className="-mb-6">
           <Logo />
