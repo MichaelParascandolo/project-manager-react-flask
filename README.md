@@ -23,7 +23,9 @@
 https://dev.to/nagatodev/how-to-connect-flask-to-reactjs-1k8i
 
 ## To run back end, I used the following site to install flask locally,
-## and then run 2 commands in the terminal to test the back end
+## and then run 2 commands in the terminal to test the back end (on Mac)
 https://flask.palletsprojects.com/en/2.2.x/installation/#install-flask
+## For MAC
 ## . venv/bin/activate
 ## flask run
+## For Windows: python -m flask run
