@@ -67,7 +67,7 @@ const Customers = () => {
           </div>
         </div> */}
         {/* schedule */}
-        <div className="span-cols-3 bg-gradient-to-b from-slate-600 to-slate-800 h-screen w-full">
+        <div className="span-cols-3 h-screen w-full">
           <div className="pl-5">
             <p className="text-white py-2 text-xl">X Matching Records for Y</p>
           </div>

@@ -1,6 +1,24 @@
 import { BiLogOut } from "react-icons/bi";
 
 const Navbar = () => {
+  const navLinks = [
+    {
+      title: "Schedule",
+      path: "/schedule",
+    },
+    {
+      title: "Customers",
+      path: "/customers",
+    },
+    {
+      title: "Team",
+      path: "/team",
+    },
+    {
+      title: "Home",
+      path: "/home",
+    },
+  ];
   const styles = {
     navItem:
       "px-4 border-b-2 border-transparent hover:border-blue-500 ease-in-out duration-300 transition-all",
@@ -18,18 +36,13 @@ const Navbar = () => {
         </div>
         <div className="px-2 my-auto">
           <ul className="flex">
-            <li className={styles.navItem}>
-              <a href="/schedule">Schedule</a>
-            </li>
-            <li className={styles.navItem}>
-              <a href="/customers">Customers</a>
-            </li>
-            <li className={styles.navItem}>
-              <a href="/">Home</a>
-            </li>
+            {navLinks.map((item, index) => (
+              <li className={styles.navItem} key={index}>
+                <a href={item.path}>{item.title}</a>
+              </li>
+            ))}
           </ul>
         </div>
-        {/* <div className="my-auto px-4">Logout</div> */}
       </div>
     </>
   );
