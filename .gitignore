@@ -16,7 +16,6 @@ dist-ssr
 backend/env
 backend/venv
 backend/__pycache__
-unused
 
 # Editor directories and files
 .vscode/*
