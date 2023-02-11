@@ -1,6 +1,6 @@
 const Logo = () => {
   return (
-    <div>
+    <div className="select-none">
       <h1 className="font-pacifico text-center tracking-wide text-white text-[45px]">
         Quality Electric Services
       </h1>

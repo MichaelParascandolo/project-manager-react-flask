@@ -9,7 +9,7 @@ const getData = async () => {
 };
 
 function Signup() {
-  const styles: { links: string; label: string; input: string } = {
+  const styles = {
     links:
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
@@ -17,8 +17,8 @@ function Signup() {
       "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
   };
   return (
-    <div className="mt-[75px] flex justify-center">
-      <div>
+    <div className="h-screen flex justify-center">
+      <div className="my-auto">
         <div className="-mb-6">
           <Logo />
         </div>
@@ -29,11 +29,7 @@ function Signup() {
                 Create an account
               </h2>
               <p className={styles.label}>Name</p>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="first name"
-              />
+              <input type="text" className={styles.input} placeholder="name" />
               <p className={styles.label}>Your email</p>
               <input
                 type="email"
@@ -53,9 +49,11 @@ function Signup() {
                 placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
               />
               <div className="flex justify-center">
-                <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300">
-                  Create an account
-                </button>
+                <a href="/" className="w-full">
+                  <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300">
+                    Create an account
+                  </button>
+                </a>
               </div>
               <div className="mt-4">
                 <p className="text-center text-gray-300 text-md">

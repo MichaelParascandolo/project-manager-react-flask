@@ -1,7 +1,7 @@
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import Day from "../components/Day";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 const Schedule = () => {
   return (
@@ -10,9 +10,9 @@ const Schedule = () => {
         <Navbar />
         <div className="my-4 flex justify-center">
           <div className="text-center">
-            {/* <h1 className="text-white text-[30px] font-mono tracking-wide">
-              Weekly Schedule
-            </h1> */}
+            <h1 className="text-white text-[30px] mb-2 font-mono tracking-wide">
+              February
+            </h1>
             <div className="flex justify-evenly">
               <div className=" bg-slate-400 rounded-full mr-2">
                 <MdNavigateBefore size={25} />

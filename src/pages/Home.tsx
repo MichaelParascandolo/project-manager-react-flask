@@ -1,35 +1,50 @@
-import Navbar from "../components/Navbar";
-import { RiTeamFill } from "react-icons/ri";
 import { BsPersonFill, BsCalendarFill } from "react-icons/bs";
+import { RiTeamFill } from "react-icons/ri";
+import { BiLogOut } from "react-icons/bi";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Home = () => {
-  const size: number = 60;
+  const iconSize: number = 60;
+  const styles = {
+    container:
+      "bg-slate-900 text-white p-4 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
+    text: "text-2xl mx-auto my-auto",
+  };
   return (
     <>
       <Navbar />
       <div className="flex justify-center mt-20">
         <div className="w-[600px]">
-          <div className="text-white text-[50px] font-pacifico tracking-wider text-center my-4">
+          <div className="text-white text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, Michael
           </div>
+          <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
+            Admin
+          </h2>
           <div className="grid grid-cols-2 gap-4 px-4">
-            <a href="/team">
-              <div className="bg-slate-900 col-span-1 text-white p-4 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:scale-105 duration-300 ease-in-out transition-all">
-                <RiTeamFill size={size} />
-                <p className="text-xl mx-auto my-auto">Team</p>
+            <a href="/team" className="col-span-1">
+              <div className={styles.container}>
+                <RiTeamFill size={iconSize} />
+                <p className={styles.text}>Team</p>
               </div>
             </a>
-            <a href="/customers">
-              <div className="bg-slate-900 col-span-1 text-white p-4 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:scale-105 duration-300 ease-in-out transition-all">
-                <BsPersonFill size={size} />
-                <p className="text-xl mx-auto my-auto">Customers</p>
+            <a href="/customers" className="col-span-1">
+              <div className={styles.container}>
+                <BsPersonFill size={iconSize} />
+                <p className={styles.text}>Customers</p>
               </div>
             </a>
-            <a href="/schedule">
-              <div className="bg-slate-900 col-span-2 text-white p-4 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:scale-105 duration-300 ease-in-out transition-all">
-                <BsCalendarFill size={size} />
-                <p className="text-xl mx-auto my-auto">Schedule</p>
+            <a href="/schedule" className="col-span-1">
+              <div className={styles.container}>
+                <BsCalendarFill size={iconSize} />
+                <p className={styles.text}>Schedule</p>
+              </div>
+            </a>
+            <a href="/" className="col-span-1">
+              <div className={styles.container}>
+                <BiLogOut size={iconSize} />
+                <p className={styles.text}>Logout</p>
               </div>
             </a>
           </div>

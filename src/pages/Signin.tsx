@@ -17,8 +17,8 @@ function Signin() {
       "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
   };
   return (
-    <div className="mt-[125px] flex justify-center">
-      <div>
+    <div className="flex h-screen justify-center">
+      <div className="my-auto">
         <div className="-mb-6">
           <Logo />
         </div>
