@@ -1,13 +1,6 @@
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-// USED FOR TESTING
-const getData = async () => {
-  const response = await fetch("/profile");
-  const data = await response.json();
-  console.log(data);
-};
-
 function Signin() {
   const styles = {
     links:

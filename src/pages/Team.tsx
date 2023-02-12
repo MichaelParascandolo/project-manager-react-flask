@@ -33,11 +33,14 @@ const Team = () => {
       hiredDate: "Feb 12th 2023",
     },
   ];
+  const removeMember = (id: number) => {
+    alert("delete " + id);
+  };
   return (
     <>
       <Navbar />
       <div className="flex justify-center mt-20">
-        <div className="w-[600px]">
+        <div className="max-w-[600px] w-[90%]">
           <div className="text-white text-[50px] font-pacifico tracking-wider text-center my-4 select-none">
             Team Members
           </div>
@@ -53,7 +56,7 @@ const Team = () => {
                     "bg-slate-900 text-white p-4 w-full flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all"
                   }
                 >
-                  <BsPersonFill size={30} />
+                  <BsPersonFill size={25} />
                   <p
                     className={
                       "text-xl mx-auto my-auto font-bold tracking-wide"
@@ -64,10 +67,14 @@ const Team = () => {
                   <p className="text-md mx-auto my-auto font-bold">
                     {item.number}
                   </p>
-                  <p className="text-md mx-auto my-auto font-bold">
+                  {/* <p className="hidden md:block text-md mx-auto my-auto font-bold">
                     {item.hiredDate}
-                  </p>
-                  <BsTrashFill size={30} className="my-auto" />
+                  </p> */}
+                  <BsTrashFill
+                    onClick={() => removeMember(item.id)}
+                    size={25}
+                    className="my-auto"
+                  />
                 </div>
               </>
             ))}
