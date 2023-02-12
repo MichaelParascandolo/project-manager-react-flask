@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-function Notfound() {
+function NotFound() {
   return (
     <div className="mt-[125px] flex justify-center">
       <div>
@@ -31,4 +31,4 @@ function Notfound() {
   );
 }
 
-export default Notfound;
+export default NotFound;

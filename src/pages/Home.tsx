@@ -9,7 +9,7 @@ const Home = () => {
   const styles = {
     container:
       "bg-slate-900 text-white p-4 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
-    text: "text-2xl mx-auto my-auto",
+    text: "text-2xl mx-auto my-auto font-bold tracking-wide",
   };
   return (
     <>
@@ -22,26 +22,26 @@ const Home = () => {
           <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
             Admin
           </h2>
-          <div className="grid grid-cols-2 gap-4 px-4">
-            <a href="/team" className="col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
+            <a href="/team">
               <div className={styles.container}>
                 <RiTeamFill size={iconSize} />
                 <p className={styles.text}>Team</p>
               </div>
             </a>
-            <a href="/customers" className="col-span-1">
+            <a href="/customers">
               <div className={styles.container}>
                 <BsPersonFill size={iconSize} />
                 <p className={styles.text}>Customers</p>
               </div>
             </a>
-            <a href="/schedule" className="col-span-1">
+            <a href="/schedule">
               <div className={styles.container}>
                 <BsCalendarFill size={iconSize} />
                 <p className={styles.text}>Schedule</p>
               </div>
             </a>
-            <a href="/" className="col-span-1">
+            <a href="/">
               <div className={styles.container}>
                 <BiLogOut size={iconSize} />
                 <p className={styles.text}>Logout</p>
