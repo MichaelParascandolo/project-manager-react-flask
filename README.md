@@ -28,4 +28,6 @@ https://flask.palletsprojects.com/en/2.2.x/installation/#install-flask
 ## For MAC
 ## . venv/bin/activate
 ## flask run
-## For Windows: python -m flask run
+## For Windows: 
+##  cd backend
+##  python -m flask run
