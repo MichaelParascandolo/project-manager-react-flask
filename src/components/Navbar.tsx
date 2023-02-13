@@ -7,16 +7,16 @@ const Navbar = () => {
       path: "/home",
     },
     {
-      title: "Schedule",
-      path: "/schedule",
+      title: "Team",
+      path: "/team",
     },
     {
       title: "Customers",
       path: "/customers",
     },
     {
-      title: "Team",
-      path: "/team",
+      title: "Schedule",
+      path: "/schedule",
     },
   ];
   const styles = {
