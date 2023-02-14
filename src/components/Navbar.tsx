@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
+import { CgChevronRight } from "react-icons/cg";
+import Logo from "./Logo";
 
 const Navbar = () => {
+  const [nav, setNav] = useState<Boolean>(true);
   const navLinks = [
     {
       title: "Home",
@@ -43,10 +47,36 @@ const Navbar = () => {
             ))}
           </ul>
           <div className="flex md:hidden">
-            <BiMenu size={30} />
+            <BiMenu size={30} onClick={() => setNav(!nav)} />
           </div>
         </div>
       </div>
+      {/* mobile nav menu */}
+      {nav ? (
+        <>
+          <div className="h-screen w-full fixed top-0 left-0 bg-black/70">
+            <div className="bg-slate-900 border-2 border-slate-800 w-[300px] h-screen">
+              <Logo />
+              <div className="ml-4">
+                <ul className="mt-8">
+                  <li className="text-white py-4 flex justify-between tracking-wider">
+                    Overview <CgChevronRight size={20} className={"mr-2"} />
+                  </li>
+                  <li className="text-white py-4 flex justify-between tracking-wider">
+                    Calendar <CgChevronRight size={20} className={"mr-2"} />
+                  </li>
+                  <li className="text-white py-4 flex justify-between tracking-wider">
+                    Customers <CgChevronRight size={20} className={"mr-2"} />
+                  </li>
+                  <li className="text-white py-4 flex justify-between tracking-wider">
+                    Settings <CgChevronRight size={20} className={"mr-2"} />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
     </>
   );
 };
