@@ -13,7 +13,7 @@ function Signin() {
     <div className="flex h-screen justify-center">
       <div className="my-auto">
         <div className="-mb-6">
-          <Logo />
+          <Logo size1={"45"} size2={"25"} />
         </div>
         <div className="mt-10 bg-slate-800 shadow-xl shadow-black rounded-xl border-2 border-slate-900 h-[400px]">
           <div className="flex justify-center">
