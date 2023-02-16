@@ -16,7 +16,7 @@ const Home = () => {
       <Navbar />
       <div className="flex justify-center mt-20">
         <div className="w-[600px]">
-          <div className="text-white text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
+          <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, Michael
           </div>
           <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
