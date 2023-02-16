@@ -64,7 +64,20 @@ const Navbar = () => {
         {nav ? (
           <>
             <div className="bg-slate-900 border-2 border-slate-800 w-[50%] p-4 h-screen">
-              <Logo size1={"30"} size2={"20"} />
+              {/*  */}
+              <div className="select-none">
+                <h1
+                  className={`font-pacifico text-center tracking-wide text-white text-[25px]`}
+                >
+                  Quality Electric Services
+                </h1>
+                <h2
+                  className={`font-roboto text-center text-gray-400 text-[15}px] tracking-widest`}
+                >
+                  Project Manager
+                </h2>
+              </div>
+              {/*  */}
               <div className="ml-4">
                 <ul className="mt-8">
                   {navLinks.map((item, index) => (
