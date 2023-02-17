@@ -20,9 +20,14 @@ function Signin(props: any) {
     })
       .then((response) => {
         props.setToken(response.data.access_token);
+        // testing
+        console.log("Email" + loginForm.email);
+        console.log("Password" + loginForm.password);
+        console.log("Token" + response.data.access_token);
       })
       .catch((error) => {
         if (error.response) {
+          console.log("NO TOKEN");
           console.log(error.response);
           console.log(error.response.status);
           console.log(error.response.headers);
@@ -69,18 +74,22 @@ function Signin(props: any) {
                   <p className={styles.label}>Your email</p>
                   <input
                     type="email"
+                    name="email"
+                    onChange={handleChange}
                     className={styles.input}
                     placeholder="name@company.com"
+                    value={loginForm.email}
+                    // text={loginForm.email}
                   />
                   <p className={styles.label}>Password</p>
                   <input
-                    onChange={handleChange}
                     type="password"
                     name="password"
+                    onChange={handleChange}
                     className={styles.input}
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                    text={loginForm.password}
                     value={loginForm.password}
+                    // text={loginForm.password}
                   />
                   <div className="flex justify-between mt-4">
                     <div className="flex">

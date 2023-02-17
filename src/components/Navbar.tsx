@@ -1,9 +1,26 @@
 import { useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { CgChevronRight } from "react-icons/cg";
-import Logo from "./Logo";
+import axios from "axios";
 
-const Navbar = () => {
+const Navbar = (props: any) => {
+  function logMeOut() {
+    axios({
+      method: "POST",
+      url: "/logout",
+    })
+      .then((response) => {
+        props.token();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
+
   const [nav, setNav] = useState<Boolean>(false);
   const navLinks = [
     {
@@ -28,11 +45,11 @@ const Navbar = () => {
       <div className="h-[50px] w-full bg-slate-900 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
         <div className="my-auto px-4 flex">
           <p>Hello 👋, Michael</p>
-          {/* <a href="/" className="pl-2 my-auto">
-            <button className="text-gray-200">
-              <BiLogOut size={22} />
-            </button>
-          </a> */}
+          {/* <a href="/" className="pl-2 my-auto"> */}
+          <button className="text-gray-200" onClick={logMeOut}>
+            <BiLogOut size={22} />
+          </button>
+          {/* </a> */}
         </div>
         <div className="px-2 my-auto">
           <ul className="hidden md:flex">

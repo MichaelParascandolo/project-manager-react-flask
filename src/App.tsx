@@ -7,33 +7,50 @@ import Customers from "./pages/Customers";
 import Home from "./pages/Home";
 import Team from "./pages/Team";
 import useToken from "./components/useToken";
+import Navbar from "./components/Navbar";
 
 function App() {
   const { token, removeToken, setToken } = useToken();
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/schedule" element={<Schedule />} />
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/team" element={<Team />} />
-        {/* <Route path="/home" element={<Home />} /> */}
-        {!token && token !== "" && token !== undefined ? (
-          <Signin setToken={setToken} />
-        ) : (
-          <>
-            <Routes>
-              <Route
-                path="/home"
-                element={<Home token={token} setToken={setToken} />}
-              />
-            </Routes>
-          </>
-        )}
-      </Routes>
+      {/* <Navbar token={removeToken} /> */}
+      {!token && token !== "" && token !== undefined ? (
+        <Signin setToken={setToken} />
+      ) : (
+        <>
+          <Routes>
+            <Route
+              path="/profile"
+              element={<Home token={token} setToken={setToken} />}
+            />
+          </Routes>
+        </>
+      )}
     </BrowserRouter>
+    // <BrowserRouter>
+    //   <Routes>
+    //     {/* <Navbar token={removeToken} /> */}
+    //     <Route path="*" element={<NotFound />} />
+    //     <Route path="/" element={<Signin />} />
+    //     <Route path="/signup" element={<Signup />} />
+    //     <Route path="/schedule" element={<Schedule />} />
+    //     <Route path="/customers" element={<Customers />} />
+    //     <Route path="/team" element={<Team />} />
+    //     {/* <Route path="/home" element={<Home />} /> */}
+    //     {!token && token !== "" && token !== undefined ? (
+    //       <Signin setToken={setToken} />
+    //     ) : (
+    //       <>
+    //         <Routes>
+    //           <Route
+    //             path="/home"
+    //             element={<Home token={token} setToken={setToken} />}
+    //           />
+    //         </Routes>
+    //       </>
+    //     )}
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 

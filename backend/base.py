@@ -52,7 +52,7 @@ def logout():
 @jwt_required()
 def my_profile():
     response_body = {
-        "name": "Nagato",
+        "name": "Michael",
         "about" :"Hello! I'm a full stack developer that loves python and javascript"
     }
 
