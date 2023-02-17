@@ -6,8 +6,10 @@ import Schedule from "./pages/Schedule";
 import Customers from "./pages/Customers";
 import Home from "./pages/Home";
 import Team from "./pages/Team";
+import useToken from "./components/useToken";
 
 function App() {
+  const { token, removeToken, setToken } = useToken();
   return (
     <BrowserRouter>
       <Routes>
@@ -17,7 +19,19 @@ function App() {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/home" element={<Home />} />
+        {/* <Route path="/home" element={<Home />} /> */}
+        {!token && token !== "" && token !== undefined ? (
+          <Signin setToken={setToken} />
+        ) : (
+          <>
+            <Routes>
+              <Route
+                path="/home"
+                element={<Home token={token} setToken={setToken} />}
+              />
+            </Routes>
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

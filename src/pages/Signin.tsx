@@ -1,7 +1,50 @@
+import { useState } from "react";
+import axios from "axios";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-function Signin() {
+function Signin(props: any) {
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  function logMeIn(event: any) {
+    axios({
+      method: "POST",
+      url: "/token",
+      data: {
+        email: loginForm.email,
+        password: loginForm.password,
+      },
+    })
+      .then((response) => {
+        props.setToken(response.data.access_token);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+
+    setLoginForm({
+      email: "",
+      password: "",
+    });
+
+    event.preventDefault();
+  }
+
+  function handleChange(event: any) {
+    const { value, name } = event.target;
+    setLoginForm((prevNote) => ({
+      ...prevNote,
+      [name]: value,
+    }));
+  }
+
   const styles = {
     links:
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
@@ -22,37 +65,46 @@ function Signin() {
                 <h2 className="text-white cap font-bold text-center text-xl tracking-wide">
                   Sign in to your account
                 </h2>
-                <p className={styles.label}>Your email</p>
-                <input
-                  type="email"
-                  className={styles.input}
-                  placeholder="name@company.com"
-                />
-                <p className={styles.label}>Password</p>
-                <input
-                  type="password"
-                  className={styles.input}
-                  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                />
-                <div className="flex justify-between mt-4">
-                  <div className="flex">
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 mr-2 mt-1 accent-blue-500"
-                    />
-                    <p className="text-gray-300">Remember me</p>
+                <form className="login">
+                  <p className={styles.label}>Your email</p>
+                  <input
+                    type="email"
+                    className={styles.input}
+                    placeholder="name@company.com"
+                  />
+                  <p className={styles.label}>Password</p>
+                  <input
+                    onChange={handleChange}
+                    type="password"
+                    name="password"
+                    className={styles.input}
+                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                    text={loginForm.password}
+                    value={loginForm.password}
+                  />
+                  <div className="flex justify-between mt-4">
+                    <div className="flex">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 mr-2 mt-1 accent-blue-500"
+                      />
+                      <p className="text-gray-300">Remember me</p>
+                    </div>
+                    <a href="#" className={styles.links}>
+                      Forgot password?
+                    </a>
                   </div>
-                  <a href="#" className={styles.links}>
-                    Forgot password?
-                  </a>
-                </div>
-                <div className="flex justify-center">
-                  <a href="/home" className="w-full">
-                    <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300">
+                  <div className="flex justify-center">
+                    {/* <a href="/home" className="w-full"> */}
+                    <button
+                      className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                      onClick={logMeIn}
+                    >
                       Login to your account
                     </button>
-                  </a>
-                </div>
+                    {/* </a> */}
+                  </div>
+                </form>
                 <div className="mt-4">
                   <p className="text-center text-gray-300 text-md">
                     Don't have an account?{" "}
