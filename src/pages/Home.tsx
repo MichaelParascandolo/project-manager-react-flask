@@ -11,7 +11,7 @@ const Home = (props: any) => {
   function getData() {
     axios({
       method: "GET",
-      url: "/profile",
+      url: "http://127.0.0.1:5000/profile",
       headers: {
         Authorization: "Bearer " + props.token,
       },
@@ -34,7 +34,8 @@ const Home = (props: any) => {
   }
 
   useEffect(() => {
-    getData();
+    // getData();
+    // console.log(props.token);
   }, []);
 
   const iconSize: number = 60;
@@ -50,11 +51,15 @@ const Home = (props: any) => {
       <div className="flex justify-center mt-20">
         <div className="w-[600px]">
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
-            Welcome, {profileData.profile_name}
+            {/* Welcome, {profileData.profile_name} */}
           </div>
           <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
-            Admin {profileData.about_me}
+            {/* Admin {profileData.about_me} */}
           </h2>
+          {/* testing */}
+          <button className="text-white bg-blue-500" onClick={() => getData()}>
+            Get Data
+          </button>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
             <a href="/team">
               <div className={styles.container}>

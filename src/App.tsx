@@ -20,9 +20,13 @@ function App() {
         <>
           <Routes>
             <Route
-              path="/profile"
-              element={<Home token={token} setToken={setToken} />}
+              path="/"
+              element={<Home Token={token} setToken={setToken} />}
             />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </>
       )}
@@ -30,7 +34,6 @@ function App() {
     // <BrowserRouter>
     //   <Routes>
     //     {/* <Navbar token={removeToken} /> */}
-    //     <Route path="*" element={<NotFound />} />
     //     <Route path="/" element={<Signin />} />
     //     <Route path="/signup" element={<Signup />} />
     //     <Route path="/schedule" element={<Schedule />} />

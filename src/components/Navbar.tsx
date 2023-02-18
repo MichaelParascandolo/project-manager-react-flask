@@ -7,13 +7,15 @@ const Navbar = (props: any) => {
   function logMeOut() {
     axios({
       method: "POST",
-      url: "/logout",
+      url: "http://127.0.0.1:5000/logout",
     })
       .then((response) => {
         props.token();
+        console.log("logout");
       })
       .catch((error) => {
         if (error.response) {
+          console.log("logout unsuccessful");
           console.log(error.response);
           console.log(error.response.status);
           console.log(error.response.headers);
