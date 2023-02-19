@@ -20,8 +20,9 @@ const Home = (props: any) => {
         const res = response.data;
         res.access_token && props.setToken(res.access_token);
         setProfileData({
-          profile_name: res.name,
-          profile_role: res.role,
+          firstName: res.firstName,
+          lastName: res.lastName,
+          role: res.Admin,
         });
       })
       .catch((error) => {
@@ -50,10 +51,10 @@ const Home = (props: any) => {
       <div className="flex justify-center mt-20">
         <div className="w-[600px]">
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
-            Welcome, {profileData.profile_name}
+            Welcome, {profileData.firstName}
           </div>
           <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
-            {profileData.profile_role}
+            {profileData.role ? "Admin" : "User"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
             <a href="/team">

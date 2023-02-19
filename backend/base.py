@@ -53,8 +53,9 @@ def logout():
 ## this should be here to makes sure the user has a token but it does not work . . .
 def my_profile():
     response_body = {
-        "name": "Michael",
-        "role" :"Admin"
+        "firstName": "Michael",
+        "lastName": "Parascandolo",
+        "Admin": True,
     }
 
     return response_body
