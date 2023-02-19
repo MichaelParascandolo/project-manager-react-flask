@@ -48,6 +48,11 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
+@api.route("/employees", methods=["GET"])
+def team():
+    get_employees = jsonify({"John Appleseed"})
+    return get_employees
+
 @api.route("/profile", methods=["GET"])
 # @jwt_required()
 ## this should be here to makes sure the user has a token but it does not work . . .

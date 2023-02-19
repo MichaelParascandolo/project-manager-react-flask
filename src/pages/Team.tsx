@@ -48,9 +48,9 @@ const Team = () => {
     }
     return null;
   };
-  // useEffect(() => {
-  //   formatNumber("12345678");
-  // }, []);
+  useEffect(() => {
+    // formatNumber("12345678");
+  }, []);
   const styles = {
     links:
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
