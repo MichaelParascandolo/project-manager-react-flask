@@ -48,6 +48,8 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
+# this function should return an array of employee objects with: 
+# firstName, lastName, employeeID, and their username and password
 @api.route("/employees", methods=["GET"])
 def team():
     get_employees = jsonify({"John Appleseed"})
@@ -55,7 +57,7 @@ def team():
 
 @api.route("/profile", methods=["GET"])
 # @jwt_required()
-## this should be here to makes sure the user has a token but it does not work . . .
+# this should be here to makes sure the user has a token but it does not work . . .
 def my_profile():
     response_body = {
         "firstName": "Michael",
