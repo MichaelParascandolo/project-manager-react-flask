@@ -4,6 +4,7 @@ Flask-JWT-Extended
 itsdangerous
 Jinja2
 MarkupSafe
+flask-cors
 PyJWT
 python-dotenv
 Werkzeug
