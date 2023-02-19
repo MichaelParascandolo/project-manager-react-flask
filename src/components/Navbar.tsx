@@ -2,27 +2,9 @@ import { useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { CgChevronRight } from "react-icons/cg";
 import axios from "axios";
+import { test } from "../pages/Home";
 
-const Navbar = (props: any) => {
-  function logMeOut() {
-    axios({
-      method: "POST",
-      url: "http://127.0.0.1:5000/logout",
-    })
-      .then((response) => {
-        props.token();
-        console.log("logout");
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log("logout unsuccessful");
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
-
+const Navbar = () => {
   const [nav, setNav] = useState<Boolean>(false);
   const navLinks = [
     {
@@ -65,6 +47,9 @@ const Navbar = (props: any) => {
                 <a href={item.path}>{item.title}</a>
               </li>
             ))}
+            <button className="text-gray-200 mr-2" onClick={test}>
+              <BiLogOut size={22} />
+            </button>
           </ul>
           <div className="flex md:hidden cursor-pointer">
             <BiMenu size={30} onClick={() => setNav(true)} />
@@ -96,7 +81,6 @@ const Navbar = (props: any) => {
                   Project Manager
                 </h2>
               </div>
-              {/*  */}
               <div className="ml-4">
                 <ul className="mt-8">
                   {navLinks.map((item, index) => (

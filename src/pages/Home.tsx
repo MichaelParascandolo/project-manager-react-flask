@@ -6,12 +6,16 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+export function test() {
+  alert("logout");
+}
+
 const Home = (props: any) => {
   const [profileData, setProfileData] = useState<any>("");
   function getData() {
     axios({
       method: "GET",
-      url: "http://127.0.0.1:5000/profile",
+      url: "http://192.168.7.236:3000/profile",
       headers: {
         Authorization: "Bearer " + props.token,
       },
@@ -24,6 +28,23 @@ const Home = (props: any) => {
           lastName: res.lastName,
           role: res.Admin,
         });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
+  function logOut() {
+    axios({
+      method: "POST",
+      url: "http://192.168.7.236:3000/logout",
+    })
+      .then((response) => {
+        console.log(response.data);
+        props.removeToken();
       })
       .catch((error) => {
         if (error.response) {
@@ -75,12 +96,10 @@ const Home = (props: any) => {
                 <p className={styles.text}>Schedule</p>
               </div>
             </a>
-            <a href="/">
-              <div className={styles.container}>
-                <BiLogOut size={iconSize} />
-                <p className={styles.text}>Logout</p>
-              </div>
-            </a>
+            <div className={styles.container} onClick={logOut}>
+              <BiLogOut size={iconSize} />
+              <p className={styles.text}>Logout</p>
+            </div>
           </div>
         </div>
       </div>

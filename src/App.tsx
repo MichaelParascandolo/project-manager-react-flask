@@ -13,7 +13,6 @@ function App() {
   const { token, removeToken, setToken } = useToken();
   return (
     <BrowserRouter>
-      {/* <Navbar token={removeToken} /> */}
       {!token && token !== "" && token !== undefined ? (
         <>
           <Signin setToken={setToken} />
@@ -23,7 +22,13 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Home Token={token} setToken={setToken} />}
+              element={
+                <Home
+                  Token={token}
+                  removeToken={removeToken}
+                  setToken={setToken}
+                />
+              }
             />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/customers" element={<Customers />} />
@@ -33,28 +38,6 @@ function App() {
         </>
       )}
     </BrowserRouter>
-    // <BrowserRouter>
-    //   <Routes>
-    //     {/* <Navbar token={removeToken} /> */}
-    //     <Route path="/" element={<Signin />} />
-    //     <Route path="/schedule" element={<Schedule />} />
-    //     <Route path="/customers" element={<Customers />} />
-    //     <Route path="/team" element={<Team />} />
-    //     {/* <Route path="/home" element={<Home />} /> */}
-    //     {!token && token !== "" && token !== undefined ? (
-    //       <Signin setToken={setToken} />
-    //     ) : (
-    //       <>
-    //         <Routes>
-    //           <Route
-    //             path="/home"
-    //             element={<Home token={token} setToken={setToken} />}
-    //           />
-    //         </Routes>
-    //       </>
-    //     )}
-    //   </Routes>
-    // </BrowserRouter>
   );
 }
 

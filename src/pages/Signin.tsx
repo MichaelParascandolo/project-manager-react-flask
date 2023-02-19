@@ -13,7 +13,7 @@ function Signin(props: any) {
   function logMeIn(event: any) {
     axios({
       method: "POST",
-      url: "http://127.0.0.1:5000/token",
+      url: "http://192.168.7.236:3000/token",
       data: {
         email: loginForm.email,
         password: loginForm.password,
@@ -23,14 +23,13 @@ function Signin(props: any) {
         props.setToken(response.data.access_token);
         setWrongPassword(false);
         // testing
-        console.log("Email" + loginForm.email);
-        console.log("Password" + loginForm.password);
+        // console.log("Email" + loginForm.email);
+        // console.log("Password" + loginForm.password);
         // console.log("Token" + response.data.access_token);
       })
       .catch((error) => {
         if (error.response) {
           setWrongPassword(true);
-          console.log("NO TOKEN");
           console.log(error.response);
           console.log(error.response.status);
           console.log(error.response.headers);
