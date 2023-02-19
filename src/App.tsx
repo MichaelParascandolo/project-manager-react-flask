@@ -15,7 +15,9 @@ function App() {
     <BrowserRouter>
       {/* <Navbar token={removeToken} /> */}
       {!token && token !== "" && token !== undefined ? (
-        <Signin setToken={setToken} />
+        <>
+          <Signin setToken={setToken} />
+        </>
       ) : (
         <>
           <Routes>
@@ -35,7 +37,6 @@ function App() {
     //   <Routes>
     //     {/* <Navbar token={removeToken} /> */}
     //     <Route path="/" element={<Signin />} />
-    //     <Route path="/signup" element={<Signup />} />
     //     <Route path="/schedule" element={<Schedule />} />
     //     <Route path="/customers" element={<Customers />} />
     //     <Route path="/team" element={<Team />} />

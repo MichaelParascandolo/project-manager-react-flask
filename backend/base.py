@@ -1,7 +1,5 @@
 # following this as a guide 
 # https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7
-
-import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime, timedelta, timezone
@@ -50,12 +48,13 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
-@api.route('/profile')
-@jwt_required()
+@api.route("/profile", methods=["GET"])
+# @jwt_required()
+## this should be here to makes sure the user has a token but it does not work . . .
 def my_profile():
     response_body = {
         "name": "Michael",
-        "about" :"Hello! I'm a full stack developer that loves python and javascript"
+        "role" :"Admin"
     }
 
     return response_body

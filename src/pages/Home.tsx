@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Home = (props: any) => {
-  const [profileData, setProfileData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<any>("");
   function getData() {
     axios({
       method: "GET",
@@ -21,7 +21,7 @@ const Home = (props: any) => {
         res.access_token && props.setToken(res.access_token);
         setProfileData({
           profile_name: res.name,
-          about_me: res.about,
+          profile_role: res.role,
         });
       })
       .catch((error) => {
@@ -34,8 +34,7 @@ const Home = (props: any) => {
   }
 
   useEffect(() => {
-    // getData();
-    // console.log(props.token);
+    getData();
   }, []);
 
   const iconSize: number = 60;
@@ -51,15 +50,11 @@ const Home = (props: any) => {
       <div className="flex justify-center mt-20">
         <div className="w-[600px]">
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
-            {/* Welcome, {profileData.profile_name} */}
+            Welcome, {profileData.profile_name}
           </div>
           <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
-            {/* Admin {profileData.about_me} */}
+            {profileData.profile_role}
           </h2>
-          {/* testing */}
-          <button className="text-white bg-blue-500" onClick={() => getData()}>
-            Get Data
-          </button>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
             <a href="/team">
               <div className={styles.container}>

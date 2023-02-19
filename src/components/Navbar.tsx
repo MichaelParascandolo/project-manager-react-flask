@@ -27,7 +27,7 @@ const Navbar = (props: any) => {
   const navLinks = [
     {
       title: "Home",
-      path: "/home",
+      path: "/",
     },
     {
       title: "Team",
@@ -48,7 +48,7 @@ const Navbar = (props: any) => {
         <div className="my-auto px-4 flex">
           <p>Hello 👋, Michael</p>
           {/* <a href="/" className="pl-2 my-auto"> */}
-          <button className="text-gray-200" onClick={logMeOut}>
+          <button className="text-gray-200" onClick={() => logMeOut()}>
             <BiLogOut size={22} />
           </button>
           {/* </a> */}
