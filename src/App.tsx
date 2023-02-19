@@ -23,17 +23,52 @@ function App() {
             <Route
               path="/"
               element={
-                <Home
-                  Token={token}
-                  removeToken={removeToken}
-                  setToken={setToken}
-                />
+                <>
+                  <Navbar removeToken={removeToken} />
+                  <Home
+                    Token={token}
+                    removeToken={removeToken}
+                    setToken={setToken}
+                  />
+                </>
               }
             />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/customers" element={<Customers />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path="/schedule"
+              element={
+                <>
+                  <Navbar removeToken={removeToken} />
+                  <Schedule />
+                </>
+              }
+            />
+            <Route
+              path="/customers"
+              element={
+                <>
+                  <Navbar removeToken={removeToken} />
+                  <Customers />
+                </>
+              }
+            />
+            <Route
+              path="/team"
+              element={
+                <>
+                  <Navbar removeToken={removeToken} />
+                  <Team />
+                </>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                  <Navbar removeToken={removeToken} />
+                  <NotFound />
+                </>
+              }
+            />
           </Routes>
         </>
       )}

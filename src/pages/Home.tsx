@@ -3,12 +3,7 @@ import { BsPersonFill, BsCalendarFill } from "react-icons/bs";
 import { RiTeamFill } from "react-icons/ri";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-export function test() {
-  alert("logout");
-}
 
 const Home = (props: any) => {
   const [profileData, setProfileData] = useState<any>("");
@@ -37,6 +32,7 @@ const Home = (props: any) => {
         }
       });
   }
+  // maybe export this function so navbar can also use it?
   function logOut() {
     axios({
       method: "POST",
@@ -68,7 +64,7 @@ const Home = (props: any) => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar removeToken={props} /> */}
       <div className="flex justify-center mt-20">
         <div className="w-[600px]">
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">

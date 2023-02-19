@@ -6,7 +6,6 @@ import {
 } from "react-icons/cg";
 import { BsPersonFill } from "react-icons/bs";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 
 const Customers = () => {
   // used for testing
@@ -34,7 +33,6 @@ const Customers = () => {
   ];
   return (
     <>
-      <Navbar />
       <div className="flex w-full h-screen">
         {/* sidebar */}
         {/* <div className="span-cols-1 bg-slate-900 w-[300px] h-screen">

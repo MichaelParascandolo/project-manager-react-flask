@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BsPersonFill, BsTrashFill } from "react-icons/bs";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Team = () => {
@@ -61,7 +60,7 @@ const Team = () => {
   };
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex justify-center mt-20">
         <div className="max-w-[600px] w-[90%]">
           {/* <div className="text-white text-[50px] font-pacifico tracking-wider text-center my-4 select-none">

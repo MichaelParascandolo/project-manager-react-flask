@@ -1,13 +1,12 @@
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import Day from "../components/Day";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 
 const Schedule = () => {
   return (
     <>
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="my-4 flex justify-center">
           <div className="text-center">
             <h1 className="text-white text-[30px] mb-2 font-mono tracking-wide">

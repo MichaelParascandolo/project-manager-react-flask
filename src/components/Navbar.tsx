@@ -2,9 +2,25 @@ import { useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { CgChevronRight } from "react-icons/cg";
 import axios from "axios";
-import { test } from "../pages/Home";
 
-const Navbar = () => {
+const Navbar = (props: any) => {
+  function logOut() {
+    axios({
+      method: "POST",
+      url: "http://192.168.7.236:3000/logout",
+    })
+      .then((response) => {
+        console.log(response.data);
+        props.removeToken();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
   const [nav, setNav] = useState<Boolean>(false);
   const navLinks = [
     {
@@ -29,11 +45,6 @@ const Navbar = () => {
       <div className="h-[50px] w-full bg-slate-900 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
         <div className="my-auto px-4 flex">
           <p>Hello 👋, Michael</p>
-          {/* <a href="/" className="pl-2 my-auto"> */}
-          {/* <button className="text-gray-200" onClick={() => logMeOut()}>
-            <BiLogOut size={22} />
-          </button> */}
-          {/* </a> */}
         </div>
         <div className="px-2 my-auto">
           <ul className="hidden md:flex">
@@ -47,7 +58,7 @@ const Navbar = () => {
                 <a href={item.path}>{item.title}</a>
               </li>
             ))}
-            <button className="text-gray-200 mr-2" onClick={test}>
+            <button className="text-gray-200 mr-2" onClick={logOut}>
               <BiLogOut size={22} />
             </button>
           </ul>
@@ -94,11 +105,12 @@ const Navbar = () => {
                   ))}
                 </ul>
               </div>
-              <a href="/" className="w-full">
-                <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300">
-                  Sign Out
-                </button>
-              </a>
+              <button
+                className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                onClick={logOut}
+              >
+                Sign Out
+              </button>
             </div>
           </>
         ) : null}
