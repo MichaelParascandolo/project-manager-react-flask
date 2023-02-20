@@ -7,7 +7,7 @@ const Navbar = (props: any) => {
   function logOut() {
     axios({
       method: "POST",
-      url: "http://192.168.7.236:3000/logout",
+      url: "http://127.0.0.1:3000/logout",
     })
       .then((response) => {
         console.log(response.data);
