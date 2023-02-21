@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { BsPersonFill, BsTrashFill } from "react-icons/bs";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
-const Team = () => {
+const Team = (props: any) => {
   let initialMembers = [
     {
       id: 1,
@@ -43,7 +44,6 @@ const Team = () => {
     let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
     if (match) {
       let formattedNumber = "(" + match[1] + ") " + match[2] + "-" + match[3];
-      // console.log(formattedNumber);
       return formattedNumber;
     }
     return null;
@@ -60,7 +60,11 @@ const Team = () => {
   };
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar
+        name={props.name}
+        admin={props.admin}
+        removeToken={props.removeToken}
+      />
       <div className="flex justify-center mt-20">
         <div className="max-w-[600px] w-[90%]">
           {/* <div className="text-white text-[50px] font-pacifico tracking-wider text-center my-4 select-none">

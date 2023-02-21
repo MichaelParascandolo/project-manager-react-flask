@@ -4,61 +4,65 @@ import { CgChevronRight } from "react-icons/cg";
 import axios from "axios";
 
 const Navbar = (props: any) => {
-  function logOut() {
-    axios({
-      method: "POST",
-      url: "http://127.0.0.1:3000/logout",
-    })
-      .then((response) => {
-        console.log(response.data);
-        props.removeToken();
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
   const [nav, setNav] = useState<Boolean>(false);
   const navLinks = [
     {
       title: "Home",
       path: "/",
+      adminRequired: false,
     },
     {
       title: "Team",
       path: "/team",
+      adminRequired: true,
     },
     {
       title: "Customers",
       path: "/customers",
+      adminRequired: false,
     },
     {
       title: "Schedule",
       path: "/schedule",
+      adminRequired: false,
     },
   ];
   return (
     <>
       <div className="h-[50px] w-full bg-slate-900 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
         <div className="my-auto px-4 flex">
-          <p>Hello 👋, Michael</p>
+          <p>Hello 👋, {props.name}</p>
+          <p className="ml-2 mt-2 text-gray-600 text-[10px]">
+            {props.admin ? "ADMIN" : "USER"}
+          </p>
         </div>
         <div className="px-2 my-auto">
           <ul className="hidden md:flex">
-            {navLinks.map((item, index) => (
-              <li
-                className={
-                  "px-4 border-b-2 border-transparent hover:border-blue-500 ease-in-out duration-300 transition-all"
-                }
-                key={index}
-              >
-                <a href={item.path}>{item.title}</a>
-              </li>
-            ))}
-            <button className="text-gray-200 mr-2" onClick={logOut}>
+            {navLinks.map((item, index) =>
+              props.admin ? (
+                <a href={item.path} key={index}>
+                  <li
+                    className={
+                      "px-4 border-b-2 border-transparent hover:border-blue-500 ease-in-out duration-300 transition-all"
+                    }
+                  >
+                    {item.title}
+                  </li>
+                </a>
+              ) : !item.adminRequired ? (
+                <a href={item.path} key={index}>
+                  <li
+                    className={
+                      "px-4 border-b-2 border-transparent hover:border-blue-500 ease-in-out duration-300 transition-all"
+                    }
+                    key={index}
+                  >
+                    {item.title}
+                  </li>
+                </a>
+              ) : null
+            )}
+            <button className="text-gray-200 mr-2" onClick={props.removeToken}>
               <BiLogOut size={22} />
             </button>
           </ul>
@@ -79,7 +83,6 @@ const Navbar = (props: any) => {
         {nav ? (
           <>
             <div className="bg-slate-900 border-2 border-slate-800 w-[50%] p-4 h-screen">
-              {/*  */}
               <div className="select-none">
                 <h1
                   className={`font-pacifico text-center tracking-wide text-white text-[25px]`}
@@ -89,25 +92,35 @@ const Navbar = (props: any) => {
                 <h2
                   className={`font-roboto text-center text-gray-400 text-[15}px] tracking-widest`}
                 >
-                  Project Manager
+                  {props.admin ? "ADMIN" : "USER"}
                 </h2>
               </div>
               <div className="ml-4">
                 <ul className="mt-8">
-                  {navLinks.map((item, index) => (
-                    <a href={item.path} key={index}>
-                      <li className="text-white py-6 flex justify-between tracking-wider">
-                        {item.title}
-                        <CgChevronRight size={20} className={"mr-2"} />
-                      </li>
-                      <div className="bg-slate-800/70 w-full h-0.5 rounded-lg" />
-                    </a>
-                  ))}
+                  {navLinks.map((item, index) =>
+                    props.admin ? (
+                      <a href={item.path} key={index}>
+                        <li className="text-white py-6 flex justify-between tracking-wider">
+                          {item.title}
+                          <CgChevronRight size={20} className={"mr-2"} />
+                        </li>
+                        <div className="bg-slate-800/70 w-full h-0.5 rounded-lg" />
+                      </a>
+                    ) : !item.adminRequired ? (
+                      <a href={item.path} key={index}>
+                        <li className="text-white py-6 flex justify-between tracking-wider">
+                          {item.title}
+                          <CgChevronRight size={20} className={"mr-2"} />
+                        </li>
+                        <div className="bg-slate-800/70 w-full h-0.5 rounded-lg" />
+                      </a>
+                    ) : null
+                  )}
                 </ul>
               </div>
               <button
                 className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
-                onClick={logOut}
+                onClick={props.removeToken}
               >
                 Sign Out
               </button>

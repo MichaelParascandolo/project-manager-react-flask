@@ -8,9 +8,13 @@ import Home from "./pages/Home";
 import Team from "./pages/Team";
 import useToken from "./components/useToken";
 import Navbar from "./components/Navbar";
+import { useState } from "react";
 
 function App() {
   const { token, removeToken, setToken } = useToken();
+  const [admin, setAdmin] = useState();
+  const [name, setName] = useState();
+
   return (
     <BrowserRouter>
       {!token && token !== "" && token !== undefined ? (
@@ -24,11 +28,15 @@ function App() {
               path="/"
               element={
                 <>
-                  <Navbar removeToken={removeToken} />
+                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <Home
+                    setAdmin={setAdmin}
+                    setName={setName}
                     token={token}
                     removeToken={removeToken}
                     setToken={setToken}
+                    name={name}
+                    admin={admin}
                   />
                 </>
               }
@@ -37,7 +45,7 @@ function App() {
               path="/schedule"
               element={
                 <>
-                  <Navbar removeToken={removeToken} />
+                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <Schedule />
                 </>
               }
@@ -46,7 +54,7 @@ function App() {
               path="/customers"
               element={
                 <>
-                  <Navbar removeToken={removeToken} />
+                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <Customers />
                 </>
               }
@@ -55,8 +63,16 @@ function App() {
               path="/team"
               element={
                 <>
-                  <Navbar removeToken={removeToken} />
-                  <Team />
+                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
+                  <Team
+                    setAdmin={setAdmin}
+                    setName={setName}
+                    token={token}
+                    removeToken={removeToken}
+                    setToken={setToken}
+                    name={name}
+                    admin={admin}
+                  />
                 </>
               }
             />
@@ -64,7 +80,7 @@ function App() {
               path="*"
               element={
                 <>
-                  <Navbar removeToken={removeToken} />
+                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <NotFound />
                 </>
               }
