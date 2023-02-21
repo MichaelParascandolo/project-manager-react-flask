@@ -28,13 +28,12 @@ function App() {
               path="/"
               element={
                 <>
-                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <Home
                     setAdmin={setAdmin}
                     setName={setName}
                     token={token}
                     removeToken={removeToken}
-                    setToken={setToken}
+                    // setToken={setToken}
                     name={name}
                     admin={admin}
                   />
@@ -45,8 +44,15 @@ function App() {
               path="/schedule"
               element={
                 <>
-                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
-                  <Schedule />
+                  <Schedule
+                    setAdmin={setAdmin}
+                    setName={setName}
+                    token={token}
+                    // removeToken={removeToken}
+                    // setToken={setToken}
+                    name={name}
+                    admin={admin}
+                  />
                 </>
               }
             />
@@ -54,8 +60,15 @@ function App() {
               path="/customers"
               element={
                 <>
-                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
-                  <Customers />
+                  <Customers
+                    setAdmin={setAdmin}
+                    setName={setName}
+                    token={token}
+                    // removeToken={removeToken}
+                    // setToken={setToken}
+                    name={name}
+                    admin={admin}
+                  />
                 </>
               }
             />
@@ -63,13 +76,12 @@ function App() {
               path="/team"
               element={
                 <>
-                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <Team
                     setAdmin={setAdmin}
                     setName={setName}
                     token={token}
-                    removeToken={removeToken}
-                    setToken={setToken}
+                    // removeToken={removeToken}
+                    // setToken={setToken}
                     name={name}
                     admin={admin}
                   />
@@ -80,7 +92,6 @@ function App() {
               path="*"
               element={
                 <>
-                  {/* <Navbar name={name} admin={admin} removeToken={removeToken} /> */}
                   <NotFound />
                 </>
               }

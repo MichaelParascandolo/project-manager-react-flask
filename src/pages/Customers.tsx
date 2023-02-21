@@ -1,13 +1,38 @@
+import { useEffect } from "react";
+import { BsPersonFill } from "react-icons/bs";
 import {
   CgProfile,
   CgChevronRight,
   CgChevronDown,
   CgSearch,
 } from "react-icons/cg";
-import { BsPersonFill } from "react-icons/bs";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import axios from "axios";
 
-const Customers = () => {
+const Customers = (props: any) => {
+  function getData() {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/profile",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        res.access_token && props.setToken(res.access_token);
+        props.setName(res.firstName);
+        props.setAdmin(res.Admin);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
   // used for testing
   const customers = [
     {
@@ -31,44 +56,18 @@ const Customers = () => {
       number: "1-234-5678",
     },
   ];
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
+      <Navbar
+        name={props.name}
+        admin={props.admin}
+        removeToken={props.removeToken}
+      />
       <div className="flex w-full h-screen">
-        {/* sidebar */}
-        {/* <div className="span-cols-1 bg-slate-900 w-[300px] h-screen">
-          <div className="flex justify-center"></div>
-          <div className="flex justify-center">
-            <input
-              className="mt-4 rounded-lg border-2 tracking-wider border-slate-800 p-2 bg-slate-700 text-white w-[90%]"
-              type={"text"}
-              placeholder="Search Customers"
-            />
-          </div>
-          <div className="ml-4">
-            <ul className="mt-8">
-              <li className="text-white py-4 flex justify-between tracking-wider">
-                Overview <CgChevronRight size={20} className={"mr-2"} />
-              </li>
-              <li className="text-white py-4 flex justify-between tracking-wider">
-                Calendar <CgChevronRight size={20} className={"mr-2"} />
-              </li>
-              <li className="text-white py-4 flex justify-between tracking-wider">
-                Customers <CgChevronRight size={20} className={"mr-2"} />
-              </li>
-              <li className="text-white py-4 flex justify-between tracking-wider">
-                Settings <CgChevronRight size={20} className={"mr-2"} />
-              </li>
-            </ul>
-          </div>
-          <div className="mt-20 text-center">
-            <a href="/calendar">
-              <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg w-[90%] hover:bg-blue-700 transition-all ease-in-out duration-300">
-                Sign Out
-              </button>
-            </a>
-          </div>
-        </div> */}
-        {/* schedule */}
         <div className="w-full">
           <div className="flex justify-center">
             <div className="w-[100%] text-center">

@@ -1,9 +1,32 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsPersonFill, BsTrashFill } from "react-icons/bs";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 const Team = (props: any) => {
+  function getData() {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/profile",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        res.access_token && props.setToken(res.access_token);
+        props.setName(res.firstName);
+        props.setAdmin(res.Admin);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
   let initialMembers = [
     {
       id: 1,
@@ -50,6 +73,7 @@ const Team = (props: any) => {
   };
   useEffect(() => {
     // formatNumber("12345678");
+    getData();
   }, []);
   const styles = {
     links:
