@@ -48,8 +48,8 @@ function App() {
                     setAdmin={setAdmin}
                     setName={setName}
                     token={token}
-                    // removeToken={removeToken}
-                    // setToken={setToken}
+                    removeToken={removeToken}
+                    setToken={setToken}
                     name={name}
                     admin={admin}
                   />
@@ -64,8 +64,8 @@ function App() {
                     setAdmin={setAdmin}
                     setName={setName}
                     token={token}
-                    // removeToken={removeToken}
-                    // setToken={setToken}
+                    removeToken={removeToken}
+                    setToken={setToken}
                     name={name}
                     admin={admin}
                   />
@@ -80,8 +80,8 @@ function App() {
                     setAdmin={setAdmin}
                     setName={setName}
                     token={token}
-                    // removeToken={removeToken}
-                    // setToken={setToken}
+                    removeToken={removeToken}
+                    setToken={setToken}
                     name={name}
                     admin={admin}
                   />
