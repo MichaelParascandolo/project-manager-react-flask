@@ -56,8 +56,8 @@ def team():
     return get_employees
 
 @api.route("/profile", methods=["GET"])
-# @jwt_required()
-# this should be here to makes sure the user has a token but it does not work . . .
+@jwt_required()
+# this protects the endpoint (user must have a token)
 def my_profile():
     response_body = {
         "firstName": "Michael",

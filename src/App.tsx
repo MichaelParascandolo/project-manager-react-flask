@@ -26,7 +26,7 @@ function App() {
                 <>
                   <Navbar removeToken={removeToken} />
                   <Home
-                    Token={token}
+                    token={token}
                     removeToken={removeToken}
                     setToken={setToken}
                   />
