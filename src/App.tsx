@@ -19,7 +19,18 @@ function App() {
     <BrowserRouter>
       {!token && token !== "" && token !== undefined ? (
         <>
-          <Signin setToken={setToken} />
+          <Routes>
+            <Route path="/" element={<Signin setToken={setToken} />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="*"
+              element={
+                <>
+                  <NotFound />
+                </>
+              }
+            />
+          </Routes>
         </>
       ) : (
         <>
@@ -33,7 +44,7 @@ function App() {
                     setName={setName}
                     token={token}
                     removeToken={removeToken}
-                    // setToken={setToken}
+                    setToken={setToken}
                     name={name}
                     admin={admin}
                   />
