@@ -1,33 +1,57 @@
-## Make sure node.js is installed on your computer
+# Prerequisites
 
-### node --version in your terminal
+### Install on your machine
 
-## Make sure yarn is installed on your computer (Google it)
+- Node js
+- Git
+- Yarn
+- Python
 
-### yarn --version in your terminal to check
+# Getting Started
 
-## "yarn vite" starts front-end server
+### You will need to open and run two terminal windows simultaneously, one to run the frontend, and one for the backend.
 
-## "yarn start-backend" starts the back-end server
+# Starting Backend
 
-### This might not work for you..otherwise cd into 'backend' and use "flask run" in the terminal
+https://flask.palletsprojects.com/en/2.2.x/installation/#install-flask For Reference
+https://www.postman.com/downloads/ Not required but useful for testing the API
 
----
+## For Mac
 
-## Python back-end server is not going to run after cloning it will require some setup
+### In the terminal
 
-### Still trying to get this to work
+- cd backend
+  - Where all flask files are stored
+- python3 -m venv venv
+  - Creates python virtual environment, if you already have a venv/env folder you can skip this command.
+- . venv/bin/activate
+  - Activates Python virtual environment
+- pip install -r requirements.txt
+  - Downloads all required dependencies, if you have already ran this command previously, you can skip this.
+- flask run
+  - Starts Flask
 
-#### This was the guide I used to get it running on my local machine
+## For Windows
 
-https://dev.to/nagatodev/how-to-connect-flask-to-reactjs-1k8i
+### In the terminal
 
-## To run back end, I used the following site to install flask locally,
-## and then run 2 commands in the terminal to test the back end (on Mac)
-https://flask.palletsprojects.com/en/2.2.x/installation/#install-flask
-## For MAC
-## . venv/bin/activate
-## flask run
-## For Windows: 
-##  cd backend
-##  python -m flask run
+- cd backend
+  - Where all flask files are stored
+- py -3 -m venv venv
+  - Creates python virtual environment, if you already have a venv/env folder you can skip this command.
+- venv\Scripts\activate
+  - Activates Python virtual environment
+- pip install -r requirements.txt
+  - Downloads all required dependencies, if you have already ran this command previously, you can skip this.
+- flask run
+  - Starts Flask.
+
+# Starting Frontend
+
+## For Mac/Windows
+
+### Make sure your terminal is in the main project directory
+
+- yarn dev
+  - Starts the frontend.
+- If you get an error saying you are missing dependencies simply run "yarn" in the terminal.
