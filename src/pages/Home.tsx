@@ -29,6 +29,8 @@ const Home = (props: any) => {
       })
       .catch((error) => {
         if (error.response) {
+          // props.removeToken();
+          //removes token if expires
           console.log(error.response);
           console.log(error.response.status);
           console.log(error.response.headers);

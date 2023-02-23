@@ -12,6 +12,7 @@ import axios from "axios";
 
 const Customers = (props: any) => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   function getData() {
     axios({
       method: "GET",
@@ -80,7 +81,7 @@ const Customers = (props: any) => {
               <p className="text-white py-2 text-2xl">Create Profile</p>
               <div className="h-1 rounded-full mb-4 bg-slate-900/50" />
               <form action="">
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-4 gap-2">
                   <div className="col-span-2">
                     <label className={styles.label}>First Name</label>
                     <input
@@ -160,12 +161,13 @@ const Customers = (props: any) => {
               </form>
 
               <div className="h-1 rounded-full my-4 bg-slate-900/50" />
-              <p className="text-white py-2 text-2xl">Search Customer</p>
+              <p className="text-white pt-2 text-2xl">Search Customers</p>
               <div className="flex justify-center">
                 <input
                   className="mt-4 rounded-lg border-2 tracking-wider border-slate-800 p-2 bg-slate-900 text-white w-full"
                   type={"text"}
                   placeholder="Search Customers . . ."
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button
                   className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
@@ -174,30 +176,33 @@ const Customers = (props: any) => {
                   <CgSearch size={25} />
                 </button>
               </div>
-
-              <p className="text-white py-2 text-xl">
-                X Matching Records for Y
-              </p>
             </div>
           </div>
-          <ul className="mx-4">
-            {customers.map((customer, index) => (
-              <li
-                key={index}
-                className="bg-slate-800 border-2 border-slate-900 justify-start text-white p-4 my-4 rounded-lg flex shadow-lg shadow-slate-900"
-              >
-                <div className="mr-2 mt-2">
-                  <CgProfile className="text-white" size={30} />
-                </div>
-                <div className="flex justify-between w-[100%]">
-                  <div className="ml-4 my-auto">
-                    {`${customer.firstName} ${customer.lastName}`}
-                  </div>
-                  <p className="my-auto">{customer.number}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {showSearch ? (
+            <>
+              <p className="text-white text-center py-2 text-xl">
+                X Matching Records for {searchTerm}
+              </p>
+              <ul className="mx-4">
+                {customers.map((customer, index) => (
+                  <li
+                    key={index}
+                    className="bg-slate-800 border-2 border-slate-900 justify-start text-white p-4 my-4 rounded-lg flex shadow-lg shadow-slate-900"
+                  >
+                    <div className="mr-2 mt-2">
+                      <CgProfile className="text-white" size={30} />
+                    </div>
+                    <div className="flex justify-between w-[100%]">
+                      <div className="ml-4 my-auto">
+                        {`${customer.firstName} ${customer.lastName}`}
+                      </div>
+                      <p className="my-auto">{customer.number}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : null}
           <Footer />
         </div>
       </div>
