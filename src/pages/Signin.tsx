@@ -60,7 +60,7 @@ function Signin(props: any) {
       "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
   };
   return (
-    <div className="flex h-screen justify-center">
+    <div className="flex min-h-screen justify-center">
       <div className="my-auto w-full max-w-[550px] p-4">
         <div className="my-auto">
           <div className="-mb-6">
