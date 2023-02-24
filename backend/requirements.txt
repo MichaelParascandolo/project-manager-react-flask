@@ -8,3 +8,5 @@ flask-cors
 PyJWT
 python-dotenv
 Werkzeug
+psycopg2
+psycopg2-binary

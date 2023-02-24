@@ -1,3 +1,7 @@
 FLASK_APP=base.py
 FLASK_DEBUG=True
 FLASK_RUN_PORT=3000
+
+DATABASE="QualityScheduler"
+DATABASE_USERNAME="postgres"
+DATABASE_PASSWORD="qsseclass"

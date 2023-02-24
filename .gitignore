@@ -17,6 +17,9 @@ backend/env
 backend/venv
 backend/__pycache__
 
+#PostgreSQL Database stuff
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
