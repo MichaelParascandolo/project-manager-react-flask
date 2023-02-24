@@ -1,10 +1,28 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {useEffect, useState, SetStateAction } from "react";
 import { BsPersonFill, BsTrashFill } from "react-icons/bs";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
+interface Employee {
+  id: number;
+  firstName: String;
+  lastName: String;
+  phone: number;
+  hiredDate: String;
+}
+const tmp : Employee={
+  firstName: "",
+  lastName: "",
+  id: 0,
+  phone: 0,
+  hiredDate: ""
+}
+
+
+
 const Team = (props: any) => {
+  const [teamMembers, setTeamMembers] = useState<Employee[]>([tmp]);
   function getData() {
     axios({
       method: "GET",
@@ -27,37 +45,48 @@ const Team = (props: any) => {
         }
       });
   }
-  let initialMembers = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Smith",
-      number: 1234567891,
-      hiredDate: "Feb 12th 2023",
-    },
-    {
-      id: 2,
-      firstName: "John",
-      lastName: "Smith",
-      number: 1234567891,
-      hiredDate: "Feb 12th 2023",
-    },
-    {
-      id: 3,
-      firstName: "John",
-      lastName: "Smith",
-      number: 1234567891,
-      hiredDate: "Feb 12th 2023",
-    },
-    {
-      id: 4,
-      firstName: "John",
-      lastName: "Smith",
-      number: 1234567891,
-      hiredDate: "Feb 12th 2023",
-    },
-  ];
-  const [teamMembers, setTeamMembers] = useState(initialMembers);
+  
+
+  function getTeam() {
+
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/employees",
+    })
+    .then((response) => {
+      const emp = response.data;
+      setTeamMembers([
+      {
+          id: emp.id,
+          firstName: emp.fN,
+          lastName: emp.lN,
+          phone: emp.phone,
+          hiredDate: emp.hiredDate
+      }]);
+      
+        
+      })
+      
+  }
+
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [num, setNum] = useState("");
+  
+  const handleClick = () => {
+    
+      setTeamMembers([...teamMembers, {
+        firstName: first,
+        lastName: last,
+        id: 0,
+        phone: Number(num),
+        hiredDate: "Feb-24th-2023"
+    }])
+    
+    
+  }
+ 
+
   const [menu, setMenu] = useState<boolean>(false);
   const removeMember = (id: number) => {};
   const formatNumber = (num: number) => {
@@ -74,6 +103,7 @@ const Team = (props: any) => {
   useEffect(() => {
     // formatNumber("12345678");
     getData();
+    getTeam();
   }, []);
   const styles = {
     links:
@@ -136,22 +166,30 @@ const Team = (props: any) => {
                           type="text"
                           className={styles.input}
                           placeholder="John"
+                          onChange={e => setFirst(e.target.value)}
+                          value={first}
                         />
                         <p className={styles.label}>Last name</p>
                         <input
                           type="text"
                           className={styles.input}
                           placeholder="Smith"
+                          onChange={e => setLast(e.target.value)}
+                          value={last}
                         />
                         <p className={styles.label}>Phone number</p>
                         <input
                           type="text"
                           className={styles.input}
                           placeholder="1-234-6789"
+                          onChange={e => setNum(e.target.value)}
+                          value = {num}
                         />
                       </div>
                       <div className="flex justify-center">
-                        <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300">
+                        <button className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                          onClick={handleClick}
+                        >
                           Create Employee
                         </button>
                       </div>
@@ -176,7 +214,7 @@ const Team = (props: any) => {
                   {`${item.firstName} ${item.lastName}`}
                 </p>
                 <p className="text-md mx-auto my-auto font-bold">
-                  {formatNumber(item.number)}
+                  {item.phone}
                 </p>
                 {/* <p className="hidden md:block text-md mx-auto my-auto font-bold">
                     {item.hiredDate}

@@ -2,6 +2,7 @@
 # https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from user import User
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
@@ -50,10 +51,19 @@ def logout():
 
 # this function should return an array of employee objects with: 
 # firstName, lastName, employeeID, and their username and password
-@api.route("/employees", methods=["GET"])
+@api.route('/employees', methods=["GET"])
 def team():
-    get_employees = jsonify({"John Appleseed"})
-    return get_employees
+    #get_employees = jsonify({"John Appleseed"})
+    tst = User("Harry", "Balsagna", 69, "tmp", "tmp", False)
+
+    employee = {
+        "fN" : tst.fN,
+        "lN" : tst.lN,
+        "id" : tst.id,
+        "phone" : 7779311,
+        "hiredDate" : "Feb 24th 2023",
+    }
+    return employee
 
 @api.route("/profile", methods=["GET"])
 @jwt_required()
