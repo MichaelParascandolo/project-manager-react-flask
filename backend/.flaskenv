@@ -1,4 +1,4 @@
-FLASK_APP=index.py
+FLASK_APP=app.py
 FLASK_DEBUG=True
 FLASK_RUN_PORT=5000
 
