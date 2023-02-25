@@ -25,9 +25,9 @@ try:
 
     cur = con.cursor()
 
-    # GET: Fetch all movies from the database
+    # GET: Fetch all customers from the database
     @app.route('/')
-    def fetch_all_movies():
+    def fetch_all_customers():
         cur.execute('SELECT * FROM CUSTOMER')
         rows = cur.fetchall()
         print(rows)
