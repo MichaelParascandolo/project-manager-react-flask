@@ -60,8 +60,8 @@ def team():
         "fN" : tst.fN,
         "lN" : tst.lN,
         "id" : tst.id,
-        "phone" : 7779311,
-        "hiredDate" : "Feb 24th 2023",
+        "phone" : 1234567891, # must be 10 digits
+        "hiredDate" : "2/26/2023",
     }
     return employee
 
