@@ -4,6 +4,7 @@ import { BsPersonFill, BsTrashFill } from "react-icons/bs";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
+
 interface Employee {
   id: number;
   firstName: String;
@@ -72,18 +73,23 @@ const Team = (props: any) => {
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
   const [num, setNum] = useState("");
-  
+  const time = new Date();
   const handleClick = () => {
     
       setTeamMembers([...teamMembers, {
         firstName: first,
         lastName: last,
-        id: 0,
+        id: Math.random()*400,
         phone: Number(num),
-        hiredDate: "Feb-24th-2023"
+        hiredDate: time.getMonth()+1 + "/" + time.getDate() + "/" + time.getFullYear()
     }])
     
     
+  }
+
+  const remove = (element: Employee) => {
+    const tmpTeam = teamMembers.filter(t => t.id !== element.id)
+    setTeamMembers(tmpTeam)
   }
  
 
@@ -216,14 +222,15 @@ const Team = (props: any) => {
                 <p className="text-md mx-auto my-auto font-bold">
                   {item.phone}
                 </p>
-                {/* <p className="hidden md:block text-md mx-auto my-auto font-bold">
+                {<p className="hidden md:block text-md mx-auto my-auto font-bold">
                     {item.hiredDate}
-                  </p> */}
-                <BsTrashFill
-                  onClick={() => removeMember(item.id)}
+                  </p>}
+               
+                <button onClick={() => remove(item)}>
+                  <BsTrashFill 
                   size={25}
-                  className="my-auto"
-                />
+                  className="my-auto"></BsTrashFill>
+                </button>
               </div>
             ))}
           </div>
