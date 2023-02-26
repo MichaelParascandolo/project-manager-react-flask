@@ -1,7 +1,7 @@
 from flask import Flask, request, abort, jsonify
 from flask_bcrypt import Bcrypt
 from config import ApplicationConfig
-from models import db, Employees, Customers, Generators, ServiceRecords
+from models import db, Employees, Customers, Generators, ServiceRecords,User
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
@@ -16,16 +16,16 @@ with app.app_context():
 
 @app.route("/register", methods=["POST"])
 def register_user():
-    email = request.json["email"]
-    password = request.json["password"]
+    email1 = request.json["email"]
+    password1 = request.json["password"]
 
-    user_exists = Employees.query.filter_by(email=email).first() is not None
+    user_exists = User.query.filter_by(email = email1).first() is not None
 
     if user_exists:
         abort(409)
     
-    hashed_password = bcrypt.generate_password_hash(password)
-    new_user = Employees(email = email, password = hashed_password)
+    hashed_password = bcrypt.generate_password_hash(password1)
+    new_user = User(email = email1, password = hashed_password)
     db.session.add(new_user)
     db.session.commit()
     
@@ -38,115 +38,135 @@ def register_user():
 
 @app.route("/employee/create", methods=["POST"])
 def create_employee():
-    id = request.json["EmployeeID"]
-    email = request.json["Email"]
-    password = request.json["Password"]
-    firstname = request.json["First Name"]
-    lastname = request.json["Last Name"]
+    id1 = request.json["EmployeeID"]
+    email1 = request.json["Email"]
+    password1 = request.json["Password"]
+    firstname1 = request.json["First Name"]
+    lastname1 = request.json["Last Name"]
 
-    employee_exists = Employees.query.filter_by(id = id).first() is not None
+    employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
 
     if employee_exists:
         abort(409)
 
-    hashed_password = bcrypt.generate_password_hash(password)
-    new_employee = Employees(id = id, email = email, password = hashed_password, firstname = firstname, lastname = lastname)
+    hashed_password = bcrypt.generate_password_hash(password1)
+    new_employee = Employees(Employeeid = id1, Email = email1, Password = hashed_password, FirstName = firstname1, LastName = lastname1)
     db.session.add(new_employee)
     db.session.commit()
 
     return jsonify({
-        "ID": new_employee.id,
-        "Email": new_employee.email,
-        "First Name": new_employee.firstname,
-        "Last Name": new_employee.lastname
+        "ID": new_employee.Employeeid,
+        "Email": new_employee.Email,
+        "First Name": new_employee.FirstName,
+        "Last Name": new_employee.LastName
         })
 
 #Creates a new Customer in the database, checks for any errors while creating
 
 @app.route("/customer/create", methods=["POST"])
 def create_customer():
-    id = request.json["CustomerID"]
-    firstname = request.json["First Name"]
-    lastname = request.json["Last Name"]
-    email = request.json["Email"]
-    city = request.json["City"]
-    street = request.json["Street"]
-    phonenumber = request.json["Phone Number"]
+    id1 = request.json["CustomerID"]
+    firstname1 = request.json["First Name"]
+    lastname1 = request.json["Last Name"]
+    email1 = request.json["Email"]
+    city1 = request.json["City"]
+    street1 = request.json["Street"]
+    phonenumber1 = request.json["Phone Number"]
     
-    customer_exists = Customers.query.filter_by(id = id).first() is not None
+    customer_exists = Customers.query.filter_by(Customerid = id1).first() is not None
 
     if customer_exists:
         abort(409)
 
-    new_customer = Customers(id = id, firstname = firstname, lastname = lastname, email = email, city = city, street = street, phonenumber = phonenumber)
+    new_customer = Customers(id = id, firstname = firstname1, lastname = lastname1, email = email1, city = city1, street = street1, phonenumber = phonenumber1)
     db.session.add(new_customer)
     db.session.commit()
 
     return jsonify({
-        "ID": new_customer.id,
-        "First Name": new_customer.firstname,
-        "Last Name": new_customer.lastname,
-        "Email": new_customer.email,
-        "City": new_customer.city,
-        "Street": new_customer.street,
-        "Phone Number": new_customer.phonenumber
+        "ID": new_customer.Customerid,
+        "First Name": new_customer.FirstName,
+        "Last Name": new_customer.LastName,
+        "Email": new_customer.Email,
+        "City": new_customer.City,
+        "Street": new_customer.Street,
+        "Phone Number": new_customer.PhoneNumber
         })
 
 #Creates a new generator in the database, checks for errors while creating
 
 @app.route("/generator/create", methods=["POST"])
 def create_generator():
-    id = request.json["CustomerID"]
-    name = request.json["Name"]
-    cost = request.json["Price"]
-    notes = request.json["Notes"]
+    id1 = request.json["CustomerID"]
+    name1 = request.json["Name"]
+    cost1 = request.json["Price"]
+    notes1 = request.json["Notes"]
     
-    generator_exists = Generators.query.filter_by(id = id).first() is not None
+    generator_exists = Generators.query.filter_by(Generatorid = id1).first() is not None
 
     if generator_exists:
         abort(409)
 
-    new_generator = Generators(id = id, name = name, cost = cost, notes = notes)
+    new_generator = Generators(Generatorid = id1, Name = name1, Cost = cost1, Notes = notes1)
     db.session.add(new_generator)
     db.session.commit()
 
     return jsonify({
-        "ID": new_generator.id,
-        "Name": new_generator.name,
-        "Cost": new_generator.cost,
-        "Notes": new_generator.notes
+        "ID": new_generator.Generatorid,
+        "Name": new_generator.Name,
+        "Cost": new_generator.Cost,
+        "Notes": new_generator.Notes
         })
 
 #Creates a new service record in the database, checks for errors while creating
 
 @app.route("/service/create", methods=["POST"])
 def create_service():
-    id = request.json["ServiceID"]
-    customerid = request.json["CustomerID"]
-    employeeid = request.json["EmployeeID"]
-    generatorid = request.json["GeneratorID"]
-    performed = request.json["Service Performed"]
-    date = request.json["Date Performed"]
-    notes = request.json["Notes"]
+    id1 = request.json["ServiceID"]
+    customerid1 = request.json["CustomerID"]
+    employeeid1 = request.json["EmployeeID"]
+    generatorid1 = request.json["GeneratorID"]
+    performed1 = request.json["Service Performed"]
+    date1 = request.json["Date Performed"]
+    notes1 = request.json["Notes"]
     
-    service_exists = ServiceRecords.query.filter_by(id = id).first() is not None
+    service_exists = ServiceRecords.query.filter_by(Serviceid = id1).first() is not None
 
     if service_exists:
         abort(409)
 
-    new_service = ServiceRecords(id = id, customerid = customerid, employeeid = employeeid, generatorid = generatorid, performed = performed, date = date, notes = notes)
+    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Employeeid = employeeid1, Generatorid = generatorid1, ServicePerformed = performed1, DatePerformed = date1, Notes = notes1)
     db.session.add(new_service)
     db.session.commit()
 
     return jsonify({
-        "ID": new_service.id,
-        "Customer Name": new_service.customerid,
-        "Employee Name": new_service.employeeid,
-        "Generator Type": new_service.generatorid,
-        "Service Performed": new_service.servicePerformed,
+        "ID": new_service.Serviceid,
+        "Customer Name": new_service.Customerid,
+        "Employee Name": new_service.Employeeid,
+        "Generator Type": new_service.Generatorid,
+        "Service Performed": new_service.ServicePerformed,
         "Date Performed": new_service.DatePerformed,
-        "Phone Number": new_service.phonenumber
+        "Notes": new_service.Notes
         })
+
+#Test Logging in
+
+@app.route("/login", methods=["POST"])
+def login_employee():
+    email1 = request.json["Email"]
+    password1 = request.json["Password"]
+
+    user = Employees.query.filter_by(Email=email1).first()
+
+    if user is None:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    if not bcrypt.check_password_hash(user.Password, password1):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    return jsonify({
+        "id": user.Employeeid,
+        "email": user.Email
+    })
 
 
 if __name__ == "__main__":

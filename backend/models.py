@@ -4,11 +4,17 @@ from uuid import uuid4
 db = SQLAlchemy()
 
 def get_uuid():
-    return uuid4.hex
+    return uuid4().hex
+
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.String(32),primary_key=True, unique=True, default=get_uuid)
+    email = db.Column(db.String(345), unique=True, nullable = False)
+    password = db.Column(db.Text, nullable=False)
 
 class Employees(db.Model):
     __tablename__ = "EMPLOYEE"
-    Employeeid = db.Column(db.String(32),primary_key=True, unique=True, default=get_uuid)
+    Employeeid = db.Column(db.String(32),primary_key=True, unique=True, nullable = False)
     Email = db.Column(db.String(345), unique=True, nullable = False)
     Password = db.Column(db.Text, nullable=False)
     FirstName = db.Column(db.String(50), nullable=False)
