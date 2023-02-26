@@ -62,13 +62,15 @@ const Team = (props: any) => {
     });
   }
 
+  const [menu, setMenu] = useState<boolean>(false);
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
   const [num, setNum] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const time = new Date();
-  const handleClick = () => {
+  const handleClick = (e: any) => {
+    e.preventDefault();
     setTeamMembers([
       ...teamMembers,
       {
@@ -80,6 +82,13 @@ const Team = (props: any) => {
           time.getMonth() + 1 + "/" + time.getDate() + "/" + time.getFullYear(),
       },
     ]);
+    // clears the inputs after the user submits form
+    setFirst("");
+    setLast("");
+    setNum("");
+    setEmail("");
+    setPassword("");
+    setMenu(false);
   };
 
   const remove = (element: Employee) => {
@@ -87,7 +96,6 @@ const Team = (props: any) => {
     setTeamMembers(tmpTeam);
   };
 
-  const [menu, setMenu] = useState<boolean>(false);
   const formatNumber = (num: number) => {
     //Filter only numbers from the input
     let cleaned = ("" + num).replace(/\D/g, "");
@@ -151,7 +159,7 @@ const Team = (props: any) => {
                   </div>
                   {menu ? (
                     <>
-                      <div>
+                      <form onSubmit={handleClick}>
                         <p className={styles.label}>First name</p>
                         <input
                           type="text"
@@ -200,13 +208,13 @@ const Team = (props: any) => {
                         />
                         <div className="flex justify-center">
                           <button
+                            type="submit"
                             className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
-                            onClick={handleClick}
                           >
                             Create Employee
                           </button>
                         </div>
-                      </div>
+                      </form>
                     </>
                   ) : null}
                 </div>
