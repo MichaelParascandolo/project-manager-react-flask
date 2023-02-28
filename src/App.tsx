@@ -18,25 +18,26 @@ function App() {
   return (
     <BrowserRouter>
       {!token && token !== "" && token !== undefined ? (
-        <>
-          <Routes>
-            <Route path="/" element={<Signin setToken={setToken} />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="*"
-              element={
-                <>
-                  <NotFound />
-                </>
-              }
-            />
-          </Routes>
-        </>
+        // <>
+        //   <Routes>
+        //     <Route path="/" element={<Signin setToken={setToken} />} />
+        //     <Route path="/signup" element={<Signup />} />
+        //     <Route
+        //       path="*"
+        //       element={
+        //         <>
+        //           <NotFound />
+        //         </>
+        //       }
+        //     />
+        //   </Routes>
+        // </>
+        <Signin setToken={setToken} />
       ) : (
         <>
           <Routes>
             <Route
-              path="/"
+              path={"/*"}
               element={
                 <>
                   <Home
@@ -99,14 +100,14 @@ function App() {
                 </>
               }
             />
-            <Route
+            {/* <Route
               path="*"
               element={
                 <>
                   <NotFound />
                 </>
               }
-            />
+            /> */}
           </Routes>
         </>
       )}

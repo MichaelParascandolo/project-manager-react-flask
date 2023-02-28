@@ -121,10 +121,11 @@ function Signin(props: any) {
                 </form>
                 <div className="mt-4">
                   <p className="text-center text-gray-300 text-md">
-                    Don't have an account?{" "}
+                    {/* Don't have an account?{" "}
                     <a href="/signup" className={styles.links}>
                       Sign up
-                    </a>
+                    </a> */}
+                    Contact your admin for registration.
                   </p>
                 </div>
               </div>
