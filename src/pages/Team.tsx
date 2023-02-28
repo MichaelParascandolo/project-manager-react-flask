@@ -50,8 +50,19 @@ const Team = (props: any) => {
       url: "http://127.0.0.1:3000/employees",
     }).then((response) => {
       const emp = response.data;
-      setTeamMembers([...teamMembers, 
-        emp]
+      
+      var tmp: Employee[] = []
+
+      for (const person of emp)
+        tmp  = [...tmp, {
+          firstName: person.fN, 
+          lastName: person.lN, 
+          id: person.id, 
+          phone: person.phone, 
+          hiredDate: person.hiredDate,
+        }]
+      setTeamMembers([ 
+        ...tmp]
       );
     });
   }
