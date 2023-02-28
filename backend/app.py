@@ -43,6 +43,8 @@ def create_employee():
     password1 = request.json["Password"]
     firstname1 = request.json["First Name"]
     lastname1 = request.json["Last Name"]
+    datehired1 = request.json["Date Hired"]
+    admin1 = request.json["Admin"]
 
     employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
 
@@ -50,7 +52,7 @@ def create_employee():
         abort(409)
 
     hashed_password = bcrypt.generate_password_hash(password1)
-    new_employee = Employees(Employeeid = id1, Email = email1, Password = hashed_password, FirstName = firstname1, LastName = lastname1)
+    new_employee = Employees(Employeeid = id1, Email = email1, Password = hashed_password, FirstName = firstname1, LastName = lastname1, DateHired = datehired1, Admin = admin1)
     db.session.add(new_employee)
     db.session.commit()
 

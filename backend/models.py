@@ -19,6 +19,8 @@ class Employees(db.Model):
     Password = db.Column(db.Text, nullable=False)
     FirstName = db.Column(db.String(50), nullable=False)
     LastName = db.Column(db.String(50), nullable=False)
+    DateHired = db.Column(db.String(50), nullable=True)
+    Admin = db.Column(db.Boolean, nullable=False)
 
 class Customers(db.Model):
     __tablename__ = "CUSTOMER"
