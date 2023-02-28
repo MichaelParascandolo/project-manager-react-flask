@@ -11,37 +11,37 @@ function Signin(props: any) {
   });
 
   function logMeIn(event: any) {
-    axios({
-      method: "POST",
-      url: "http://127.0.0.1:3000/token",
-      data: {
-        email: loginForm.email,
-        password: loginForm.password,
-      },
-    })
-      .then((response) => {
-        props.setToken(response.data.access_token);
-        setWrongPassword(false);
-        // testing
-        // console.log("Email" + loginForm.email);
-        // console.log("Password" + loginForm.password);
-        // console.log("Token" + response.data.access_token);
-      })
-      .catch((error) => {
-        if (error.response) {
-          setWrongPassword(true);
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-
-    setLoginForm({
-      email: "",
-      password: "",
-    });
-
     event.preventDefault();
+    if (loginForm.email != "" && loginForm.password != "") {
+      axios({
+        method: "POST",
+        url: "http://127.0.0.1:3000/token",
+        data: {
+          email: loginForm.email,
+          password: loginForm.password,
+        },
+      })
+        .then((response) => {
+          props.setToken(response.data.access_token);
+          setWrongPassword(false);
+          // console.log("Email" + loginForm.email);
+          // console.log("Password" + loginForm.password);
+          // console.log("Token" + response.data.access_token);
+        })
+        .catch((error) => {
+          if (error.response) {
+            setWrongPassword(true);
+            console.log(error.response);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
+        });
+
+      setLoginForm({
+        email: "",
+        password: "",
+      });
+    }
   }
 
   function handleChange(event: any) {
@@ -80,7 +80,7 @@ function Signin(props: any) {
                 )}
 
                 <form className="login">
-                  <p className={styles.label}>Your email</p>
+                  <p className={styles.label}>Email</p>
                   <input
                     type="email"
                     name="email"
@@ -88,7 +88,6 @@ function Signin(props: any) {
                     className={styles.input}
                     placeholder="name@company.com"
                     value={loginForm.email}
-                    // text={loginForm.email}
                   />
                   <p className={styles.label}>Password</p>
                   <input
@@ -98,7 +97,6 @@ function Signin(props: any) {
                     className={styles.input}
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                     value={loginForm.password}
-                    // text={loginForm.password}
                   />
                   <div className="flex justify-between mt-4">
                     <div className="flex">
@@ -113,14 +111,12 @@ function Signin(props: any) {
                     </a>
                   </div>
                   <div className="flex justify-center">
-                    {/* <a href="/home" className="w-full"> */}
                     <button
                       className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                       onClick={logMeIn}
                     >
                       Login to your account
                     </button>
-                    {/* </a> */}
                   </div>
                 </form>
                 <div className="mt-4">
