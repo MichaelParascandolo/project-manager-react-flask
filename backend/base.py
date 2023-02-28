@@ -75,7 +75,22 @@ def logout():
 @api.route("/employees", methods=["GET"])
 def team():
     
+    #tst = User("Harry", "Balsagna", 69, "tmp", "tmp", False)
+
     team_list = []
+    team_size = Employees.query.count()
+    for i in Employees.query.all():
+        employee = {
+            "fN" : i.FirstName,
+            "lN" : i.LastName,
+            "id" : i.Employeeid,
+            "phone" : 1234567891, # must be 10 digits
+            "hiredDate" : "2/26/2023",
+        }
+        team_list.append(employee)
+    return team_list
+    
+    
     
     
     get_employees = jsonify({"John Appleseed"})
