@@ -4,6 +4,23 @@ import { CgChevronRight } from "react-icons/cg";
 import axios from "axios";
 
 const Navbar = (props: any) => {
+  function logOut() {
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/logout",
+    })
+      .then((response) => {
+        console.log(response.data);
+        props.removeToken();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
   const [nav, setNav] = useState<Boolean>(false);
   const navLinks = [
     {
@@ -62,7 +79,7 @@ const Navbar = (props: any) => {
                 </a>
               ) : null
             )}
-            <button className="text-gray-200 mr-2" onClick={props.removeToken}>
+            <button className="text-gray-200 mr-2" onClick={logOut}>
               <BiLogOut size={22} />
             </button>
           </ul>

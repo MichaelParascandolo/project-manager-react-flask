@@ -37,24 +37,24 @@ const Home = (props: any) => {
         }
       });
   }
-  // maybe export this function so navbar can also use it?
-  // function logOut() {
-  //   axios({
-  //     method: "POST",
-  //     url: "http://127.0.0.1:3000/logout",
-  //   })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       props.removeToken();
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         console.log(error.response);
-  //         console.log(error.response.status);
-  //         console.log(error.response.headers);
-  //       }
-  //     });
-  // }
+
+  function logOut() {
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/logout",
+    })
+      .then((response) => {
+        console.log(response.data);
+        props.removeToken();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
 
   useEffect(() => {
     getData();
@@ -109,7 +109,7 @@ const Home = (props: any) => {
               className={
                 profileData.admin ? styles.container : styles.container2
               }
-              onClick={props.removeToken}
+              onClick={logOut}
             >
               <BiLogOut size={iconSize} />
               <p className={styles.text}>Logout</p>
