@@ -157,66 +157,76 @@ const Team = (props: any) => {
                       </button>
                     )}
                   </div>
-                  {menu ? (
-                    <>
-                      <form onSubmit={handleClick}>
-                        <p className={styles.label}>First name</p>
-                        <input
-                          type="text"
-                          className={styles.input}
-                          placeholder="John"
-                          onChange={(e) => setFirst(e.target.value)}
-                          value={first}
-                          required
-                        />
-                        <p className={styles.label}>Last name</p>
-                        <input
-                          type="text"
-                          className={styles.input}
-                          placeholder="Smith"
-                          onChange={(e) => setLast(e.target.value)}
-                          value={last}
-                          required
-                        />
-                        <p className={styles.label}>Phone number</p>
-                        <input
-                          type="tel"
-                          // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                          className={styles.input}
-                          placeholder="1-234-6789"
-                          onChange={(e) => setNum(e.target.value)}
-                          value={num}
-                          required
-                        />
-                        <p className={styles.label}>Email:</p>
-                        <input
-                          type="email"
-                          className={styles.input}
-                          placeholder="Johnsmith@gmail.com"
-                          onChange={(e) => setEmail(e.target.value)}
-                          value={email}
-                          required
-                        />
-                        <p className={styles.label}>Password:</p>
-                        <input
-                          type="password"
-                          className={styles.input}
-                          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                          onChange={(e) => setPassword(e.target.value)}
-                          value={password}
-                          required
-                        />
-                        <div className="flex justify-center">
-                          <button
-                            type="submit"
-                            className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
-                          >
-                            Create Employee
-                          </button>
-                        </div>
-                      </form>
-                    </>
-                  ) : null}
+                  <div
+                    className={
+                      menu
+                        ? "opacity-1 transition-all ease-in-out duration-500"
+                        : "opacity-0 transition-all ease-in-out duration-500"
+                    }
+                  >
+                    {/* add new employee dropdown menu */}
+                    {menu ? (
+                      <>
+                        <form onSubmit={handleClick}>
+                          <p className={styles.label}>First name</p>
+                          <input
+                            type="text"
+                            className={styles.input}
+                            placeholder="John"
+                            onChange={(e) => setFirst(e.target.value)}
+                            value={first}
+                            required
+                          />
+                          <p className={styles.label}>Last name</p>
+                          <input
+                            type="text"
+                            className={styles.input}
+                            placeholder="Smith"
+                            onChange={(e) => setLast(e.target.value)}
+                            value={last}
+                            required
+                          />
+                          <p className={styles.label}>Phone number</p>
+                          <input
+                            type="text"
+                            pattern="[1-9]{1}[0-9]{9}"
+                            maxLength={10}
+                            className={styles.input}
+                            placeholder="1-234-6789"
+                            onChange={(e) => setNum(e.target.value)}
+                            value={num}
+                            required
+                          />
+                          <p className={styles.label}>Email:</p>
+                          <input
+                            type="email"
+                            className={styles.input}
+                            placeholder="Johnsmith@gmail.com"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            required
+                          />
+                          <p className={styles.label}>Password:</p>
+                          <input
+                            type="password"
+                            className={styles.input}
+                            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            required
+                          />
+                          <div className="flex justify-center">
+                            <button
+                              type="submit"
+                              className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                            >
+                              Create Employee
+                            </button>
+                          </div>
+                        </form>
+                      </>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>
