@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from uuid import uuid4
 
 db = SQLAlchemy()
@@ -14,13 +15,14 @@ class User(db.Model):
 
 class Employees(db.Model):
     __tablename__ = "EMPLOYEE"
-    Employeeid = db.Column(db.String(32),primary_key=True, unique=True, nullable = False)
+    Employeeid = db.Column(db.Integer, primary_key=True, unique=True, nullable = False)
     Email = db.Column(db.String(345), unique=True, nullable = False)
     Password = db.Column(db.Text, nullable=False)
     FirstName = db.Column(db.String(50), nullable=False)
     LastName = db.Column(db.String(50), nullable=False)
-    DateHired = db.Column(db.String(50), nullable=True)
+    PhoneNumber = db.Column(db.Integer, nullable = False)
     Admin = db.Column(db.Boolean, nullable=False)
+    DateHired = db.Column(db.Date, default = datetime.utcnow, nullable=True)
 
 class Customers(db.Model):
     __tablename__ = "CUSTOMER"
