@@ -19,6 +19,7 @@ backend/__pycache__
 
 #PostgreSQL Database stuff
 .env
+backend/instance/db.sqlite
 
 # Editor directories and files
 .vscode/*

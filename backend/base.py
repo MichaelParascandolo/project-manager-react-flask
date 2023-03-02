@@ -140,6 +140,28 @@ def create_employee():
         "Last Name": new_employee.LastName
         })
 
+#Deleting employees route
+@api.route("/employees/delete", methods=["POST"])
+@cross_origin()
+# @jwt_required()
+def delete_employee():
+    reqs = request.get_json()
+    id1 = reqs.get("EmployeeID")
+
+    employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
+
+    if not employee_exists:
+        abort(409)
+        
+    Employees.query.filter_by(Employeeid = id1).delete()
+    db.session.commit()
+    
+    return jsonify({"ID": id1})
+
+    
+
+    
+
 @api.route("/customer/create", methods=["POST"])
 @jwt_required()
 def create_customer():
@@ -170,6 +192,8 @@ def create_customer():
         "Phone Number": new_customer.PhoneNumber
         })
 
+
+
 #Creating generator route
 @api.route("/generator/create", methods=["POST"])
 @jwt_required()
@@ -194,6 +218,8 @@ def create_generator():
         "Cost": new_generator.Cost,
         "Notes": new_generator.Notes
         })
+
+
 
 #Creates a new service record in the database, checks for errors while creating
 

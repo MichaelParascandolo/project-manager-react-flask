@@ -111,9 +111,18 @@ const Team = (props: any) => {
         }
       });
   }
-  const remove = (element: Employee) => {
-    const tmpTeam = teamMembers.filter((t) => t.id !== element.id);
-    setTeamMembers(tmpTeam);
+
+ 
+
+  const remove = (id: number) => {
+    axios.post("http://localhost:3000/employees/delete", {
+          EmployeeID: id
+        })
+        .then((response) => {
+          console.log(response)
+          getTeam();
+        })
+    
   };
 
   const formatNumber = (num: number) => {
@@ -273,7 +282,7 @@ const Team = (props: any) => {
                   </p>
                 }
 
-                <button onClick={() => remove(item)}>
+                <button onClick={() => remove(item.id)}>
                   <BsTrashFill size={25} className="my-auto"></BsTrashFill>
                 </button>
               </div>
