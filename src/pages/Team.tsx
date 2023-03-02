@@ -87,10 +87,17 @@ const Team = (props: any) => {
         EmployeeID: Math.floor(Math.random() * 90000) + 10000,
         Email: email,
         Password: password,
-        "First Name": first,
-        "Last Name": last,
+        "First Name": first.charAt(0).toUpperCase() + first.slice(1),
+        "Last Name": last.charAt(0).toUpperCase() + last.slice(1),
         "Phone Number": num,
         Admin: false,
+        hiredDate:
+          time.getMonth() +
+          1 +
+          " / " +
+          time.getDate() +
+          " / " +
+          time.getFullYear(),
       },
     })
       .then((response) => {

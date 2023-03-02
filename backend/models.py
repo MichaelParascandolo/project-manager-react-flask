@@ -22,7 +22,7 @@ class Employees(db.Model):
     LastName = db.Column(db.String(50), nullable=False)
     PhoneNumber = db.Column(db.Integer, nullable = False)
     Admin = db.Column(db.Boolean, nullable=False)
-    DateHired = db.Column(db.Date, default = datetime.utcnow, nullable=True)
+    DateHired = db.Column(db.String(345), nullable=False)
 
 class Customers(db.Model):
     __tablename__ = "CUSTOMER"
