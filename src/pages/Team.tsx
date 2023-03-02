@@ -20,6 +20,13 @@ const tmp: Employee = {
 };
 
 const Team = (props: any) => {
+  const [menu, setMenu] = useState<boolean>(false);
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [num, setNum] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const time = new Date();
   const [teamMembers, setTeamMembers] = useState<Employee[]>([tmp]);
   function getData() {
     axios({
@@ -50,47 +57,60 @@ const Team = (props: any) => {
       url: "http://127.0.0.1:3000/employees",
     }).then((response) => {
       const emp = response.data;
-      setTeamMembers([
-        {
-          id: emp.id,
-          firstName: emp.fN,
-          lastName: emp.lN,
-          phone: emp.phone,
-          hiredDate: emp.hiredDate,
-        },
-      ]);
+
+      var tmp: Employee[] = [];
+
+      for (const person of emp)
+        tmp = [
+          ...tmp,
+          {
+            firstName: person.fN,
+            lastName: person.lN,
+            id: person.id,
+            phone: person.phone,
+            hiredDate: person.hiredDate,
+          },
+        ];
+      setTeamMembers([...tmp]);
     });
   }
 
-  const [menu, setMenu] = useState<boolean>(false);
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
-  const [num, setNum] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const time = new Date();
-  const handleClick = (e: any) => {
+  function addEmployee(e: any) {
     e.preventDefault();
-    setTeamMembers([
-      ...teamMembers,
-      {
-        firstName: first,
-        lastName: last,
-        id: Math.random() * 400,
-        phone: Number(num),
-        hiredDate:
-          time.getMonth() + 1 + "/" + time.getDate() + "/" + time.getFullYear(),
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/employees/create",
+      headers: {
+        Authorization: "Bearer " + props.token,
       },
-    ]);
-    // clears the inputs after the user submits form
-    setFirst("");
-    setLast("");
-    setNum("");
-    setEmail("");
-    setPassword("");
-    setMenu(false);
-  };
-
+      data: {
+        EmployeeID: Math.floor(Math.random() * 90000) + 10000,
+        Email: email,
+        Password: password,
+        "First Name": first,
+        "Last Name": last,
+        "Phone Number": num,
+        Admin: false,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        setFirst("");
+        setLast("");
+        setNum("");
+        setEmail("");
+        setPassword("");
+        setMenu(false);
+        getTeam();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
   const remove = (element: Employee) => {
     const tmpTeam = teamMembers.filter((t) => t.id !== element.id);
     setTeamMembers(tmpTeam);
@@ -167,7 +187,7 @@ const Team = (props: any) => {
                     {/* add new employee dropdown menu */}
                     {menu ? (
                       <>
-                        <form onSubmit={handleClick}>
+                        <form onSubmit={addEmployee}>
                           <p className={styles.label}>First name</p>
                           <input
                             type="text"

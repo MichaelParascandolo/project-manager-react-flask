@@ -8,3 +8,6 @@ flask-cors
 PyJWT
 python-dotenv
 Werkzeug
+flask-sqlalchemy
+flask-migrate
+flask-bcrypt
