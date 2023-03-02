@@ -20,6 +20,13 @@ const tmp: Employee = {
 };
 
 const Team = (props: any) => {
+  const [menu, setMenu] = useState<boolean>(false);
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [num, setNum] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const time = new Date();
   const [teamMembers, setTeamMembers] = useState<Employee[]>([tmp]);
   function getData() {
     axios({
@@ -77,7 +84,7 @@ const Team = (props: any) => {
         Authorization: "Bearer " + props.token,
       },
       data: {
-        EmployeeID: Math.floor(Math.random() * 90000) + 10000, // random 5 digit number
+        EmployeeID: Math.floor(Math.random() * 90000) + 10000,
         Email: email,
         Password: password,
         "First Name": first,
@@ -88,10 +95,13 @@ const Team = (props: any) => {
     })
       .then((response) => {
         console.log(response);
-        // const res = response.data;
-        // res.access_token && props.setToken(res.access_token);
-        // props.setName(res.firstName);
-        // props.setAdmin(res.Admin);
+        setFirst("");
+        setLast("");
+        setNum("");
+        setEmail("");
+        setPassword("");
+        setMenu(false);
+        getTeam();
       })
       .catch((error) => {
         if (error.response) {
@@ -101,36 +111,6 @@ const Team = (props: any) => {
         }
       });
   }
-
-  const [menu, setMenu] = useState<boolean>(false);
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
-  const [num, setNum] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const time = new Date();
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    setTeamMembers([
-      ...teamMembers,
-      {
-        firstName: first,
-        lastName: last,
-        id: Math.random() * 400,
-        phone: Number(num),
-        hiredDate:
-          time.getMonth() + 1 + "/" + time.getDate() + "/" + time.getFullYear(),
-      },
-    ]);
-    // clears the inputs after the user submits form
-    setFirst("");
-    setLast("");
-    setNum("");
-    setEmail("");
-    setPassword("");
-    setMenu(false);
-  };
-
   const remove = (element: Employee) => {
     const tmpTeam = teamMembers.filter((t) => t.id !== element.id);
     setTeamMembers(tmpTeam);
