@@ -76,7 +76,7 @@ const Home = (props: any) => {
         admin={props.admin}
         removeToken={props.removeToken}
       />
-      <div className="flex justify-center mt-20">
+      <div className="flex justify-center md:mt-20">
         <div className="w-[600px]">
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, {profileData.firstName}
