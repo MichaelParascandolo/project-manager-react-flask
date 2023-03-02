@@ -3,7 +3,7 @@
 from flask import Flask, request, jsonify, json, abort
 from flask_bcrypt import Bcrypt
 from config import ApplicationConfig
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
@@ -12,8 +12,9 @@ from models import db, Employees, Customers, Generators, ServiceRecords
 
 
 api = Flask(__name__)
-api.config.from_object(ApplicationConfig)
 CORS(api)
+api.config['CORS_HEADERS'] = 'Content-Type'
+api.config.from_object(ApplicationConfig)
 bcrypt = Bcrypt(api)
 db.init_app(api)
 
@@ -111,6 +112,7 @@ def my_profile():
 
 #Creating employees route
 @api.route("/employees/create", methods=["POST"])
+@cross_origin()
 @jwt_required()
 def create_employee():
     id1 = request.json["EmployeeID"]

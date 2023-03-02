@@ -50,21 +50,56 @@ const Team = (props: any) => {
       url: "http://127.0.0.1:3000/employees",
     }).then((response) => {
       const emp = response.data;
-      
-      var tmp: Employee[] = []
+
+      var tmp: Employee[] = [];
 
       for (const person of emp)
-        tmp  = [...tmp, {
-          firstName: person.fN, 
-          lastName: person.lN, 
-          id: person.id, 
-          phone: person.phone, 
-          hiredDate: person.hiredDate,
-        }]
-      setTeamMembers([ 
-        ...tmp]
-      );
+        tmp = [
+          ...tmp,
+          {
+            firstName: person.fN,
+            lastName: person.lN,
+            id: person.id,
+            phone: person.phone,
+            hiredDate: person.hiredDate,
+          },
+        ];
+      setTeamMembers([...tmp]);
     });
+  }
+
+  function addEmployee(e: any) {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/employees/create",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+      data: {
+        EmployeeID: Math.floor(Math.random() * 90000) + 10000, // random 5 digit number
+        Email: email,
+        Password: password,
+        "First Name": first,
+        "Last Name": last,
+        "Phone Number": num,
+        Admin: false,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        // const res = response.data;
+        // res.access_token && props.setToken(res.access_token);
+        // props.setName(res.firstName);
+        // props.setAdmin(res.Admin);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
   }
 
   const [menu, setMenu] = useState<boolean>(false);
@@ -172,7 +207,7 @@ const Team = (props: any) => {
                     {/* add new employee dropdown menu */}
                     {menu ? (
                       <>
-                        <form onSubmit={handleClick}>
+                        <form onSubmit={addEmployee}>
                           <p className={styles.label}>First name</p>
                           <input
                             type="text"
