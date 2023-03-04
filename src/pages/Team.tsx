@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect, useState, SetStateAction } from "react";
+import { useEffect, useState } from "react";
 import { BsPersonFill, BsTrashFill } from "react-icons/bs";
+import { RiUserLine, RiAdminLine } from "react-icons/ri";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
@@ -9,6 +10,8 @@ interface Employee {
   firstName: String;
   lastName: String;
   phone: number;
+  email: String;
+  admin: boolean;
   hiredDate: String;
 }
 const tmp: Employee = {
@@ -16,6 +19,8 @@ const tmp: Employee = {
   lastName: "",
   id: 0,
   phone: 0,
+  admin: false,
+  email: "",
   hiredDate: "",
 };
 
@@ -43,11 +48,8 @@ const Team = (props: any) => {
         props.setAdmin(res.Admin);
       })
       .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
+        // props.removeToken();
+        console.log(error);
       });
   }
 
@@ -57,6 +59,7 @@ const Team = (props: any) => {
       url: "http://127.0.0.1:3000/employees",
     }).then((response) => {
       const emp = response.data;
+      console.log(emp);
 
       var tmp: Employee[] = [];
 
@@ -68,6 +71,8 @@ const Team = (props: any) => {
             lastName: person.lN,
             id: person.id,
             phone: person.phone,
+            admin: person.admin,
+            email: person.email,
             hiredDate: person.hiredDate,
           },
         ];
@@ -153,13 +158,13 @@ const Team = (props: any) => {
         removeToken={props.removeToken}
       />
       <div className="flex justify-center mt-20">
-        <div className="max-w-[600px] w-[90%]">
+        <div className="max-w-[550px] w-[90%]">
           <div className="grid grid-cols-1 gap-4 px-4">
             <div
               className={
                 menu
-                  ? "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl h-[620px] transition-all duration-300 ease-in-out"
-                  : "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl h-[130px] transition-all duration-300 ease-in-out"
+                  ? "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl h-[640px] transition-all duration-300 ease-in-out"
+                  : "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl h-[150px] transition-all duration-300 ease-in-out"
               }
             >
               <div className="flex justify-center">
@@ -167,6 +172,9 @@ const Team = (props: any) => {
                   <h2 className="text-white cap font-pacifico text-center text-4xl tracking-wide">
                     Team Members
                   </h2>
+                  <h3 className="text-gray-400 text-center tracking-wider">
+                    {teamMembers.length} Total Employees
+                  </h3>
                   <div className="flex justify-center">
                     {!menu ? (
                       <button
@@ -257,32 +265,55 @@ const Team = (props: any) => {
                 </div>
               </div>
             </div>
-            {/* add employee menu end */}
+            {/* list of employees */}
             {teamMembers.map((item) => (
               <div
                 key={item.id}
                 className={
-                  "bg-slate-900 text-white p-4 w-full flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all"
+                  "bg-slate-900 text-white p-4 w-full rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:scale-105 duration-300 ease-in-out transition-all"
                 }
               >
-                <BsPersonFill size={25} />
-                <p
-                  className={"text-xl mx-auto my-auto font-bold tracking-wide"}
-                >
-                  {`${item.firstName} ${item.lastName}`}
-                </p>
-                <p className="text-md mx-auto my-auto font-bold">
-                  {formatNumber(item.phone)}
-                </p>
-                {
-                  <p className="hidden md:block text-md mx-auto my-auto font-bold">
-                    {item.hiredDate}
-                  </p>
-                }
-
-                <button onClick={() => remove(item)}>
-                  <BsTrashFill size={25} className="my-auto"></BsTrashFill>
-                </button>
+                <div className="flex justify-evenly">
+                  <div className="my-auto hidden sm:block">
+                    <div className="bg-slate-800 border-2 text-white border-slate-700 p-3 m-4 rounded-full">
+                      {item.admin ? (
+                        <RiAdminLine size={70} />
+                      ) : (
+                        <RiUserLine size={70} />
+                      )}
+                    </div>
+                    <p className="text-lg text-center text-gray-400 tracking-wide font-bold">
+                      {item.admin ? "ADMIN" : "USER"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 tracking-wide">
+                      Employee ID: {item.id}
+                    </p>
+                    <p className={"text-xl font-bold tracking-wide"}>
+                      {`${item.firstName} ${item.lastName}`}
+                    </p>
+                    <div className="h-0.5 w-full my-2 bg-slate-800 rounded-xl" />
+                    <p className="text-md py-0.5 tracking-wide text-gray-200">
+                      Number:
+                      <span className="ml-2">{formatNumber(item.phone)}</span>
+                    </p>
+                    <p className="text-md py-0.5 tracking-wide text-gray-200">
+                      Email: <span className="ml-2">{item.email}</span>
+                    </p>
+                    <p className="text-md py-0.5 tracking-wide text-gray-200">
+                      Hired: <span className="ml-2">{item.hiredDate}</span>
+                    </p>
+                    <div className="flex mt-2">
+                      <button className="bg-blue-500 border-2 border-blue-800 mr-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
+                        {item.admin ? "Make User" : "Make Admin"}
+                      </button>
+                      <button className="bg-red-500 border-2 border-red-800 ml-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300">
+                        Delete User
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

@@ -86,6 +86,8 @@ def team():
             "fN" : i.FirstName,
             "lN" : i.LastName,
             "id" : i.Employeeid,
+            "admin": i.Admin,
+            "email": i.Email,
             "phone" : i.PhoneNumber, # must be 10 digits
             "hiredDate" : i.DateHired,
         }
