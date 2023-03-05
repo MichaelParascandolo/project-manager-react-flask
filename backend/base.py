@@ -113,7 +113,7 @@ def my_profile():
 #Creating employees route
 @api.route("/employees/create", methods=["POST"])
 @cross_origin()
-# @jwt_required()
+@jwt_required()
 def create_employee():
     id1 = request.json["EmployeeID"]
     email1 = request.json["Email"]
@@ -143,7 +143,7 @@ def create_employee():
 #Deleting employees route
 @api.route("/employees/delete", methods=["POST"])
 @cross_origin()
-# @jwt_required()
+@jwt_required()
 def delete_employee():
     reqs = request.get_json()
     id1 = reqs.get("EmployeeID")

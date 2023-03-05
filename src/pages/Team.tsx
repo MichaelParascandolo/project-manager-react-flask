@@ -112,19 +112,27 @@ const Team = (props: any) => {
       });
   }
 
- 
-
-  const remove = (id: number) => {
-    axios.post("http://localhost:3000/employees/delete", {
-          EmployeeID: id
-        })
-        .then((response) => {
-          console.log(response)
-          getTeam();
-        })
-    
+  const deleteEmployee = (id: number) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/employees/delete",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+      data: {
+        EmployeeID: id,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        getTeam();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
   };
-
   const formatNumber = (num: number) => {
     //Filter only numbers from the input
     let cleaned = ("" + num).replace(/\D/g, "");
@@ -281,8 +289,7 @@ const Team = (props: any) => {
                     {item.hiredDate}
                   </p>
                 }
-
-                <button onClick={() => remove(item.id)}>
+                <button onClick={() => deleteEmployee(item.id)}>
                   <BsTrashFill size={25} className="my-auto"></BsTrashFill>
                 </button>
               </div>
