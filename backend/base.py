@@ -49,9 +49,6 @@ def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     
-   #if email != "test" or password != "test":
-   #    return {"msg": "Wrong email or password"}, 401
-
     user = Employees.query.filter_by(Email=email).first()
     
     if user is None:
@@ -76,10 +73,9 @@ def logout():
 # this function should return an array of employee objects with: 
 # firstName, lastName, employeeID, and their username and password
 @api.route('/employees', methods=["GET"])
+@jwt_required()
 def team():
     
-    #tst = User("Harry", "Balsagna", 69, "tmp", "tmp", False)
-
     team_list = []
     for i in Employees.query.all():
         employee = {
@@ -88,17 +84,12 @@ def team():
             "id" : i.Employeeid,
             "admin": i.Admin,
             "email": i.Email,
-            "phone" : i.PhoneNumber, # must be 10 digits
+            "phone" : i.PhoneNumber,
             "hiredDate" : i.DateHired,
         }
         team_list.append(employee)
     return team_list
     
-    
-    
-    
-    get_employees = jsonify({"John Appleseed"})
-    return get_employees
 
 @api.route("/profile", methods=["GET"])
 @jwt_required()
@@ -164,7 +155,7 @@ def delete_employee():
     
 
     
-
+#Creating Customers
 @api.route("/customer/create", methods=["POST"])
 @jwt_required()
 def create_customer():
@@ -225,7 +216,6 @@ def create_generator():
 
 
 #Creates a new service record in the database, checks for errors while creating
-
 @api.route("/service/create", methods=["POST"])
 @jwt_required()
 def create_service():

@@ -58,9 +58,12 @@ const Team = (props: any) => {
     axios({
       method: "GET",
       url: "http://127.0.0.1:3000/employees",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
     }).then((response) => {
       const emp = response.data;
-      console.log(emp);
+      // console.log(emp);
 
       var tmp: Employee[] = [];
 
