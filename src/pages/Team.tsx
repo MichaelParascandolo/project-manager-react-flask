@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import Employee from "../components/Employee";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -25,11 +26,12 @@ const tmp: Employee = {
 
 const Team = (props: any) => {
   const [menu, setMenu] = useState<boolean>(false);
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
-  const [num, setNum] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [first, setFirst] = useState<string>("");
+  const [last, setLast] = useState<string>("");
+  const [num, setNum] = useState<string>("");
+  const [admin, setAdmin] = useState<boolean | undefined>();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const time = new Date();
   const [teamMembers, setTeamMembers] = useState<Employee[]>([tmp]);
   function getData() {
@@ -94,7 +96,7 @@ const Team = (props: any) => {
         "First Name": first.charAt(0).toUpperCase() + first.slice(1),
         "Last Name": last.charAt(0).toUpperCase() + last.slice(1),
         "Phone Number": num,
-        Admin: false,
+        Admin: admin,
         hiredDate:
           time.getMonth() +
           1 +
@@ -105,6 +107,7 @@ const Team = (props: any) => {
       },
     })
       .then((response) => {
+        toast.success("Employee Added");
         console.log(response);
         setFirst("");
         setLast("");
@@ -115,6 +118,7 @@ const Team = (props: any) => {
         getTeam();
       })
       .catch((error) => {
+        toast.error("Something Went Wrong");
         if (error.response) {
           console.log(error.response);
           console.log(error.response.status);
@@ -135,10 +139,12 @@ const Team = (props: any) => {
       },
     })
       .then((response) => {
+        toast.success("Employee Removed");
         console.log(response);
         getTeam();
       })
       .catch((error) => {
+        toast.error("Something Went Wrong");
         if (error.response) {
           console.log(error.response);
         }
@@ -158,12 +164,13 @@ const Team = (props: any) => {
   };
   return (
     <>
+      <Toaster />
       <Navbar
         name={props.name}
         admin={props.admin}
         removeToken={props.removeToken}
       />
-      <div className="flex justify-center mt-20">
+      <div className="flex justify-center mt-10">
         <div className="max-w-[550px] w-[90%]">
           <div className="grid grid-cols-1 gap-4 px-4">
             <div
@@ -258,10 +265,18 @@ const Team = (props: any) => {
                           />
                           <div className="flex justify-center">
                             <button
+                              onClick={() => setAdmin(true)}
                               type="submit"
-                              className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                              className="bg-blue-500 border-2 border-blue-800 text-lg mr-1 px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                             >
-                              Create Employee
+                              Create Admin
+                            </button>
+                            <button
+                              onClick={() => setAdmin(false)}
+                              type="submit"
+                              className="bg-blue-500 border-2 border-blue-800 text-lg ml-1 px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                            >
+                              Create User
                             </button>
                           </div>
                         </form>
