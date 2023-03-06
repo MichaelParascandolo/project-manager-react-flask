@@ -90,15 +90,14 @@ def team():
         team_list.append(employee)
     return team_list
     
-
+#returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])
 @jwt_required()
-# this protects the endpoint (user must have a token)
 def my_profile():
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
     response_body = {
-        "firstName": "Michael",
-        "lastName": "Parascandolo",
-        "Admin": True,
+        "firstName": user.FirstName,
+        "Admin": user.Admin,
     }
 
     return response_body
