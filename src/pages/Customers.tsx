@@ -7,36 +7,12 @@ import {
   CgSearch,
 } from "react-icons/cg";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import axios from "axios";
 import Customer from "../components/Customer";
+import axios from "axios";
 
 const Customers = (props: any) => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  function getData() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/profile",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
-        res.access_token && props.setToken(res.access_token);
-        props.setName(res.firstName);
-        props.setAdmin(res.Admin);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
-  // used for testing
   const customers = [
     {
       firstName: "John",
@@ -76,17 +52,8 @@ const Customers = (props: any) => {
     input:
       "p-4 bg-slate-900 border-2 border-slate-700 w-full rounded-lg text-white",
   };
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <>
-      <Navbar
-        name={props.name}
-        admin={props.admin}
-        removeToken={props.removeToken}
-      />
       <div className="flex justify-center w-full min-h-screen">
         <div className="w-[80%] max-w-[900px] text-center">
           <p className="text-white py-2 text-2xl">Create Profile</p>

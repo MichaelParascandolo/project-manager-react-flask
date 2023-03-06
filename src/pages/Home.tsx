@@ -4,10 +4,10 @@ import { RiTeamFill } from "react-icons/ri";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 
 const Home = (props: any) => {
-  const [profileData, setProfileData] = useState<any>("");
+  const [name, setName] = useState<String>();
+  const [admin, setAdmin] = useState<Boolean>();
   function getData() {
     axios({
       method: "GET",
@@ -19,18 +19,11 @@ const Home = (props: any) => {
       .then((response) => {
         const res = response.data;
         res.access_token && props.setToken(res.access_token);
-        props.setName(res.firstName);
-        props.setAdmin(res.Admin);
-        setProfileData({
-          firstName: res.firstName,
-          lastName: res.lastName,
-          admin: res.Admin,
-        });
+        setName(res.firstName);
+        setAdmin(Boolean(res.Admin));
       })
       .catch((error) => {
         if (error.response) {
-          // props.removeToken();
-          //removes token if expires
           console.log(error.response);
           console.log(error.response.status);
           console.log(error.response.headers);
@@ -71,21 +64,16 @@ const Home = (props: any) => {
 
   return (
     <>
-      <Navbar
-        name={props.name}
-        admin={props.admin}
-        removeToken={props.removeToken}
-      />
       <div className="flex justify-center md:mt-20">
         <div className="w-[600px]">
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
-            Welcome, {profileData.firstName}
+            Welcome, {name}
           </div>
           <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
-            {profileData.admin ? "Admin" : "User"}
+            {admin ? "Admin" : "User"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
-            {profileData.admin ? (
+            {admin ? (
               <a href="/team">
                 <div className={styles.container}>
                   <RiTeamFill size={iconSize} />
@@ -106,9 +94,7 @@ const Home = (props: any) => {
               </div>
             </a>
             <div
-              className={
-                profileData.admin ? styles.container : styles.container2
-              }
+              className={admin ? styles.container : styles.container2}
               onClick={logOut}
             >
               <BiLogOut size={iconSize} />

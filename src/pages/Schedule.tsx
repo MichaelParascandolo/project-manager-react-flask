@@ -3,42 +3,10 @@ import { useEffect } from "react";
 import Day from "../components/Day";
 import Footer from "../components/Footer";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 
 const Schedule = (props: any) => {
-  function getData() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/profile",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
-        res.access_token && props.setToken(res.access_token);
-        props.setName(res.firstName);
-        props.setAdmin(res.Admin);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <>
-      <Navbar
-        name={props.name}
-        admin={props.admin}
-        removeToken={props.removeToken}
-      />
       <div className="my-4 flex justify-center">
         <div className="text-center">
           <h1 className="text-white text-[30px] mb-2 font-mono tracking-wide">

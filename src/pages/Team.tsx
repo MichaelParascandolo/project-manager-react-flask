@@ -3,16 +3,15 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Employee from "../components/Employee";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 
 interface Employee {
   id: number;
-  firstName: String;
-  lastName: String;
+  firstName: string;
+  lastName: string;
   phone: number;
-  email: String;
+  email: string;
   admin: boolean;
-  hiredDate: String;
+  hiredDate: string;
 }
 const tmp: Employee = {
   firstName: "",
@@ -34,25 +33,6 @@ const Team = (props: any) => {
   const [password, setPassword] = useState<string>("");
   const time = new Date();
   const [teamMembers, setTeamMembers] = useState<Employee[]>([tmp]);
-  function getData() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/profile",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
-        res.access_token && props.setToken(res.access_token);
-        props.setName(res.firstName);
-        props.setAdmin(res.Admin);
-      })
-      .catch((error) => {
-        // props.removeToken();
-        console.log(error);
-      });
-  }
 
   function getTeam() {
     axios({
@@ -155,7 +135,6 @@ const Team = (props: any) => {
   };
 
   useEffect(() => {
-    getData();
     getTeam();
   }, []);
   const styles = {
@@ -168,11 +147,6 @@ const Team = (props: any) => {
   return (
     <>
       <Toaster />
-      <Navbar
-        name={props.name}
-        admin={props.admin}
-        removeToken={props.removeToken}
-      />
       <div className="flex justify-center mt-10">
         <div className="max-w-[550px] w-[90%]">
           <div className="grid grid-cols-1 gap-4 px-4">

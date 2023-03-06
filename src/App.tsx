@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
 import NotFound from "./pages/Notfound";
 import Schedule from "./pages/Schedule";
 import Customers from "./pages/Customers";
@@ -12,26 +11,9 @@ import { useState } from "react";
 
 function App() {
   const { token, removeToken, setToken } = useToken();
-  const [admin, setAdmin] = useState();
-  const [name, setName] = useState();
-
   return (
     <BrowserRouter>
       {!token && token !== "" && token !== undefined ? (
-        // <>
-        //   <Routes>
-        //     <Route path="/" element={<Signin setToken={setToken} />} />
-        //     <Route path="/signup" element={<Signup />} />
-        //     <Route
-        //       path="*"
-        //       element={
-        //         <>
-        //           <NotFound />
-        //         </>
-        //       }
-        //     />
-        //   </Routes>
-        // </>
         <Signin setToken={setToken} />
       ) : (
         <>
@@ -40,14 +22,15 @@ function App() {
               path={"/*"}
               element={
                 <>
+                  <Navbar
+                    token={token}
+                    setToken={setToken}
+                    removeToken={removeToken}
+                  />
                   <Home
-                    setAdmin={setAdmin}
-                    setName={setName}
                     token={token}
                     removeToken={removeToken}
                     setToken={setToken}
-                    name={name}
-                    admin={admin}
                   />
                 </>
               }
@@ -56,14 +39,15 @@ function App() {
               path="/schedule"
               element={
                 <>
-                  <Schedule
-                    setAdmin={setAdmin}
-                    setName={setName}
+                  <Navbar
                     token={token}
-                    removeToken={removeToken}
                     setToken={setToken}
-                    name={name}
-                    admin={admin}
+                    removeToken={removeToken}
+                  />
+                  <Schedule
+                    token={token}
+                    setToken={setToken}
+                    removeToken={removeToken}
                   />
                 </>
               }
@@ -72,14 +56,15 @@ function App() {
               path="/customers"
               element={
                 <>
-                  <Customers
-                    setAdmin={setAdmin}
-                    setName={setName}
+                  <Navbar
                     token={token}
-                    removeToken={removeToken}
                     setToken={setToken}
-                    name={name}
-                    admin={admin}
+                    removeToken={removeToken}
+                  />
+                  <Customers
+                    token={token}
+                    setToken={setToken}
+                    removeToken={removeToken}
                   />
                 </>
               }
@@ -88,14 +73,15 @@ function App() {
               path="/team"
               element={
                 <>
-                  <Team
-                    setAdmin={setAdmin}
-                    setName={setName}
+                  <Navbar
                     token={token}
-                    removeToken={removeToken}
                     setToken={setToken}
-                    name={name}
-                    admin={admin}
+                    removeToken={removeToken}
+                  />
+                  <Team
+                    token={token}
+                    setToken={setToken}
+                    removeToken={removeToken}
                   />
                 </>
               }

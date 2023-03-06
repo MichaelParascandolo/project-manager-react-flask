@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { CgChevronRight } from "react-icons/cg";
 import axios from "axios";
 
 const Navbar = (props: any) => {
+  const [name, setName] = useState<String>();
+  const [admin, setAdmin] = useState<boolean>();
+  const [nav, setNav] = useState<Boolean>(false);
+  function getData() {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/profile",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        res.access_token && props.setToken(res.access_token);
+        setName(res.firstName);
+        setAdmin(res.Admin);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   function logOut() {
     axios({
       method: "POST",
@@ -21,7 +42,6 @@ const Navbar = (props: any) => {
         }
       });
   }
-  const [nav, setNav] = useState<Boolean>(false);
   const navLinks = [
     {
       title: "Home",
@@ -44,19 +64,22 @@ const Navbar = (props: any) => {
       adminRequired: false,
     },
   ];
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <div className="h-[50px] w-full bg-slate-900 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
         <div className="my-auto px-4 flex">
-          <p>Hello 👋, {props.name}</p>
+          <p>Hello 👋, {name}</p>
           <p className="ml-2 mt-2 text-gray-600 text-[10px]">
-            {props.admin ? "ADMIN" : "USER"}
+            {admin ? "ADMIN" : "USER"}
           </p>
         </div>
         <div className="px-2 my-auto">
           <ul className="hidden md:flex">
             {navLinks.map((item, index) =>
-              props.admin ? (
+              admin ? (
                 <a href={item.path} key={index}>
                   <li
                     className={
@@ -109,13 +132,13 @@ const Navbar = (props: any) => {
                 <h2
                   className={`font-roboto text-center text-gray-400 text-[15}px] tracking-widest`}
                 >
-                  {props.admin ? "ADMIN" : "USER"}
+                  {admin ? "ADMIN" : "USER"}
                 </h2>
               </div>
               <div className="ml-4">
                 <ul className="mt-8">
                   {navLinks.map((item, index) =>
-                    props.admin ? (
+                    admin ? (
                       <a href={item.path} key={index}>
                         <li className="text-white py-6 flex justify-between tracking-wider">
                           {item.title}
