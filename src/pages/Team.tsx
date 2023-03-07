@@ -109,6 +109,29 @@ const Team = (props: any) => {
         }
       });
   }
+  const changePermission = (id: number) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/employees/permission",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+      data: {
+        EmployeeID: id,
+      },
+    })
+      .then((response) => {
+        toast.success("Permission Changed");
+        console.log(response);
+        getTeam();
+      })
+      .catch((error) => {
+        toast.error("Something Went Wrong");
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
 
   const deleteEmployee = (id: number) => {
     if (
@@ -274,6 +297,7 @@ const Team = (props: any) => {
               <Employee
                 item={item}
                 key={item.id}
+                changePermission={changePermission}
                 deleteEmployee={deleteEmployee}
               />
             ))}

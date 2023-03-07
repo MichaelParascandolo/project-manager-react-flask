@@ -3,9 +3,11 @@ import { RiAdminLine, RiUserLine } from "react-icons/ri";
 const Employee = ({
   item,
   deleteEmployee,
+  changePermission,
 }: {
   item: any;
   deleteEmployee: any;
+  changePermission: any;
 }) => {
   const formatNumber = (num: number) => {
     //Filter only numbers from the input
@@ -40,7 +42,10 @@ const Employee = ({
           </div>
           <div>
             <p className="text-xs text-gray-400 tracking-wide">
-              Employee ID: {item.id}
+              Employee ID: {item.id}{" "}
+              <span className="font-bold ml-1">
+                | {item.admin ? "ADMIN" : "USER"}
+              </span>
             </p>
             <p className={"text-xl font-bold tracking-wide"}>
               {`${item.firstName} ${item.lastName}`}
@@ -57,7 +62,10 @@ const Employee = ({
               Hired: <span className="ml-2">{item.hiredDate}</span>
             </p>
             <div className="flex mt-2">
-              <button className="bg-blue-500 border-2 border-blue-800 mr-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
+              <button
+                onClick={() => changePermission(item.id)}
+                className="bg-blue-500 border-2 border-blue-800 mr-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
+              >
                 {item.admin ? "Make User" : "Make Admin"}
               </button>
               <button

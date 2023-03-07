@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./pages/Signin";
-import NotFound from "./pages/Notfound";
 import Schedule from "./pages/Schedule";
 import Customers from "./pages/Customers";
 import Home from "./pages/Home";
 import Team from "./pages/Team";
 import useToken from "./components/useToken";
 import Navbar from "./components/Navbar";
-import { useState } from "react";
 
 function App() {
   const { token, removeToken, setToken } = useToken();
@@ -86,14 +84,6 @@ function App() {
                 </>
               }
             />
-            {/* <Route
-              path="*"
-              element={
-                <>
-                  <NotFound />
-                </>
-              }
-            /> */}
           </Routes>
         </>
       )}

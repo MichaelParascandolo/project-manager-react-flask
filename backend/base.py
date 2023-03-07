@@ -151,6 +151,30 @@ def delete_employee():
     
     return jsonify({"ID": id1})
 
+
+#Changes user between admin/user
+@api.route("/employees/permission", methods=["POST"])
+# @cross_origin
+# @jwt_required
+# route protection not working
+def change_permission():
+    req = request.get_json()
+    id1 = req.get("EmployeeID")
+
+    employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
+
+    if not employee_exists:
+        abort(409)
+        
+    user = Employees.query.filter_by(Employeeid = id1).first()
+    user.Admin = not user.Admin
+    db.session.commit()
+    
+    return jsonify({"ID": id1})
+    
+
+
+
     
 
     
