@@ -111,27 +111,33 @@ const Team = (props: any) => {
   }
 
   const deleteEmployee = (id: number) => {
-    axios({
-      method: "POST",
-      url: "http://localhost:3000/employees/delete",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-      data: {
-        EmployeeID: id,
-      },
-    })
-      .then((response) => {
-        toast.success("Employee Removed");
-        console.log(response);
-        getTeam();
+    if (
+      confirm(
+        "Are you sure you want to delete this user?\nThis action cannot be undone."
+      ) == true
+    ) {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/employees/delete",
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+        data: {
+          EmployeeID: id,
+        },
       })
-      .catch((error) => {
-        toast.error("Something Went Wrong");
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
+        .then((response) => {
+          toast.success("Employee Removed");
+          console.log(response);
+          getTeam();
+        })
+        .catch((error) => {
+          toast.error("Something Went Wrong");
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+    }
   };
 
   useEffect(() => {
