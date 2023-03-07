@@ -23,6 +23,8 @@ const Navbar = (props: any) => {
       })
       .catch((error) => {
         console.log(error);
+        props.removeToken();
+        // removes the users token if it's no longer valid
       });
   }
   function logOut() {

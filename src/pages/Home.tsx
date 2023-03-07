@@ -69,7 +69,7 @@ const Home = (props: any) => {
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, {name}
           </div>
-          <h2 className="font-roboto text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
+          <h2 className="font-roboto uppercase text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
             {admin ? "Admin" : "User"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">

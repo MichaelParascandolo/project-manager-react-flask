@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Footer from "../components/Footer";
@@ -7,6 +8,7 @@ import Logo from "../components/Logo";
 function Signin(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   function delay(ms = 1000): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -28,9 +30,6 @@ function Signin(props: any) {
           });
           await delay();
           props.setToken(response.data.access_token);
-          // console.log("Email" + loginForm.email);
-          // console.log("Password" + loginForm.password);
-          // console.log("Token" + response.data.access_token);
         })
         .catch(async (error) => {
           if (error.response) {
@@ -40,13 +39,14 @@ function Signin(props: any) {
             });
             setEmail("");
             setPassword("");
-            // console.log(error.response);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
           }
         });
     }
   }
+  useEffect(() => {
+    navigate("/"); // resets browser path back to /
+  }, []);
+
   const styles = {
     links:
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
