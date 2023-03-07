@@ -173,8 +173,10 @@ def change_permission():
     
     return jsonify({"ID": id1})
 
+
 #Search and Display Customers    
-@api.route("/customers", methods=["GET", "POST"])
+@api.route("/customer/display", methods=["POST"])
+@cross_origin()
 @jwt_required()
 def display_customers():
 
@@ -197,6 +199,7 @@ def display_customers():
 
 #Creating Customers
 @api.route('/customer/create', methods=["POST"])
+@cross_origin()
 @jwt_required()
 def create_customer():
     id1 = request.json["CustomerID"]
@@ -228,7 +231,8 @@ def create_customer():
 
 #Deleting Customers
 @api.route("/customer/delete", methods=["POST"])
-@jwt_required
+@cross_origin()
+@jwt_required()
 def delete_customer():
     reqs = request.get_json()
     id1 = reqs.get("CustomerID")

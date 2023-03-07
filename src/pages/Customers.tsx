@@ -32,23 +32,15 @@ const Customers = (props: any) => {
   function getCustomers() {
     axios({
       method: "POST",
-      url:"http://127.0.0.1:3000/customers",
+      url:"http://127.0.0.1:3000/customer/display",
       headers: {
-        Authorization: "Bearer" + props.token,
+        Authorization: "Bearer " + props.token,
       },
       data: {Search: searchTerm},
-    })
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/customers",
-      headers: {
-        Authorization: "Bearer" + props.token
-      },
     }).then(response => {
-      const cust = response.data
-      let tmp : any[] = []
+      const cust = response.data;
+      let tmp : any[] = [];
       for (const person of cust)
-      {
         tmp = [...tmp,
         {
           id: person.ID,
@@ -58,8 +50,7 @@ const Customers = (props: any) => {
           city: person.City,
           street: person.Street,
           phone: person.Phone,
-        }]
-      }
+        },]
       setCustomers([...tmp])
     })
 
@@ -71,7 +62,7 @@ const Customers = (props: any) => {
       method: "POST",
       url: "http://127.0.0.1:3000/customer/create",
       headers: {
-        Authorization: "Bearer" + props.token,
+        Authorization: "Bearer " + props.token,
       },
       data: {
         CustomerID: Math.floor(Math.random() * 90000) + 10000,
@@ -85,7 +76,7 @@ const Customers = (props: any) => {
     }).then(response => {
       console.log(response)
       clearFields()
-      getCustomers()
+      
     }).catch(error => {
 
       if (error.response)
@@ -102,12 +93,11 @@ const Customers = (props: any) => {
       method: "POST",
       url: "http://127.0.0.1:3000/customer/delete",
       headers: {
-        Authorization: "Bearer" + props.token,
+        Authorization: "Bearer " + props.token,
       },
       data: {CustomerID: id},
     }).then(response => {
       console.log(response)
-      getCustomers()
     }).catch(error => {
       if (error.response)
       {
@@ -235,7 +225,7 @@ const Customers = (props: any) => {
             />
             <button
               className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
-              onClick={() => (setShowSearch(!showSearch), getCustomers())}
+              onClick={() => (setShowSearch(true), getCustomers())}
             >
               <CgSearch size={25} />
             </button>
