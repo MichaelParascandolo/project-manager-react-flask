@@ -4,25 +4,6 @@ import toast, { Toaster } from "react-hot-toast";
 import Employee from "../components/Employee";
 import Footer from "../components/Footer";
 
-interface Employee {
-  id: number;
-  firstName: string;
-  lastName: string;
-  phone: number;
-  email: string;
-  admin: boolean;
-  hiredDate: string;
-}
-const tmp: Employee = {
-  firstName: "",
-  lastName: "",
-  id: 0,
-  phone: 0,
-  admin: false,
-  email: "",
-  hiredDate: "",
-};
-
 const Team = (props: any) => {
   const [menu, setMenu] = useState<boolean>(false);
   const [first, setFirst] = useState<string>("");
@@ -32,7 +13,7 @@ const Team = (props: any) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const time = new Date();
-  const [teamMembers, setTeamMembers] = useState<Employee[]>([tmp]);
+  const [teamMembers, setTeamMembers] = useState<any>([]);
 
   function getTeam() {
     axios({
@@ -41,27 +22,16 @@ const Team = (props: any) => {
       headers: {
         Authorization: "Bearer " + props.token,
       },
-    }).then((response) => {
-      const emp = response.data;
-      // console.log(emp);
-
-      var tmp: Employee[] = [];
-
-      for (const person of emp)
-        tmp = [
-          ...tmp,
-          {
-            firstName: person.fN,
-            lastName: person.lN,
-            id: person.id,
-            phone: person.phone,
-            admin: person.admin,
-            email: person.email,
-            hiredDate: person.hiredDate,
-          },
-        ];
-      setTeamMembers([...tmp]);
-    });
+    })
+      .then((response) => {
+        const employees = response.data;
+        setTeamMembers(employees);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
   }
 
   function addEmployee(e: any) {
@@ -104,8 +74,6 @@ const Team = (props: any) => {
         toast.error("Something Went Wrong");
         if (error.response) {
           console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
         }
       });
   }
@@ -293,7 +261,7 @@ const Team = (props: any) => {
               </div>
             </div>
             {/* list of employees */}
-            {teamMembers.map((item) => (
+            {teamMembers.map((item: any) => (
               <Employee
                 item={item}
                 key={item.id}

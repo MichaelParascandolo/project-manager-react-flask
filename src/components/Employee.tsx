@@ -48,7 +48,7 @@ const Employee = ({
               </span>
             </p>
             <p className={"text-xl font-bold tracking-wide"}>
-              {`${item.firstName} ${item.lastName}`}
+              {`${item.fN} ${item.lN}`}
             </p>
             <div className="h-0.5 w-full my-2 bg-slate-800 rounded-xl" />
             <p className="text-md py-0.5 tracking-wide text-gray-200">
