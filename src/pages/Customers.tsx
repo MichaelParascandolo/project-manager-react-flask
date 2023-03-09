@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsPersonFill } from "react-icons/bs";
+import { toast, Toaster } from "react-hot-toast";
 import {
   CgProfile,
   CgChevronRight,
@@ -21,42 +22,30 @@ const Customers = (props: any) => {
   const [street, setStreet] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const clearFields = () => {
-    setFirst("")
-    setLast("")
-    setEmail("")
-    setCity("")
-    setStreet("")
-    setPhone("")
-  }
-  
+    setFirst("");
+    setLast("");
+    setEmail("");
+    setCity("");
+    setStreet("");
+    setPhone("");
+  };
+
   function getCustomers() {
     axios({
       method: "POST",
-      url:"http://127.0.0.1:3000/customer/display",
+      url: "http://127.0.0.1:3000/customer/display",
       headers: {
         Authorization: "Bearer " + props.token,
       },
-      data: {Search: searchTerm},
-    }).then(response => {
-      const cust = response.data;
-      let tmp : any[] = [];
-      for (const person of cust)
-        tmp = [...tmp,
-        {
-          id: person.ID,
-          firstName: person.FirstName,
-          lastName: person.LastName,
-          email: person.Email,
-          city: person.City,
-          street: person.Street,
-          phone: person.Phone,
-        },]
-      setCustomers([...tmp])
-    })
-
+      data: { Search: searchTerm },
+    }).then((response) => {
+      const customers = response.data;
+      setCustomers(customers);
+      console.log(customers);
+    });
   }
 
-  function addCustomer(e:any) {
+  function addCustomer(e: any) {
     e.preventDefault();
     axios({
       method: "POST",
@@ -73,38 +62,40 @@ const Customers = (props: any) => {
         Street: street,
         "Phone Number": phone,
       },
-    }).then(response => {
-      console.log(response)
-      clearFields()
-      
-    }).catch(error => {
-
-      if (error.response)
-      {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-      }
     })
+      .then((response) => {
+        toast.success("Customer Added");
+        console.log(response);
+        clearFields();
+      })
+      .catch((error) => {
+        toast.error("Something Went Wrong");
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
   }
 
-  const deleteCustomer = (id:number) => {
+  const deleteCustomer = (id: number) => {
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/customer/delete",
       headers: {
         Authorization: "Bearer " + props.token,
       },
-      data: {CustomerID: id},
-    }).then(response => {
-      console.log(response)
-    }).catch(error => {
-      if (error.response)
-      {
-        console.log(error.response)
-      }
+      data: { CustomerID: id },
     })
-  }
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
 
   const styles = {
     label: "text-white mr-2 text-md tracking-wider",
@@ -113,6 +104,7 @@ const Customers = (props: any) => {
   };
   return (
     <>
+      <Toaster />
       <div className="flex justify-center w-full min-h-screen">
         <div className="w-[80%] max-w-[900px] text-center">
           <p className="text-white py-2 text-2xl">Create Profile</p>
@@ -124,7 +116,7 @@ const Customers = (props: any) => {
                 <input
                   type="text"
                   placeholder="First Name"
-                  onChange={e => setFirst(e.target.value)}
+                  onChange={(e) => setFirst(e.target.value)}
                   value={first}
                   required
                   className={styles.input}
@@ -135,31 +127,31 @@ const Customers = (props: any) => {
                 <input
                   type="text"
                   placeholder="Last Name"
-                  onChange={e => setLast(e.target.value)}
+                  onChange={(e) => setLast(e.target.value)}
                   value={last}
                   required
                   className={styles.input}
                 />
               </div>
-              <div className="col-span-2 md:col-span-1">
+              <div className="col-span-2">
                 <label className={styles.label}>Phone Number</label>
                 <input
                   type="tel"
                   pattern="[1-9]{1}[0-9]{9}"
                   maxLength={10}
                   placeholder="Phone Number"
-                  onChange={e => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   value={phone}
                   required
                   className={styles.input}
                 />
               </div>
-              <div className="col-span-2 md:col-span-1">
+              <div className="col-span-2">
                 <label className={styles.label}>Email</label>
                 <input
                   type="email"
                   placeholder="Email"
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   required
                   className={styles.input}
@@ -170,7 +162,7 @@ const Customers = (props: any) => {
                 <input
                   type="text"
                   placeholder="Street"
-                  onChange={e => setStreet(e.target.value)}
+                  onChange={(e) => setStreet(e.target.value)}
                   value={street}
                   required
                   className={styles.input}
@@ -178,24 +170,37 @@ const Customers = (props: any) => {
               </div>
               <div className="col-span-1">
                 <label className={styles.label}>City</label>
-                  <input
-                    type="text"
-                    placeholder="City"
-                    onChange={e => setCity(e.target.value)}
-                    value={city}
-                    required
-                    className={styles.input}
-                  />
-              </div>
-              {/*div className="col-span-1">
-                <label className={styles.label}>ZIP</label>
                 <input
                   type="text"
-                  placeholder="ZIP"
+                  placeholder="City"
+                  onChange={(e) => setCity(e.target.value)}
+                  value={city}
                   required
                   className={styles.input}
                 />
-              </div*/}
+              </div>
+              <div className="col-span-1">
+                <label className={styles.label}>State</label>
+                <input
+                  type="text"
+                  placeholder="State"
+                  // onChange={(e) => setCity(e.target.value)}
+                  value={city}
+                  required
+                  className={styles.input}
+                />
+              </div>
+              <div className="col-span-1">
+                <label className={styles.label}>ZIP Code</label>
+                <input
+                  type="text"
+                  placeholder="ZIP Code"
+                  // onChange={(e) => setCity(e.target.value)}
+                  value={city}
+                  required
+                  className={styles.input}
+                />
+              </div>
               <button
                 type="reset"
                 onClick={clearFields}
@@ -236,17 +241,9 @@ const Customers = (props: any) => {
                 X Matching Records for {searchTerm}
               </p>
               <ul className="mx-4">
-                <div className="grid md:grid-cols-2 gap-2">
-                  {customers.map((customer) => (
-                    <Customer
-                      firstName={customer.firstName}
-                      lastName={customer.lastName}
-                      phone={customer.phone}
-                      street={customer.street}
-                      city={customer.city}
-                      email={customer.email}
-                      key={customer.id}
-                    />
+                <div className="grid md:grid-cols-2 gap-4">
+                  {customers.map((item, index) => (
+                    <Customer item={item} key={index} />
                   ))}
                 </div>
               </ul>
