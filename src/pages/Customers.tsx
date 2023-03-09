@@ -20,6 +20,8 @@ const Customers = (props: any) => {
   const [email, setEmail] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [street, setStreet] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [ZIP, setZIP] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const clearFields = () => {
     setFirst("");
@@ -28,6 +30,8 @@ const Customers = (props: any) => {
     setCity("");
     setStreet("");
     setPhone("");
+    setState("");
+    setZIP("");
   };
 
   function getCustomers() {
@@ -57,10 +61,12 @@ const Customers = (props: any) => {
         CustomerID: Math.floor(Math.random() * 90000) + 10000,
         "First Name": first.charAt(0).toUpperCase() + first.slice(1),
         "Last Name": last.charAt(0).toUpperCase() + last.slice(1),
+        "Phone Number": phone,
         Email: email,
         City: city.charAt(0).toUpperCase() + city.slice(1),
         Street: street,
-        "Phone Number": phone,
+        State: state,
+        "ZIP Code": ZIP,
       },
     })
       .then((response) => {
@@ -184,8 +190,8 @@ const Customers = (props: any) => {
                 <input
                   type="text"
                   placeholder="State"
-                  // onChange={(e) => setCity(e.target.value)}
-                  value={city}
+                  onChange={(e) => setState(e.target.value)}
+                  value={state}
                   required
                   className={styles.input}
                 />
@@ -195,8 +201,8 @@ const Customers = (props: any) => {
                 <input
                   type="text"
                   placeholder="ZIP Code"
-                  // onChange={(e) => setCity(e.target.value)}
-                  value={city}
+                  onChange={(e) => setZIP(e.target.value)}
+                  value={ZIP}
                   required
                   className={styles.input}
                 />
@@ -206,7 +212,7 @@ const Customers = (props: any) => {
                 onClick={clearFields}
                 className="bg-red-500 border-2 border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-full col-span-2 hover:bg-red-700 transition-all ease-in-out duration-300"
               >
-                Reset
+                Clear Form
               </button>
               <button
                 type="submit"
@@ -241,7 +247,7 @@ const Customers = (props: any) => {
                 X Matching Records for {searchTerm}
               </p>
               <ul className="mx-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-1 gap-4">
                   {customers.map((item, index) => (
                     <Customer item={item} key={index} />
                   ))}

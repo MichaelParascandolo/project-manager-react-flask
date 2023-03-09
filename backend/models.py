@@ -30,8 +30,10 @@ class Customers(db.Model):
     FirstName = db.Column(db.String(50), nullable=False)
     LastName = db.Column(db.String(50), nullable=False)
     Email = db.Column(db.String(345), unique=True, nullable=False)
-    City = db.Column(db.Text, nullable=False)
-    Street = db.Column(db.Text, nullable=False)
+    City = db.Column(db.String(50), nullable=False)
+    Street = db.Column(db.String(50), nullable=False)
+    State = db.Column(db.String(50), nullable=False)
+    ZIP = db.Column(db.String(5), nullable=False)
     PhoneNumber = db.Column(db.Integer, nullable=False)
 
 class Generators(db.Model):

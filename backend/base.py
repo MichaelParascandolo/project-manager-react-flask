@@ -190,9 +190,11 @@ def display_customers():
             "FirstName": i.FirstName,
             "LastName": i.LastName,
             "Email": i.Email,
+            "Phone": i.PhoneNumber,
             "City": i.City,
             "Street": i.Street,
-            "Phone": i.PhoneNumber
+            "State": i.State,
+            "ZIP": i.ZIP
         }
         customer_list.append(customer)
     return customer_list
@@ -209,13 +211,15 @@ def create_customer():
     city1 = request.json["City"]
     street1 = request.json["Street"]
     phonenumber1 = request.json["Phone Number"]
+    state1 = request.json["State"]
+    ZIP1 = request.json["ZIP Code"]
     
     customer_exists = Customers.query.filter_by(Customerid = id1).first() is not None
 
     if customer_exists:
         abort(409)
 
-    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1)
+    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1, State = state1, ZIP = ZIP1)
     db.session.add(new_customer)
     db.session.commit()
 
@@ -226,6 +230,8 @@ def create_customer():
         "Email": new_customer.Email,
         "City": new_customer.City,
         "Street": new_customer.Street,
+        "State": new_customer.State,
+        "ZIP": new_customer.ZIP,
         "Phone Number": new_customer.PhoneNumber
         })
 
