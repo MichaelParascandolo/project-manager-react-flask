@@ -85,7 +85,7 @@ const Customers = (props: any) => {
   }
 
   const styles = {
-    label: "text-white mr-2 text-md tracking-wider",
+    label: "text-white flex ml-1 text-md tracking-wider",
     input:
       "p-4 bg-slate-900 border-2 border-slate-700 w-full rounded-lg text-white",
   };
@@ -99,7 +99,7 @@ const Customers = (props: any) => {
           <form action="">
             <div className="grid md:grid-cols-4 gap-2">
               <div className="col-span-2">
-                <label className={styles.label}>First Name</label>
+                <label className={styles.label}>First Name:</label>
                 <input
                   type="text"
                   placeholder="First Name"
@@ -110,7 +110,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-2">
-                <label className={styles.label}>Last Name</label>
+                <label className={styles.label}>Last Name:</label>
                 <input
                   type="text"
                   placeholder="Last Name"
@@ -121,7 +121,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-2">
-                <label className={styles.label}>Phone Number</label>
+                <label className={styles.label}>Phone Number:</label>
                 <input
                   type="tel"
                   pattern="[1-9]{1}[0-9]{9}"
@@ -134,7 +134,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-2">
-                <label className={styles.label}>Email</label>
+                <label className={styles.label}>Email:</label>
                 <input
                   type="email"
                   placeholder="Email"
@@ -145,7 +145,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-1">
-                <label className={styles.label}>Street Address</label>
+                <label className={styles.label}>Street Address:</label>
                 <input
                   type="text"
                   placeholder="Street"
@@ -156,7 +156,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-1">
-                <label className={styles.label}>City</label>
+                <label className={styles.label}>City:</label>
                 <input
                   type="text"
                   placeholder="City"
@@ -167,7 +167,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-1">
-                <label className={styles.label}>State</label>
+                <label className={styles.label}>State:</label>
                 <input
                   type="text"
                   placeholder="State"
@@ -178,7 +178,7 @@ const Customers = (props: any) => {
                 />
               </div>
               <div className="col-span-1">
-                <label className={styles.label}>ZIP Code</label>
+                <label className={styles.label}>ZIP Code:</label>
                 <input
                   type="text"
                   placeholder="ZIP Code"
