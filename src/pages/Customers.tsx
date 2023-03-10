@@ -84,25 +84,6 @@ const Customers = (props: any) => {
       });
   }
 
-  const deleteCustomer = (id: number) => {
-    axios({
-      method: "POST",
-      url: "http://127.0.0.1:3000/customer/delete",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-      data: { CustomerID: id },
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
-  };
-
   const styles = {
     label: "text-white mr-2 text-md tracking-wider",
     input:
@@ -249,7 +230,12 @@ const Customers = (props: any) => {
               <ul className="mx-4">
                 <div className="grid md:grid-cols-1 gap-4">
                   {customers.map((item, index) => (
-                    <Customer item={item} key={index} />
+                    <Customer
+                      item={item}
+                      key={index}
+                      token={props.token}
+                      getCustomers={getCustomers}
+                    />
                   ))}
                 </div>
               </ul>

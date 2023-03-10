@@ -1,8 +1,17 @@
 import { CgProfile, CgMoreVertical, CgPhone, CgMore } from "react-icons/cg";
 import { FaCity } from "react-icons/fa";
 import { useState } from "react";
+import axios from "axios";
 
-const Customer = ({ item }: { item: any }) => {
+const Customer = ({
+  item,
+  token,
+  getCustomers,
+}: {
+  item: any;
+  token: string;
+  getCustomers: any;
+}) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const formatNumber = (num: number) => {
     //Filter only numbers from the input
@@ -14,6 +23,31 @@ const Customer = ({ item }: { item: any }) => {
       return formattedNumber;
     }
     return null;
+  };
+  const deleteCustomer = (id: number) => {
+    if (
+      confirm(
+        "Are you sure you want to delete this user?\nThis action cannot be undone."
+      ) == true
+    ) {
+      axios({
+        method: "POST",
+        url: "http://127.0.0.1:3000/customer/delete",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: { CustomerID: id },
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+      // getCustomers();
+    }
   };
   return (
     <>
@@ -46,7 +80,8 @@ const Customer = ({ item }: { item: any }) => {
             <div className="flex justify-between w-full">
               <div>
                 <p className="mt-2 text-start text-lg tracking-wider">
-                  {item.FirstName} {item.LastName}
+                  {item.FirstName} {item.LastName}{" "}
+                  <span className="text-xs text-gray-500">{item.ID}</span>
                 </p>
                 <p className="text-gray-300 text-start py-1">
                   Email: <br /> {item.Email}
@@ -59,14 +94,11 @@ const Customer = ({ item }: { item: any }) => {
                 </p>
               </div>
               <div className="my-auto flex flex-col">
-                <button
-                  type="submit"
-                  className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] mt-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
-                >
+                <button className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] mt-2 hover:bg-blue-700 transition-all ease-in-out duration-300">
                   Create Job
                 </button>
                 <button
-                  type="reset"
+                  onClick={() => deleteCustomer(item.ID)}
                   className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300"
                 >
                   Delete Customer

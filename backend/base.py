@@ -251,6 +251,8 @@ def delete_customer():
     Customers.query.filter_by(Customerid = id1).delete()
     db.session.commit()
 
+    return jsonify({"ID": id1})
+
 #Creating generator route
 @api.route("/generator/create", methods=["POST"])
 @jwt_required()
