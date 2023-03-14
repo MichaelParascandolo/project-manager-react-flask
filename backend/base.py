@@ -91,7 +91,8 @@ def team():
                 "hiredDate" : i.DateHired,
             }
             team_list.append(employee)
-    return team_list
+        return team_list
+    return jsonify({"access denied, admin privileges": admin})
     
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])

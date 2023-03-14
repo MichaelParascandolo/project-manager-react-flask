@@ -27,13 +27,8 @@ const Team = (props: any) => {
       .then((response) => {
         const res = response.data;
         res.access_token && props.setToken(res.access_token);
-        // not working consistently....
-
-        // setAccess(res.Admin);
-        // console.log(access);
-        // if (access === true) {
-        //   getTeam();
-        // }
+        setAccess(res.Admin);
+        getTeam();
       })
       .catch((error) => {
         if (error.response) {
@@ -53,6 +48,7 @@ const Team = (props: any) => {
       },
     })
       .then((response) => {
+        // console.log(response.data);
         const employees = response.data;
         setTeamMembers(employees);
       })
@@ -295,19 +291,21 @@ const Team = (props: any) => {
                 </div>
               </>
             ) : (
-              <h2 className="text-white uppercase font-roboto text-center text-4xl tracking-wide">
-                User Access Denied
+              <h2 className="text-white select-none uppercase my-20 font-roboto text-center text-5xl tracking-wide">
+                Access Denied ☹️
               </h2>
             )}
             {/* list of employees */}
-            {teamMembers.map((item: any) => (
-              <Employee
-                item={item}
-                key={item.id}
-                changePermission={changePermission}
-                deleteEmployee={deleteEmployee}
-              />
-            ))}
+            {access
+              ? teamMembers.map((item: any) => (
+                  <Employee
+                    item={item}
+                    key={item.id}
+                    changePermission={changePermission}
+                    deleteEmployee={deleteEmployee}
+                  />
+                ))
+              : null}
           </div>
         </div>
       </div>
