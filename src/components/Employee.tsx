@@ -1,16 +1,71 @@
+import axios from "axios";
 import { RiAdminLine, RiUserLine } from "react-icons/ri";
+import toast, { Toaster } from "react-hot-toast";
 
 const Employee = ({
   item,
-  deleteEmployee,
-  changePermission,
   userID,
+  getTeam,
+  token,
 }: {
   item: any;
-  deleteEmployee: any;
-  changePermission: any;
   userID: number | undefined;
+  getTeam: any;
+  token: string;
 }) => {
+  const changePermission = (id: number) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/employees/permission",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: {
+        EmployeeID: id,
+      },
+    })
+      .then((response) => {
+        toast.success("Permission Changed");
+        console.log(response);
+        getTeam();
+      })
+      .catch((error) => {
+        toast.error("Something Went Wrong");
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
+
+  const deleteEmployee = (id: number) => {
+    if (
+      confirm(
+        "Are you sure you want to delete this user?\nThis action cannot be undone."
+      ) == true
+    ) {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/employees/delete",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: {
+          EmployeeID: id,
+        },
+      })
+        .then((response) => {
+          toast.success("Employee Removed");
+          console.log(response);
+          getTeam();
+        })
+        .catch((error) => {
+          toast.error("Something Went Wrong");
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+    }
+  };
   const formatNumber = (num: number) => {
     //Filter only numbers from the input
     let cleaned = ("" + num).replace(/\D/g, "");

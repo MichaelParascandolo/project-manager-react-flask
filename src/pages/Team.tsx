@@ -98,59 +98,6 @@ const Team = (props: any) => {
         }
       });
   }
-  const changePermission = (id: number) => {
-    axios({
-      method: "POST",
-      url: "http://localhost:3000/employees/permission",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-      data: {
-        EmployeeID: id,
-      },
-    })
-      .then((response) => {
-        toast.success("Permission Changed");
-        console.log(response);
-        getTeam();
-      })
-      .catch((error) => {
-        toast.error("Something Went Wrong");
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
-  };
-
-  const deleteEmployee = (id: number) => {
-    if (
-      confirm(
-        "Are you sure you want to delete this user?\nThis action cannot be undone."
-      ) == true
-    ) {
-      axios({
-        method: "POST",
-        url: "http://localhost:3000/employees/delete",
-        headers: {
-          Authorization: "Bearer " + props.token,
-        },
-        data: {
-          EmployeeID: id,
-        },
-      })
-        .then((response) => {
-          toast.success("Employee Removed");
-          console.log(response);
-          getTeam();
-        })
-        .catch((error) => {
-          toast.error("Something Went Wrong");
-          if (error.response) {
-            console.log(error.response);
-          }
-        });
-    }
-  };
 
   useEffect(() => {
     getProfile();
@@ -287,8 +234,8 @@ const Team = (props: any) => {
                 item={item}
                 key={item.id}
                 userID={userID}
-                changePermission={changePermission}
-                deleteEmployee={deleteEmployee}
+                getTeam={getTeam}
+                token={props.token}
               />
             ))}
           </div>
