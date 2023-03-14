@@ -75,19 +75,22 @@ def logout():
 @api.route('/employees', methods=["GET"])
 @jwt_required()
 def team():
-    
-    team_list = []
-    for i in Employees.query.all():
-        employee = {
-            "fN" : i.FirstName,
-            "lN" : i.LastName,
-            "id" : i.Employeeid,
-            "admin": i.Admin,
-            "email": i.Email,
-            "phone" : i.PhoneNumber,
-            "hiredDate" : i.DateHired,
-        }
-        team_list.append(employee)
+
+    admin = Employees.query.filter_by(Email=get_jwt_identity()).first().Admin
+    # if the logged in user is not an admin do not allow access to employee data
+    if admin:
+        team_list = []
+        for i in Employees.query.all():
+            employee = {
+                "fN" : i.FirstName,
+                "lN" : i.LastName,
+                "id" : i.Employeeid,
+                "admin": i.Admin,
+                "email": i.Email,
+                "phone" : i.PhoneNumber,
+                "hiredDate" : i.DateHired,
+            }
+            team_list.append(employee)
     return team_list
     
 #returns the currently logged in user's firstname and permission level
