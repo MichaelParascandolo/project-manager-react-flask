@@ -12,8 +12,29 @@ const Team = (props: any) => {
   const [admin, setAdmin] = useState<boolean | undefined>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const time = new Date();
   const [teamMembers, setTeamMembers] = useState<any>([]);
+  const [userID, setUserID] = useState<number | undefined>();
+  const time = new Date();
+
+  function getProfile() {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/profile",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        res.access_token && props.setToken(res.access_token);
+        console.log(res.ID);
+        setUserID(res.ID);
+        getTeam();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function getTeam() {
     axios({
@@ -132,7 +153,7 @@ const Team = (props: any) => {
   };
 
   useEffect(() => {
-    getTeam();
+    getProfile();
   }, []);
   const styles = {
     links:
@@ -265,6 +286,7 @@ const Team = (props: any) => {
               <Employee
                 item={item}
                 key={item.id}
+                userID={userID}
                 changePermission={changePermission}
                 deleteEmployee={deleteEmployee}
               />

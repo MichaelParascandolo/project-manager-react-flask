@@ -98,6 +98,7 @@ def my_profile():
     response_body = {
         "firstName": user.FirstName,
         "Admin": user.Admin,
+        "ID": user.Employeeid,
     }
 
     return response_body

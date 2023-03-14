@@ -4,10 +4,12 @@ const Employee = ({
   item,
   deleteEmployee,
   changePermission,
+  userID,
 }: {
   item: any;
   deleteEmployee: any;
   changePermission: any;
+  userID: number | undefined;
 }) => {
   const formatNumber = (num: number) => {
     //Filter only numbers from the input
@@ -44,20 +46,13 @@ const Employee = ({
             <div className="flex justify-between">
               <div>
                 <p className="text-xs text-gray-400 tracking-wide">
+                  <span className="visible md:hidden text-[12px] mr-1 font-bold text-gray-400 text-center">
+                    {item.admin ? "ADMIN" : "USER"} |
+                  </span>
                   Employee ID: {item.id}
                 </p>
                 <p className={"text-xl font-bold tracking-wide"}>
-                  {`${item.fN} ${item.lN}`}
-                </p>
-              </div>
-              <div className="visible md:hidden">
-                {item.admin ? (
-                  <RiAdminLine size={30} />
-                ) : (
-                  <RiUserLine size={30} />
-                )}
-                <p className="text-xs text-gray-400 text-center">
-                  {item.admin ? "ADMIN" : "USER"}
+                  {`${item.fN} ${item.lN}`}{" "}
                 </p>
               </div>
             </div>
@@ -72,20 +67,24 @@ const Employee = ({
             <p className="text-md py-0.5 tracking-wide text-gray-200">
               Hired: <span className="ml-2">{item.hiredDate}</span>
             </p>
-            <div className="flex mt-2">
-              <button
-                onClick={() => changePermission(item.id)}
-                className="bg-blue-500 border-2 border-blue-800 mr-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
-              >
-                {item.admin ? "Make User" : "Make Admin"}
-              </button>
-              <button
-                onClick={() => deleteEmployee(item.id)}
-                className="bg-red-500 border-2 border-red-800 ml-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300"
-              >
-                Delete User
-              </button>
-            </div>
+            {userID !== item.id ? (
+              <div className="flex mt-2">
+                <button
+                  onClick={() => changePermission(item.id)}
+                  className="bg-blue-500 border-2 border-blue-800 mr-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
+                >
+                  {item.admin ? "Make User" : "Make Admin"}
+                </button>
+                <button
+                  onClick={() => deleteEmployee(item.id)}
+                  className="bg-red-500 border-2 border-red-800 ml-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300"
+                >
+                  Delete User
+                </button>
+              </div>
+            ) : (
+              <p className=" text-gray-400">Currently Signed-In</p>
+            )}
           </div>
         </div>
       </div>
