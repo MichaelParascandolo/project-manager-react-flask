@@ -151,21 +151,21 @@ const Team = (props: any) => {
               className={
                 menu
                   ? "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl h-[640px] transition-all duration-300 ease-in-out"
-                  : "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl h-[150px] transition-all duration-300 ease-in-out"
+                  : "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-5 rounded-xl md:h-[150px] transition-all duration-300 ease-in-out"
               }
             >
               <div className="flex justify-center">
                 <div className="w-[500px] p-4">
-                  <h2 className="text-white cap font-pacifico text-center text-4xl tracking-wide">
-                    Team Members
+                  <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
+                    Manage Employees
                   </h2>
-                  <h3 className="text-gray-400 text-center tracking-wider">
+                  <h3 className="text-gray-500 uppercase text-sm my-1 text-center tracking-wider">
                     {teamMembers.length} Total Employees
                   </h3>
                   <div className="flex justify-center">
                     {!menu ? (
                       <button
-                        className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-2 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                        className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                         onClick={() => setMenu(true)}
                       >
                         New Employee

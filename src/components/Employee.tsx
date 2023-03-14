@@ -41,15 +41,26 @@ const Employee = ({
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-400 tracking-wide">
-              Employee ID: {item.id}{" "}
-              <span className="font-bold ml-1">
-                | {item.admin ? "ADMIN" : "USER"}
-              </span>
-            </p>
-            <p className={"text-xl font-bold tracking-wide"}>
-              {`${item.fN} ${item.lN}`}
-            </p>
+            <div className="flex justify-between">
+              <div>
+                <p className="text-xs text-gray-400 tracking-wide">
+                  Employee ID: {item.id}
+                </p>
+                <p className={"text-xl font-bold tracking-wide"}>
+                  {`${item.fN} ${item.lN}`}
+                </p>
+              </div>
+              <div className="visible md:hidden">
+                {item.admin ? (
+                  <RiAdminLine size={30} />
+                ) : (
+                  <RiUserLine size={30} />
+                )}
+                <p className="text-xs text-gray-400 text-center">
+                  {item.admin ? "ADMIN" : "USER"}
+                </p>
+              </div>
+            </div>
             <div className="h-0.5 w-full my-2 bg-slate-800 rounded-xl" />
             <p className="text-md py-0.5 tracking-wide text-gray-200">
               Number:

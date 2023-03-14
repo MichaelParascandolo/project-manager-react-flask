@@ -74,7 +74,7 @@ const Navbar = (props: any) => {
       <div className="h-[50px] w-full bg-slate-900 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
         <div className="my-auto px-4 flex">
           <p>Hello 👋, {name}</p>
-          <p className="ml-2 mt-2 text-gray-600 text-[10px]">
+          <p className="ml-2 mt-2 text-gray-500 text-[10px]">
             {admin ? "ADMIN" : "USER"}
           </p>
         </div>
