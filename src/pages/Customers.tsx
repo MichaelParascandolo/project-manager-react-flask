@@ -94,8 +94,12 @@ const Customers = (props: any) => {
       <Toaster />
       <div className="flex justify-center w-full min-h-screen">
         <div className="w-[80%] max-w-[900px] text-center">
-          <p className="text-white py-2 text-2xl">Create Profile</p>
-          <div className="h-1 rounded-full mb-4 bg-slate-900/50" />
+          {/* <p className="text-white py-2 text-2xl">Manage Clients</p> */}
+          <h2 className="text-white cap font-roboto my-2 text-center text-4xl tracking-wide">
+            Manage Clients
+          </h2>
+          <div className="h-1 rounded-full mb-2 bg-slate-900/50" />
+          {/* <p className="text-white">Create Profile</p> */}
           <form action="">
             <div className="grid md:grid-cols-4 gap-2">
               <div className="col-span-2">
