@@ -126,13 +126,13 @@ const Employee = ({
               <div className="flex mt-2">
                 <button
                   onClick={() => changePermission(item.id)}
-                  className="bg-blue-500 border-2 border-blue-800 mr-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
+                  className="bg-blue-500 border-2 uppercase border-blue-800 mr-1 text-sm text-black tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
                 >
                   {item.admin ? "Make User" : "Make Admin"}
                 </button>
                 <button
                   onClick={() => deleteEmployee(item.id)}
-                  className="bg-red-500 border-2 border-red-800 ml-1 text-lg tracking-wider px-4 py-2 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300"
+                  className="bg-red-500 border-2 uppercase border-red-800 ml-1 text-sm text-black tracking-wider px-4 py-2 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300"
                 >
                   Delete User
                 </button>

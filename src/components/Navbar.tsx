@@ -7,6 +7,7 @@ const Navbar = (props: any) => {
   const [name, setName] = useState<String>();
   const [admin, setAdmin] = useState<boolean>();
   const [nav, setNav] = useState<Boolean>(false);
+
   function getData() {
     axios({
       method: "GET",

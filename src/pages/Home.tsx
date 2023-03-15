@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 const Home = (props: any) => {
   const [name, setName] = useState<String>();
   const [admin, setAdmin] = useState<Boolean>();
+
   function getData() {
     axios({
       method: "GET",
