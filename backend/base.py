@@ -52,10 +52,10 @@ def create_token():
     user = Employees.query.filter_by(Email=email).first()
     
     if user is None:
-        return {"msg": "Wrong email or password"}, 401
+        return {"msg": "User Not Found"}, 401
     
     if not bcrypt.check_password_hash(user.Password, password):
-        return {"msg": "Wrong email or password"}, 401
+        return {"msg": "Invalid Password"}, 401
 
     access_token = create_access_token(identity=email)
     response = {"access_token":access_token}
@@ -65,7 +65,7 @@ def create_token():
 #The log out route
 @api.route("/logout", methods=["POST"])
 def logout():
-    response = jsonify({"msg": "logout successful"})
+    response = jsonify({"msg": "Logout Successful"})
     unset_jwt_cookies(response)
     return response
 

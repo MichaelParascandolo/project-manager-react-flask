@@ -25,7 +25,7 @@ function Signin(props: any) {
         },
       })
         .then(async (response) => {
-          toast.success("Signin Successful", {
+          toast.success("Login Successful", {
             id: toastId,
           });
           await delay();
@@ -34,7 +34,7 @@ function Signin(props: any) {
         .catch(async (error) => {
           if (error.response) {
             await delay();
-            toast.error("Invalid Credentials", {
+            toast.error(error.response.data.msg, {
               id: toastId,
             });
             setEmail("");
