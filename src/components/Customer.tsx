@@ -142,7 +142,7 @@ const Customer = ({
             </div>
             {/* job history */}
             {jobs.map((item, index) => (
-              <div className="bg-slate-700 border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-lg shadow-slate-900">
+              <div className="bg-slate-700 border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900">
                 <div className="flex justify-between px-2 tracking-wider capitalize">
                   <div>{item.generatorName}</div>|<div>{item.serviceType}</div>|
                   <div>{item.serviceDate}</div>
