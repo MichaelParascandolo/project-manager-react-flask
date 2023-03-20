@@ -1,8 +1,27 @@
-import { CgProfile, CgPhone } from "react-icons/cg";
+import { CgProfile, CgPhone, CgWorkAlt } from "react-icons/cg";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { FaCity } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
+
+// used for testing
+const jobs = [
+  {
+    serviceType: "installation",
+    serviceDate: "3/19/2023",
+    generatorName: "Generator Name",
+  },
+  {
+    serviceType: "installation",
+    serviceDate: "3/19/2023",
+    generatorName: "Generator Name",
+  },
+  {
+    serviceType: "installation",
+    serviceDate: "3/19/2023",
+    generatorName: "Generator Name",
+  },
+];
 
 const Customer = ({
   item,
@@ -62,7 +81,6 @@ const Customer = ({
               <p className="tracking-wider">
                 {item.FirstName} {item.LastName}
               </p>
-              {/* <p className="tracking-wider">{item.LastName}</p> */}
             </div>
           </div>
           <div className="my-auto flex flex-wrap">
@@ -114,6 +132,24 @@ const Customer = ({
               </div>
             </div>
             <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
+            <div className="flex my-2 justify-center">
+              <div className="my-auto">
+                <CgWorkAlt className="text-white" size={30} />
+              </div>
+              <div className="my-auto ml-2">
+                <p className="tracking-wider text-lg">Job History</p>
+              </div>
+            </div>
+            {/* job history */}
+            {jobs.map((item, index) => (
+              <div className="bg-slate-700 border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-lg shadow-slate-900">
+                <div className="flex justify-between px-2 tracking-wider capitalize">
+                  <div>{item.generatorName}</div>|<div>{item.serviceType}</div>|
+                  <div>{item.serviceDate}</div>
+                </div>
+              </div>
+            ))}
+            {/* <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" /> */}
           </>
         ) : null}
         <button onClick={() => setShowDetails(!showDetails)}>
