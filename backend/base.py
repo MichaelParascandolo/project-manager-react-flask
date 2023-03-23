@@ -3,6 +3,7 @@
 from flask import Flask, request, jsonify, json, abort
 from flask_bcrypt import Bcrypt
 from config import ApplicationConfig
+from sqlalchemy import or_
 from flask_cors import CORS, cross_origin
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
@@ -171,13 +172,34 @@ def change_permission():
     return jsonify({"Permission changed for ID": empID})
     
 
+#Search and Display Customers    
+@api.route("/customer/display", methods=["POST"])
+@cross_origin()
+@jwt_required()
+def display_customers():
 
+    reqs = request.get_json()
+    searchTerm = reqs.get("Search")
+    customer_list = []
+    for i in Customers.query.filter(or_(Customers.FirstName.like('%' + searchTerm + '%'),
+                                        Customers.LastName.like('%' + searchTerm + '%'))):
+        customer = {
+            "ID": i.Customerid,
+            "FirstName": i.FirstName,
+            "LastName": i.LastName,
+            "Email": i.Email,
+            "Phone": i.PhoneNumber,
+            "City": i.City,
+            "Street": i.Street,
+            "State": i.State,
+            "ZIP": i.ZIP
+        }
+        customer_list.append(customer)
+    return customer_list
 
-    
-
-    
 #Creating Customers
-@api.route("/customer/create", methods=["POST"])
+@api.route('/customer/create', methods=["POST"])
+@cross_origin()
 @jwt_required()
 def create_customer():
     id1 = request.json["CustomerID"]
@@ -187,13 +209,15 @@ def create_customer():
     city1 = request.json["City"]
     street1 = request.json["Street"]
     phonenumber1 = request.json["Phone Number"]
+    state1 = request.json["State"]
+    ZIP1 = request.json["ZIP Code"]
     
     customer_exists = Customers.query.filter_by(Customerid = id1).first() is not None
 
     if customer_exists:
         abort(409)
 
-    new_customer = Customers(id = id, firstname = firstname1, lastname = lastname1, email = email1, city = city1, street = street1, phonenumber = phonenumber1)
+    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1, State = state1, ZIP = ZIP1)
     db.session.add(new_customer)
     db.session.commit()
 
@@ -204,10 +228,28 @@ def create_customer():
         "Email": new_customer.Email,
         "City": new_customer.City,
         "Street": new_customer.Street,
+        "State": new_customer.State,
+        "ZIP": new_customer.ZIP,
         "Phone Number": new_customer.PhoneNumber
         })
 
+#Deleting Customers
+@api.route("/customer/delete", methods=["POST"])
+@cross_origin()
+@jwt_required()
+def delete_customer():
+    reqs = request.get_json()
+    id1 = reqs.get("CustomerID")
 
+    customer_exists = Customers.query.filter_by(Customerid = id1).first() is not None
+
+    if not customer_exists:
+        abort(409)
+
+    Customers.query.filter_by(Customerid = id1).delete()
+    db.session.commit()
+
+    return jsonify({"ID": id1})
 
 #Creating generator route
 @api.route("/generator/create", methods=["POST"])

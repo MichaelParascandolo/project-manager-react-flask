@@ -85,7 +85,7 @@ const Home = (props: any) => {
             <a href="/customers">
               <div className={styles.container}>
                 <BsPersonFill size={iconSize} />
-                <p className={styles.text}>Customers</p>
+                <p className={styles.text}>Clients</p>
               </div>
             </a>
             <a href="/schedule">
