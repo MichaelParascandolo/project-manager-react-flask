@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./pages/Signin";
 import Schedule from "./pages/Schedule";
-import Customers from "./pages/Customers";
+import Clients from "./pages/Clients";
 import Home from "./pages/Home";
 import Team from "./pages/Team";
 import useToken from "./components/useToken";
@@ -51,7 +51,7 @@ function App() {
               }
             />
             <Route
-              path="/customers"
+              path="/clients"
               element={
                 <>
                   <Navbar
@@ -59,7 +59,7 @@ function App() {
                     setToken={setToken}
                     removeToken={removeToken}
                   />
-                  <Customers
+                  <Clients
                     token={token}
                     setToken={setToken}
                     removeToken={removeToken}

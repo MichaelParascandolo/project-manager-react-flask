@@ -87,12 +87,12 @@ const Customer = ({
             <FaCity className="text-white" size={30} />
             <p className="tracking-wider my-auto ml-2">{item.City}</p>
           </div>
-          <div className="my-auto flex flex-wrap">
+          {/* <div className="my-auto flex flex-wrap">
             <CgPhone className="text-white" size={30} />
             <p className="tracking-wider my-auto ml-2">
               {formatNumber(item.Phone)}
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
         {/* more details */}
@@ -107,8 +107,11 @@ const Customer = ({
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-300 text-start py-1">
-                    Email: <br /> {item.Email}
+                  <p className="text-gray-300 text-start pt-2">
+                    Phone: {formatNumber(item.Phone)}
+                  </p>
+                  <p className="text-gray-300 capitalize text-start py-1">
+                    Email: {item.Email}
                   </p>
                   <p className="text-gray-300 mt-2 text-start py-1">
                     Address: <br />
@@ -128,7 +131,7 @@ const Customer = ({
                 >
                   Delete Customer
                 </button>
-                <p className="text-gray-600">Customer ID: {item.ID}</p>
+                {/* <p className="text-gray-600">Customer ID: {item.ID}</p> */}
               </div>
             </div>
             <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />

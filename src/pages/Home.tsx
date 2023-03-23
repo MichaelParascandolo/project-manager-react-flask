@@ -82,7 +82,7 @@ const Home = (props: any) => {
                 </div>
               </a>
             ) : null}
-            <a href="/customers">
+            <a href="/clients">
               <div className={styles.container}>
                 <BsPersonFill size={iconSize} />
                 <p className={styles.text}>Clients</p>

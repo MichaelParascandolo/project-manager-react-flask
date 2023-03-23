@@ -11,7 +11,7 @@ import Footer from "../components/Footer";
 import Customer from "../components/Customer";
 import axios from "axios";
 
-const Customers = (props: any) => {
+const Clients = (props: any) => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
   // const [menu, setMenu] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -95,7 +95,7 @@ const Customers = (props: any) => {
       <Toaster />
       <div className="flex justify-center w-full min-h-screen">
         <div className="w-[80%] max-w-[900px] text-center">
-          <div className="bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mt-10 mb-4 p-4 rounded-xl transition-all duration-300 ease-in-out">
+          <div className="bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mt-5 p-4 rounded-xl transition-all duration-300 ease-in-out">
             <h2 className="text-white cap font-roboto my-2 text-center text-4xl tracking-wide">
               Manage Clients
             </h2>
@@ -210,8 +210,8 @@ const Customers = (props: any) => {
             </form>
           </div>
 
-          <div className="h-1 rounded-full bg-slate-900/50" />
-          <p className="text-white pt-2 text-2xl">Search Customers</p>
+          <div className="h-1 rounded-full mt-6 bg-slate-900/50" />
+          <p className="text-white pt-2 text-2xl">Search Clients</p>
           <div className="flex justify-center">
             <input
               className="mt-4 rounded-lg border-2 tracking-wider border-slate-800 p-2 bg-slate-900 text-white w-full"
@@ -253,4 +253,4 @@ const Customers = (props: any) => {
   );
 };
 
-export default Customers;
+export default Clients;

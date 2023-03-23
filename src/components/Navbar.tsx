@@ -58,7 +58,7 @@ const Navbar = (props: any) => {
     },
     {
       title: "Clients",
-      path: "/customers",
+      path: "/clients",
       adminRequired: false,
     },
     {
