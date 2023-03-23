@@ -135,7 +135,7 @@ const Customer = ({
               </div>
             </div>
             <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
-            <div className="flex my-2 justify-center">
+            <div className="hidden md:flex my-2 justify-center">
               <div className="my-auto">
                 <CgWorkAlt className="text-white" size={30} />
               </div>
@@ -145,7 +145,7 @@ const Customer = ({
             </div>
             {/* job history */}
             {jobs.map((item, index) => (
-              <div className="bg-slate-700 border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900">
+              <div className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900">
                 <div className="flex justify-between px-2 tracking-wider capitalize">
                   <div>{item.generatorName}</div>|<div>{item.serviceType}</div>|
                   <div>{item.serviceDate}</div>

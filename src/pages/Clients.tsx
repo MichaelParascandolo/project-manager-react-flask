@@ -204,7 +204,7 @@ const Clients = (props: any) => {
               <button
                 type="submit"
                 // onClick={addCustomer}
-                className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-2 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
+                className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
               >
                 Create Customer
               </button>
