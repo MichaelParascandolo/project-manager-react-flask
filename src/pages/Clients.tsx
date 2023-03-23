@@ -77,6 +77,7 @@ const Clients = (props: any) => {
       })
       .catch((error) => {
         toast.error("Something Went Wrong");
+        clearFields();
         if (error.response) {
           console.log(error.response);
           console.log(error.response.status);
@@ -100,7 +101,7 @@ const Clients = (props: any) => {
               Manage Clients
             </h2>
             {/* <div className="h-1 rounded-full mb-2 bg-slate-900/50" /> */}
-            <form action="">
+            <form onSubmit={addCustomer}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
                   <label className={styles.label}>First Name:</label>
@@ -148,7 +149,7 @@ const Clients = (props: any) => {
                     className={styles.input}
                   />
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-2 md:col-span-1">
                   <label className={styles.label}>Street Address:</label>
                   <input
                     type="text"
@@ -159,7 +160,7 @@ const Clients = (props: any) => {
                     className={styles.input}
                   />
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-2 md:col-span-1">
                   <label className={styles.label}>City:</label>
                   <input
                     type="text"
@@ -170,7 +171,7 @@ const Clients = (props: any) => {
                     className={styles.input}
                   />
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-2 md:col-span-1">
                   <label className={styles.label}>State:</label>
                   <input
                     type="text"
@@ -181,7 +182,7 @@ const Clients = (props: any) => {
                     className={styles.input}
                   />
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-2 md:col-span-1">
                   <label className={styles.label}>ZIP Code:</label>
                   <input
                     type="text"
@@ -192,21 +193,21 @@ const Clients = (props: any) => {
                     className={styles.input}
                   />
                 </div>
-                <button
+                {/* <button
                   type="reset"
-                  onClick={clearFields}
+                  // onClick={clearFields}
                   className="bg-red-500 border-2 border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-full col-span-2 hover:bg-red-700 transition-all ease-in-out duration-300"
                 >
                   Clear Form
-                </button>
-                <button
-                  type="submit"
-                  onClick={addCustomer}
-                  className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-2 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
-                >
-                  Create Customer
-                </button>
+                </button> */}
               </div>
+              <button
+                type="submit"
+                // onClick={addCustomer}
+                className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-2 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
+              >
+                Create Customer
+              </button>
             </form>
           </div>
 
