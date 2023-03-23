@@ -15,33 +15,31 @@ function Signin(props: any) {
   function logMeIn(e: any) {
     const toastId = toast.loading("Please wait...");
     e.preventDefault();
-    if (email != "" && password != "") {
-      axios({
-        method: "POST",
-        url: "http://127.0.0.1:3000/token",
-        data: {
-          email: email,
-          password: password,
-        },
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/token",
+      data: {
+        email: email,
+        password: password,
+      },
+    })
+      .then(async (response) => {
+        toast.success("Login Successful", {
+          id: toastId,
+        });
+        await delay();
+        props.setToken(response.data.access_token);
       })
-        .then(async (response) => {
-          toast.success("Login Successful", {
+      .catch(async (error) => {
+        if (error.response) {
+          await delay();
+          toast.error(error.response.data.msg, {
             id: toastId,
           });
-          await delay();
-          props.setToken(response.data.access_token);
-        })
-        .catch(async (error) => {
-          if (error.response) {
-            await delay();
-            toast.error(error.response.data.msg, {
-              id: toastId,
-            });
-            setEmail("");
-            setPassword("");
-          }
-        });
-    }
+          setEmail("");
+          setPassword("");
+        }
+      });
   }
   useEffect(() => {
     navigate("/"); // resets browser path back to /

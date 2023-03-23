@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
-import { BsPersonFill } from "react-icons/bs";
 import { toast, Toaster } from "react-hot-toast";
-import {
-  CgProfile,
-  CgChevronRight,
-  CgChevronDown,
-  CgSearch,
-} from "react-icons/cg";
+import { CgSearch } from "react-icons/cg";
 import Footer from "../components/Footer";
 import Customer from "../components/Customer";
 import axios from "axios";
