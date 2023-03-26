@@ -122,9 +122,11 @@ const Customer = ({
                 </div>
               </div>
               <div className="my-auto flex flex-col">
-                <button className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] mt-2 hover:bg-blue-700 transition-all ease-in-out duration-300">
-                  Create Job
-                </button>
+                <a href="/history">
+                  <button className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] mt-2 hover:bg-blue-700 transition-all ease-in-out duration-300">
+                    View Jobs
+                  </button>
+                </a>
                 <button
                   onClick={() => deleteCustomer(item.ID)}
                   className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300"
@@ -135,24 +137,14 @@ const Customer = ({
               </div>
             </div>
             <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
-            <div className="hidden md:flex my-2 justify-center">
+            {/* <div className="hidden md:flex my-2 justify-center">
               <div className="my-auto">
                 <CgWorkAlt className="text-white" size={30} />
               </div>
               <div className="my-auto ml-2">
                 <p className="tracking-wider text-lg">Job History</p>
               </div>
-            </div>
-            {/* job history */}
-            {jobs.map((item, index) => (
-              <div className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900">
-                <div className="flex justify-between px-2 tracking-wider capitalize">
-                  <div>{item.generatorName}</div>|<div>{item.serviceType}</div>|
-                  <div>{item.serviceDate}</div>
-                </div>
-              </div>
-            ))}
-            {/* <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" /> */}
+            </div> */}
           </>
         ) : null}
         <button onClick={() => setShowDetails(!showDetails)}>

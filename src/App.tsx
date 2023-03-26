@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Team from "./pages/Team";
 import useToken from "./components/useToken";
 import Navbar from "./components/Navbar";
+import History from "./pages/History";
 
 function App() {
   const { token, removeToken, setToken } = useToken();
@@ -64,6 +65,19 @@ function App() {
                     setToken={setToken}
                     removeToken={removeToken}
                   />
+                </>
+              }
+            />
+            <Route
+              path="/history"
+              element={
+                <>
+                  <Navbar
+                    token={token}
+                    setToken={setToken}
+                    removeToken={removeToken}
+                  />
+                  <History />
                 </>
               }
             />
