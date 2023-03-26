@@ -78,7 +78,7 @@ const Customer = ({
               <CgProfile className="text-white" size={30} />
             </div>
             <div className="my-auto ml-2 text-start">
-              <p className="tracking-wider">
+              <p className="tracking-wider text-lg">
                 {item.FirstName} {item.LastName}
               </p>
             </div>
@@ -110,7 +110,7 @@ const Customer = ({
                   <p className="text-gray-300 text-start pt-2">
                     Phone: {formatNumber(item.Phone)}
                   </p>
-                  <p className="text-gray-300 capitalize text-start py-1">
+                  <p className="text-gray-300 text-start py-1">
                     Email: {item.Email}
                   </p>
                   <p className="text-gray-300 mt-2 text-start py-1">
@@ -133,18 +133,9 @@ const Customer = ({
                 >
                   Delete Customer
                 </button>
-                {/* <p className="text-gray-600">Customer ID: {item.ID}</p> */}
               </div>
             </div>
             <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
-            {/* <div className="hidden md:flex my-2 justify-center">
-              <div className="my-auto">
-                <CgWorkAlt className="text-white" size={30} />
-              </div>
-              <div className="my-auto ml-2">
-                <p className="tracking-wider text-lg">Job History</p>
-              </div>
-            </div> */}
           </>
         ) : null}
         <button onClick={() => setShowDetails(!showDetails)}>
