@@ -1,21 +1,11 @@
 import { BsCloudPlus, BsPlusCircle } from "react-icons/bs";
-import { CgPhone, CgProfile, CgWorkAlt } from "react-icons/cg";
+import { CgPathBack, CgPhone, CgProfile, CgWorkAlt } from "react-icons/cg";
 import { FaCity } from "react-icons/fa";
-import { MdExpandLess, MdExpandMore } from "react-icons/md";
+import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
 import Footer from "../components/Footer";
+import { formatNumber } from "../components/Customer";
 
 const History = () => {
-  const formatNumber = (num: number) => {
-    //Filter only numbers from the input
-    let cleaned = ("" + num).replace(/\D/g, "");
-    //Check if the input is of correct length
-    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      let formattedNumber = "(" + match[1] + ") " + match[2] + "-" + match[3];
-      return formattedNumber;
-    }
-    return null;
-  };
   const item = {
     FirstName: "John",
     LastName: "Smith",
@@ -51,31 +41,53 @@ const History = () => {
   return (
     <>
       <div className="bg-slate-800 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-900 text-white p-4 rounded-lg shadow-lg shadow-slate-900">
-        <div className="flex py-2 justify-around w-full">
-          <div className="my-auto flex">
-            <div>
-              <div className="flex">
-                <CgProfile size={90} />
-                <p className="ml-4 text-center text-[30px] tracking-wider">
-                  {item.FirstName} <br /> {item.LastName}
-                </p>
-              </div>
-              <button className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-4 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300">
+        <div className="flex justify-between w-full">
+          <a href="/clients">
+            <button className="flex uppercase">
+              <IoMdArrowRoundBack className="text-white mr-2" size={25} /> back
+            </button>
+          </a>
+          <div className="flex">
+            <div className="my-auto">
+              <button className="flex uppercase">
+                <IoMdTrash className="text-white mr-2" size={25} />
                 Delete Customer
               </button>
             </div>
           </div>
+        </div>
+        <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
+        <div className="flex py-2 justify-around w-full">
+          <div className="my-auto flex">
+            <div>
+              <div className="flex">
+                <CgProfile size={80} />
+                <p className="ml-4  m-auto text-center text-[30px] tracking-wider">
+                  {item.FirstName} {item.LastName}
+                </p>
+              </div>
+              {/* <button className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-4 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300">
+                Delete Customer
+              </button> */}
+            </div>
+          </div>
           <div className="my-auto text-lg">
-            <p className="text-gray-300 text-start pt-2">
-              Phone: {formatNumber(item.Phone)}
-            </p>
-            <p className="text-gray-300 text-start py-1">Email: {item.Email}</p>
-            <p className="text-gray-300 mt-2 text-start py-1">
-              Address: <br />
-              {item.Street}, {item.City}
-              <br />
-              {item.State} {item.ZIP}
-            </p>
+            <div>
+              <p className="text-gray-300 text-start pt-2">
+                Phone: {formatNumber(item.Phone)}
+              </p>
+              <p className="text-gray-300 text-start py-1">
+                Email: {item.Email}
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-300 mt-2 text-start py-1">
+                Address: <br />
+                {item.Street}, {item.City}
+                <br />
+                {item.State} {item.ZIP}
+              </p>
+            </div>
           </div>
         </div>
         <div className="bg-slate-900/50 my-4 rounded-xl h-1 w-full" />
@@ -84,11 +96,11 @@ const History = () => {
           <div className="grid md:grid-cols-4 gap-2">
             <div className="col-span-2">
               <label className={styles.label}>Date:</label>
-              <input type="text" required className={styles.input} />
+              <input type="date" required className={styles.input} />
             </div>
             <div className="col-span-2">
               <label className={styles.label}>Time:</label>
-              <input type="text" required className={styles.input} />
+              <input type="time" required className={styles.input} />
             </div>
             <div className="col-span-2">
               <label className={styles.label}>Generator:</label>

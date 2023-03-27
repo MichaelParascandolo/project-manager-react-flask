@@ -1,6 +1,7 @@
 import axios from "axios";
 import { RiAdminLine, RiUserLine } from "react-icons/ri";
 import toast, { Toaster } from "react-hot-toast";
+import { formatNumber } from "./Customer";
 
 const Employee = ({
   item,
@@ -65,17 +66,6 @@ const Employee = ({
           }
         });
     }
-  };
-  const formatNumber = (num: number) => {
-    //Filter only numbers from the input
-    let cleaned = ("" + num).replace(/\D/g, "");
-    //Check if the input is of correct length
-    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      let formattedNumber = "(" + match[1] + ") " + match[2] + "-" + match[3];
-      return formattedNumber;
-    }
-    return null;
   };
   return (
     <>

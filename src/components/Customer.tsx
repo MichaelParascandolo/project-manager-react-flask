@@ -4,25 +4,18 @@ import { FaCity } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 
-// used for testing
-const jobs = [
-  {
-    serviceType: "installation",
-    serviceDate: "3/19/2023",
-    generatorName: "Generator Name",
-  },
-  {
-    serviceType: "installation",
-    serviceDate: "3/19/2023",
-    generatorName: "Generator Name",
-  },
-  {
-    serviceType: "installation",
-    serviceDate: "3/19/2023",
-    generatorName: "Generator Name",
-  },
-];
-
+// formats phone number so (xxx) xxx-xxx format
+export const formatNumber = (num: number) => {
+  //Filter only numbers from the input
+  let cleaned = ("" + num).replace(/\D/g, "");
+  //Check if the input is of correct length
+  let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    let formattedNumber = "(" + match[1] + ") " + match[2] + "-" + match[3];
+    return formattedNumber;
+  }
+  return null;
+};
 const Customer = ({
   item,
   token,
@@ -33,17 +26,6 @@ const Customer = ({
   getCustomers: any;
 }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const formatNumber = (num: number) => {
-    //Filter only numbers from the input
-    let cleaned = ("" + num).replace(/\D/g, "");
-    //Check if the input is of correct length
-    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      let formattedNumber = "(" + match[1] + ") " + match[2] + "-" + match[3];
-      return formattedNumber;
-    }
-    return null;
-  };
   const deleteCustomer = (id: number) => {
     if (
       confirm(
