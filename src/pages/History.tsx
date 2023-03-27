@@ -15,22 +15,32 @@ const History = () => {
     City: "Cupertino",
     State: "California",
     ZIP: 95014,
+    ID: 57294,
   };
   const jobs = [
     {
       serviceType: "installation",
       serviceDate: "3/19/2023",
+      serviceTime: "11:00AM",
       generatorName: "Generator Name",
+      notes:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
     },
     {
       serviceType: "installation",
       serviceDate: "3/19/2023",
+      serviceTime: "11:00AM",
       generatorName: "Generator Name",
+      notes:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
     },
     {
       serviceType: "installation",
       serviceDate: "3/19/2023",
+      serviceTime: "11:00AM",
       generatorName: "Generator Name",
+      notes:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
     },
   ];
   const styles = {
@@ -62,30 +72,35 @@ const History = () => {
             <div>
               <div className="flex">
                 <CgProfile size={80} />
-                <p className="ml-4  m-auto text-center text-[30px] tracking-wider">
-                  {item.FirstName} {item.LastName}
-                </p>
+                <div className="ml-4">
+                  <p className="text-[30px] tracking-wider">
+                    {item.FirstName} {item.LastName}
+                  </p>
+                  <p className="text-gray-600 text-center -mt-2">{item.ID}</p>
+                </div>
               </div>
-              {/* <button className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-4 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300">
-                Delete Customer
-              </button> */}
             </div>
           </div>
           <div className="my-auto text-lg">
             <div>
               <p className="text-gray-300 text-start pt-2">
-                Phone: {formatNumber(item.Phone)}
+                Phone:{" "}
+                <span className="text-white">{formatNumber(item.Phone)}</span>
               </p>
               <p className="text-gray-300 text-start py-1">
-                Email: {item.Email}
+                Email: <span className="text-white">{item.Email}</span>
               </p>
             </div>
             <div>
               <p className="text-gray-300 mt-2 text-start py-1">
                 Address: <br />
-                {item.Street}, {item.City}
+                <span className="text-white">
+                  {item.Street}, {item.City}
+                </span>
                 <br />
-                {item.State} {item.ZIP}
+                <span className="text-white">
+                  {item.State} {item.ZIP}
+                </span>
               </p>
             </div>
           </div>
@@ -114,22 +129,6 @@ const History = () => {
               <label className={styles.label}>Notes:</label>
               <textarea className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white" />
             </div>
-            {/* <div className="col-span-2 md:col-span-1">
-              <label className={styles.label}>Street Address:</label>
-              <input type="text" required className={styles.input} />
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <label className={styles.label}>City:</label>
-              <input type="text" required className={styles.input} />
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <label className={styles.label}>State:</label>
-              <input type="text" required className={styles.input} />
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <label className={styles.label}>ZIP Code:</label>
-              <input type="text" required className={styles.input} />
-            </div> */}
           </div>
           <button
             type="submit"
@@ -154,9 +153,19 @@ const History = () => {
             key={index}
             className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900"
           >
-            <div className="flex justify-between px-2 tracking-wider capitalize">
-              <div>{item.generatorName}</div>|<div>{item.serviceType}</div>|
-              <div>{item.serviceDate}</div>
+            <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
+              <div>
+                <div className="text-gray-200">{item.generatorName}</div>
+                <div className="text-gray-400">{item.serviceType}</div>
+              </div>
+              <div>
+                <div className="text-gray-200">{item.serviceDate}</div>
+                <div className="text-gray-400">{item.serviceTime}</div>
+              </div>
+            </div>
+            <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" />
+            <div className="p-2 tracking-wider capitalize">
+              Notes: {item.notes}
             </div>
           </div>
         ))}
