@@ -69,7 +69,7 @@ function App() {
               }
             />
             <Route
-              path="/history"
+              path="/history/:customerID"
               element={
                 <>
                   <Navbar
@@ -77,7 +77,11 @@ function App() {
                     setToken={setToken}
                     removeToken={removeToken}
                   />
-                  <History />
+                  <History
+                    token={token}
+                    setToken={setToken}
+                    removeToken={removeToken}
+                  />
                 </>
               }
             />

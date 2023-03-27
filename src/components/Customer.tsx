@@ -104,7 +104,7 @@ const Customer = ({
                 </div>
               </div>
               <div className="my-auto flex flex-col">
-                <a href="/history">
+                <a href={`/history/${item.ID}`}>
                   <button className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] mt-2 hover:bg-blue-700 transition-all ease-in-out duration-300">
                     View Jobs
                   </button>

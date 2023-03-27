@@ -4,19 +4,37 @@ import { FaCity } from "react-icons/fa";
 import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
 import Footer from "../components/Footer";
 import { formatNumber } from "../components/Customer";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const History = () => {
-  const item = {
-    FirstName: "John",
-    LastName: "Smith",
-    Phone: 1234567891,
-    Email: "johnsmith@gmail.com",
-    Street: "1 Apple Park",
-    City: "Cupertino",
-    State: "California",
-    ZIP: 95014,
-    ID: 57294,
+const History = (props: any) => {
+  const { customerID } = useParams();
+  const [display, setDisplay] = useState<boolean>(false);
+  const [item, setItem] = useState<any>();
+  const getData = (id: number) => {
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/customer/details",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+      data: { clientID: id },
+    })
+      .then((response) => {
+        setItem(response.data);
+        setDisplay(true);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
   };
+  useEffect(() => {
+    getData(Number(customerID)); // searches customer by their ID
+  }, []);
+  // used for testing
   const jobs = [
     {
       serviceType: "installation",
@@ -51,124 +69,135 @@ const History = () => {
   return (
     <>
       <div className="bg-slate-800 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-900 text-white p-4 rounded-lg shadow-lg shadow-slate-900">
-        <div className="flex justify-between w-full">
-          <a href="/clients">
-            <button className="flex uppercase">
-              <IoMdArrowRoundBack className="text-white mr-2" size={25} /> back
-            </button>
-          </a>
-          <div className="flex">
-            <div className="my-auto">
-              <button className="flex uppercase">
-                <IoMdTrash className="text-white mr-2" size={25} />
-                Delete Customer
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
-        <div className="flex py-2 justify-around w-full">
-          <div className="my-auto flex">
-            <div>
+        {display ? (
+          <>
+            <div className="flex justify-between w-full">
+              <a href="/clients">
+                <button className="flex uppercase">
+                  <IoMdArrowRoundBack className="text-white mr-2" size={25} />{" "}
+                  back
+                </button>
+              </a>
               <div className="flex">
-                <CgProfile size={80} />
-                <div className="ml-4">
-                  <p className="text-[30px] tracking-wider">
-                    {item.FirstName} {item.LastName}
-                  </p>
-                  <p className="text-gray-600 text-center -mt-2">{item.ID}</p>
+                <div className="my-auto">
+                  <button className="flex uppercase">
+                    <IoMdTrash className="text-white mr-2" size={25} />
+                    Delete Customer
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="my-auto text-lg">
-            <div>
-              <p className="text-gray-300 text-start pt-2">
-                Phone:{" "}
-                <span className="text-white">{formatNumber(item.Phone)}</span>
-              </p>
-              <p className="text-gray-300 text-start py-1">
-                Email: <span className="text-white">{item.Email}</span>
-              </p>
-            </div>
-            <div>
-              <p className="text-gray-300 mt-2 text-start py-1">
-                Address: <br />
-                <span className="text-white">
-                  {item.Street}, {item.City}
-                </span>
-                <br />
-                <span className="text-white">
-                  {item.State} {item.ZIP}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-slate-900/50 my-4 rounded-xl h-1 w-full" />
-        {/* create job form */}
-        <form>
-          <div className="grid md:grid-cols-4 gap-2">
-            <div className="col-span-2">
-              <label className={styles.label}>Date:</label>
-              <input type="date" required className={styles.input} />
-            </div>
-            <div className="col-span-2">
-              <label className={styles.label}>Time:</label>
-              <input type="time" required className={styles.input} />
-            </div>
-            <div className="col-span-2">
-              <label className={styles.label}>Generator:</label>
-              <input type="text" required className={styles.input} />
-            </div>
-            <div className="col-span-2">
-              <label className={styles.label}>Service Type:</label>
-              <input type="email" required className={styles.input} />
-            </div>
-            <div className="col-span-4">
-              <label className={styles.label}>Notes:</label>
-              <textarea className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white" />
-            </div>
-          </div>
-          <button
-            type="submit"
-            // onClick={addCustomer}
-            className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
-          >
-            Create Job
-          </button>
-        </form>
-        <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
-        <div className="hidden md:flex my-2 justify-center">
-          <div className="my-auto">
-            <CgWorkAlt className="text-white" size={30} />
-          </div>
-          <div className="my-auto ml-2">
-            <p className="tracking-wider text-lg">Job History</p>
-          </div>
-        </div>
-        {/* job history */}
-        {jobs.map((item, index) => (
-          <div
-            key={index}
-            className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900"
-          >
-            <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
-              <div>
-                <div className="text-gray-200">{item.generatorName}</div>
-                <div className="text-gray-400">{item.serviceType}</div>
+            <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
+            <div className="flex py-2 justify-around w-full">
+              <div className="my-auto flex">
+                <div>
+                  <div className="flex">
+                    <CgProfile size={80} />
+                    <div className="ml-4">
+                      <p className="text-[30px] tracking-wider">
+                        {item.FirstName} {item.LastName}
+                      </p>
+                      <p className="text-gray-600 text-center -mt-2">
+                        Client: {item.ID}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="text-gray-200">{item.serviceDate}</div>
-                <div className="text-gray-400">{item.serviceTime}</div>
+              <div className="my-auto text-lg">
+                <div>
+                  <p className="text-gray-300 text-start pt-2">
+                    Phone:{" "}
+                    <span className="text-white">
+                      {formatNumber(item.Phone)}
+                    </span>
+                  </p>
+                  <p className="text-gray-300 text-start py-1">
+                    Email: <span className="text-white">{item.Email}</span>
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-300 mt-2 text-start py-1">
+                    Address: <br />
+                    <span className="text-white">
+                      {item.Street}, {item.City}
+                    </span>
+                    <br />
+                    <span className="text-white">
+                      {item.State} {item.ZIP}
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" />
-            <div className="p-2 tracking-wider capitalize">
-              Notes: {item.notes}
+            <div className="bg-slate-900/50 my-4 rounded-xl h-1 w-full" />
+            {/* create job form */}
+            <form>
+              <div className="grid md:grid-cols-4 gap-2">
+                <div className="col-span-2">
+                  <label className={styles.label}>Date:</label>
+                  <input type="date" required className={styles.input} />
+                </div>
+                <div className="col-span-2">
+                  <label className={styles.label}>Time:</label>
+                  <input type="time" required className={styles.input} />
+                </div>
+                <div className="col-span-2">
+                  <label className={styles.label}>Generator:</label>
+                  <input type="text" required className={styles.input} />
+                </div>
+                <div className="col-span-2">
+                  <label className={styles.label}>Service Type:</label>
+                  <input type="email" required className={styles.input} />
+                </div>
+                <div className="col-span-4">
+                  <label className={styles.label}>Notes:</label>
+                  <textarea className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white" />
+                </div>
+              </div>
+              <button
+                type="submit"
+                // onClick={addCustomer}
+                className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
+              >
+                Create Job
+              </button>
+            </form>
+            <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
+            <div className="hidden md:flex my-2 justify-center">
+              <div className="my-auto">
+                <CgWorkAlt className="text-white" size={30} />
+              </div>
+              <div className="my-auto ml-2">
+                <p className="tracking-wider text-lg">Job History</p>
+              </div>
             </div>
-          </div>
-        ))}
+            {/* job history */}
+            {jobs.map((item, index) => (
+              <div
+                key={index}
+                className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900"
+              >
+                <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
+                  <div>
+                    <div className="text-gray-200">{item.generatorName}</div>
+                    <div className="text-gray-400">{item.serviceType}</div>
+                  </div>
+                  <div>
+                    <div className="text-gray-200">{item.serviceDate}</div>
+                    <div className="text-gray-400">{item.serviceTime}</div>
+                  </div>
+                </div>
+                <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" />
+                <div className="p-2 text-gray-300 tracking-wider capitalize">
+                  {item.notes}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <p className="text-white">Loading . . .</p>
+        )}
       </div>
       <Footer />
     </>
