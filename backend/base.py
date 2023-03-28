@@ -282,7 +282,7 @@ def delete_customer():
 @api.route("/generator/create", methods=["POST"])
 @jwt_required()
 def create_generator():
-    id1 = request.json["CustomerID"]
+    id1 = request.json["GeneratorID"]
     name1 = request.json["Name"]
     cost1 = request.json["Price"]
     notes1 = request.json["Notes"]
@@ -290,18 +290,13 @@ def create_generator():
     generator_exists = Generators.query.filter_by(Generatorid = id1).first() is not None
 
     if generator_exists:
-        abort(409)
+       return {"msg": "Generator already exists"}, 401
 
     new_generator = Generators(Generatorid = id1, Name = name1, Cost = cost1, Notes = notes1)
     db.session.add(new_generator)
     db.session.commit()
 
-    return jsonify({
-        "ID": new_generator.Generatorid,
-        "Name": new_generator.Name,
-        "Cost": new_generator.Cost,
-        "Notes": new_generator.Notes
-        })
+    return {"msg": "Generator added"}, 401
 
 
 
