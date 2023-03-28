@@ -56,24 +56,24 @@ const History = (props: any) => {
         });
     }
   };
-  const getWork = (id:number) => {
+  const getWork = (id: number) => {
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/service/create",
       headers: {
-        Authorization: "Bearer: " + props.token
+        Authorization: "Bearer: " + props.token,
       },
-      data: { CustomerID: id},
+      data: { CustomerID: id },
     })
       .then((response) => {
-        setWork(response.data)
+        setWork(response.data);
       })
       .catch((error) => {
         if (error.response) {
           console.log(error.response);
         }
-      })
-  }
+      });
+  };
   useEffect(() => {
     getData(Number(customerID)); // searches customer by their ID
     getWork(Number(customerID));
@@ -86,7 +86,7 @@ const History = (props: any) => {
       serviceTime: "11:00AM",
       generatorName: "Generator Name",
       notes:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
     },
     {
       serviceType: "installation",
@@ -117,8 +117,8 @@ const History = (props: any) => {
           <>
             <div className="flex justify-between w-full">
               <a href="/clients">
-                <button className="flex uppercase">
-                  <IoMdArrowRoundBack className="text-white mr-2" size={25} />{" "}
+                <button className="flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-2 border-slate-600 hover:bg-slate-800 transition-all ease-in-out duration-300">
+                  <IoMdArrowRoundBack className="text-white mr-2" size={20} />{" "}
                   back
                 </button>
               </a>
@@ -126,9 +126,9 @@ const History = (props: any) => {
                 <div className="my-auto">
                   <button
                     onClick={() => deleteCustomer(item.ID)}
-                    className="flex uppercase"
+                    className="flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-2 border-slate-600 hover:bg-slate-800 transition-all ease-in-out duration-300"
                   >
-                    <IoMdTrash className="text-white mr-2" size={25} />
+                    <IoMdTrash className="text-white mr-2" size={20} />
                     Delete Customer
                   </button>
                 </div>
@@ -140,12 +140,9 @@ const History = (props: any) => {
                 <div>
                   <div className="flex">
                     <CgProfile size={80} />
-                    <div className="ml-4">
+                    <div className="my-auto ml-4">
                       <p className="text-[30px] tracking-wider">
                         {item.FirstName} {item.LastName}
-                      </p>
-                      <p className="text-gray-600 text-center -mt-2">
-                        Client: {item.ID}
                       </p>
                     </div>
                   </div>
@@ -241,6 +238,7 @@ const History = (props: any) => {
                 </div>
               </div>
             ))}
+            <p className="text-gray-400 text-center mt-2">Client: {item.ID}</p>
           </>
         ) : (
           <p className="text-white">Loading . . .</p>
