@@ -335,3 +335,16 @@ def create_service():
         "Date Performed": new_service.DatePerformed,
         "Notes": new_service.Notes
         })
+@api.route("/service/details", methods=["POST"])
+@jwt_required()
+def retrieve_services():
+    reqs = request.get_json()
+    id1 = reqs.get("CustomerID")
+    services = []
+
+    for i in ServiceRecords.query.filter_by(Customerid = id1).all():
+        services.append({
+            "notes": i.Notes
+        })
+
+    return services

@@ -10,6 +10,7 @@ const History = (props: any) => {
   const { customerID } = useParams();
   const [display, setDisplay] = useState<boolean>(false);
   const [item, setItem] = useState<any>();
+  const [work, setWork] = useState<any[]>([{}]);
   const getData = (id: number) => {
     axios({
       method: "POST",
@@ -55,8 +56,27 @@ const History = (props: any) => {
         });
     }
   };
+  const getWork = (id:number) => {
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/service/create",
+      headers: {
+        Authorization: "Bearer: " + props.token
+      },
+      data: { CustomerID: id},
+    })
+      .then((response) => {
+        setWork(response.data)
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      })
+  }
   useEffect(() => {
     getData(Number(customerID)); // searches customer by their ID
+    getWork(Number(customerID));
   }, []);
   // used for testing
   const jobs = [
@@ -66,7 +86,7 @@ const History = (props: any) => {
       serviceTime: "11:00AM",
       generatorName: "Generator Name",
       notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
     },
     {
       serviceType: "installation",
