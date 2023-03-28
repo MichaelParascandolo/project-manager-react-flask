@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { CgSearch } from "react-icons/cg";
 import Footer from "../components/Footer";
