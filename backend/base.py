@@ -197,6 +197,33 @@ def display_customers():
         customer_list.append(customer)
     return customer_list
 
+
+#Shows all of a single customer's details
+@api.route("/customer/details", methods=["POST"])
+@cross_origin()
+@jwt_required()
+def customer_details():
+    reqs = request.get_json()
+    id1 = reqs.get("clientID")
+
+    i = Customers.query.filter_by(Customerid = id1).first()
+
+    customer = {
+            "ID": i.Customerid,
+            "FirstName": i.FirstName,
+            "LastName": i.LastName,
+            "Email": i.Email,
+            "Phone": i.PhoneNumber,
+            "City": i.City,
+            "Street": i.Street,
+            "State": i.State,
+            "ZIP": i.ZIP
+        }
+
+    return customer
+
+
+
 #Creating Customers
 @api.route('/customer/create', methods=["POST"])
 @cross_origin()
