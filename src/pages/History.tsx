@@ -1,6 +1,4 @@
-import { BsCloudPlus, BsPlusCircle } from "react-icons/bs";
-import { CgPathBack, CgPhone, CgProfile, CgWorkAlt } from "react-icons/cg";
-import { FaCity } from "react-icons/fa";
+import { CgProfile, CgWorkAlt } from "react-icons/cg";
 import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
 import Footer from "../components/Footer";
 import { formatNumber } from "../components/Customer";
@@ -30,6 +28,32 @@ const History = (props: any) => {
           console.log(error.response);
         }
       });
+  };
+  // might be able to just import this function from customer component
+  const deleteCustomer = (id: number) => {
+    if (
+      confirm(
+        "Are you sure you want to delete this customer?\nThis action cannot be undone."
+      ) == true
+    ) {
+      axios({
+        method: "POST",
+        url: "http://127.0.0.1:3000/customer/delete",
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+        data: { CustomerID: id },
+      })
+        .then((response) => {
+          console.log(response);
+          history.back();
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+    }
   };
   useEffect(() => {
     getData(Number(customerID)); // searches customer by their ID
@@ -80,7 +104,10 @@ const History = (props: any) => {
               </a>
               <div className="flex">
                 <div className="my-auto">
-                  <button className="flex uppercase">
+                  <button
+                    onClick={() => deleteCustomer(item.ID)}
+                    className="flex uppercase"
+                  >
                     <IoMdTrash className="text-white mr-2" size={25} />
                     Delete Customer
                   </button>
