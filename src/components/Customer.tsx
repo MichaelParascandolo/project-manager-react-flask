@@ -3,6 +3,7 @@ import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { FaCity } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
+import getCustomers from "../pages/Clients";
 
 // formats phone number so (xxx) xxx-xxx format
 export const formatNumber = (num: number) => {
@@ -42,13 +43,13 @@ const Customer = ({
       })
         .then((response) => {
           console.log(response);
+          getCustomers();
         })
         .catch((error) => {
           if (error.response) {
             console.log(error.response);
           }
         });
-      // getCustomers();
     }
   };
   return (

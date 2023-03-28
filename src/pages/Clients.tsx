@@ -249,3 +249,4 @@ const Clients = (props: any) => {
 };
 
 export default Clients;
+export function getCustomers() {};
