@@ -109,6 +109,8 @@ const History = (props: any) => {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
       "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+    button:
+      "flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-slate-600 hover:bg-blue-500 transition-all ease-in-out duration-300",
   };
   return (
     <>
@@ -117,7 +119,7 @@ const History = (props: any) => {
           <>
             <div className="flex justify-between w-full">
               <a href="/clients">
-                <button className="flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-2 border-slate-600 hover:bg-slate-800 transition-all ease-in-out duration-300">
+                <button className={styles.button}>
                   <IoMdArrowRoundBack className="text-white mr-2" size={20} />{" "}
                   back
                 </button>
@@ -126,7 +128,7 @@ const History = (props: any) => {
                 <div className="my-auto">
                   <button
                     onClick={() => deleteCustomer(item.ID)}
-                    className="flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-2 border-slate-600 hover:bg-slate-800 transition-all ease-in-out duration-300"
+                    className={styles.button}
                   >
                     <IoMdTrash className="text-white mr-2" size={20} />
                     Delete Customer
