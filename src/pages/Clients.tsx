@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { CgSearch } from "react-icons/cg";
 import Footer from "../components/Footer";
@@ -6,8 +6,6 @@ import Customer from "../components/Customer";
 import axios from "axios";
 
 const Clients = (props: any) => {
-  const [showSearch, setShowSearch] = useState<boolean>(false);
-  // const [menu, setMenu] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [customers, setCustomers] = useState<any[]>([{}]);
   const [first, setFirst] = useState<string>("");
@@ -40,7 +38,6 @@ const Clients = (props: any) => {
     }).then((response) => {
       const customers = response.data;
       setCustomers(customers);
-      console.log(customers);
     });
   }
 
@@ -68,17 +65,19 @@ const Clients = (props: any) => {
         toast.success("Customer Added");
         console.log(response);
         clearFields();
+        getCustomers();
       })
       .catch((error) => {
-        toast.error("Something Went Wrong");
+        toast.error("Something Went Wrong"); // update this to say if customer already exists
         clearFields();
         if (error.response) {
           console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
         }
       });
   }
+  useEffect(() => {
+    getCustomers();
+  }, []);
 
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
@@ -94,7 +93,6 @@ const Clients = (props: any) => {
             <h2 className="text-white cap font-roboto my-2 text-center text-4xl tracking-wide">
               Manage Clients
             </h2>
-            {/* <div className="h-1 rounded-full mb-2 bg-slate-900/50" /> */}
             <form onSubmit={addCustomer}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
@@ -187,20 +185,12 @@ const Clients = (props: any) => {
                     className={styles.input}
                   />
                 </div>
-                {/* <button
-                  type="reset"
-                  // onClick={clearFields}
-                  className="bg-red-500 border-2 border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-full col-span-2 hover:bg-red-700 transition-all ease-in-out duration-300"
-                >
-                  Clear Form
-                </button> */}
               </div>
               <button
                 type="submit"
-                // onClick={addCustomer}
                 className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 rounded-lg mt-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
               >
-                Create Client Profile
+                Create Profile
               </button>
             </form>
           </div>
@@ -215,14 +205,11 @@ const Clients = (props: any) => {
               onChange={(e) => setSearchTerm(e.target.value)}
               value={searchTerm}
             />
-            <button
-              className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
-              onClick={() => (setShowSearch(true), getCustomers())}
-            >
+            <button className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all">
               <CgSearch size={25} />
             </button>
           </div>
-          {showSearch ? (
+          {customers.length > 0 ? (
             <>
               {/* <p className="text-white text-center py-2 text-xl">
                 X Matching Records for {searchTerm}
@@ -240,7 +227,9 @@ const Clients = (props: any) => {
                 </div>
               </ul>
             </>
-          ) : null}
+          ) : (
+            <p className="text-white">Loading . . .</p>
+          )}
           <Footer />
         </div>
       </div>
@@ -249,4 +238,3 @@ const Clients = (props: any) => {
 };
 
 export default Clients;
-export function getCustomers() {};
