@@ -330,6 +330,22 @@ def create_service():
         "Date Performed": new_service.DatePerformed,
         "Notes": new_service.Notes
         })
+
+@api.route("/generators/details", methods=["GET"])
+@jwt_required()
+def retrieve_generators():
+    gList = []
+    for g in Generators.query.all():
+        generator =  {
+            "gID" : g.Generatorid,
+            "gName" : g.Name,
+            "gCost" : g.Cost,
+            "gNotes" : g.Notes
+        }
+        gList.append(generator)
+
+    return gList
+
 @api.route("/service/details", methods=["POST"])
 @jwt_required()
 def retrieve_services():

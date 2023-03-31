@@ -10,7 +10,25 @@ const History = (props: any) => {
   const { customerID } = useParams();
   const [display, setDisplay] = useState<boolean>(false);
   const [item, setItem] = useState<any>();
+  const [generators, setGenerators] = useState<any[]>([{}]);
   const [work, setWork] = useState<any[]>([{}]);
+  const getGenerators = () => {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/generators/details",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        setGenerators(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      })
+  };
   const getData = (id: number) => {
     axios({
       method: "POST",
@@ -56,12 +74,13 @@ const History = (props: any) => {
         });
     }
   };
+ 
   const getWork = (id: number) => {
     axios({
       method: "POST",
-      url: "http://127.0.0.1:3000/service/create",
+      url: "http://127.0.0.1:3000/service/details",
       headers: {
-        Authorization: "Bearer: " + props.token,
+        Authorization: "Bearer " + props.token,
       },
       data: { CustomerID: id },
     })
@@ -77,6 +96,7 @@ const History = (props: any) => {
   useEffect(() => {
     getData(Number(customerID)); // searches customer by their ID
     getWork(Number(customerID));
+    getGenerators();
   }, []);
   // used for testing
   const jobs = [
@@ -190,7 +210,12 @@ const History = (props: any) => {
                 </div>
                 <div className="col-span-2">
                   <label className={styles.label}>Generator:</label>
-                  <input type="text" required className={styles.input} />
+                    <select required className={styles.input}>
+                      {generators.map((gen, index) => (
+                          <option value="{gen.gID}">{gen.gName}</option>
+                      ))}  
+                    </select>
+                {/*<input type="text" required className={styles.input} />*/}
                 </div>
                 <div className="col-span-2">
                   <label className={styles.label}>Service Type:</label>
