@@ -1,5 +1,9 @@
 import { CgProfile, CgWorkAlt } from "react-icons/cg";
-import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
+import {
+  IoMdArrowRoundBack,
+  IoMdTrash,
+  IoMdArrowDropdown,
+} from "react-icons/io";
 import Footer from "../components/Footer";
 import { formatNumber } from "../components/Customer";
 import { useEffect, useState } from "react";
@@ -27,7 +31,7 @@ const History = (props: any) => {
         if (error.response) {
           console.log(error.response);
         }
-      })
+      });
   };
   const getData = (id: number) => {
     axios({
@@ -74,7 +78,7 @@ const History = (props: any) => {
         });
     }
   };
- 
+
   const getWork = (id: number) => {
     axios({
       method: "POST",
@@ -128,7 +132,7 @@ const History = (props: any) => {
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider appearance-none border-slate-900 p-2 bg-slate-700 text-white",
     button:
       "flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-slate-600 hover:bg-blue-500 transition-all ease-in-out duration-300",
   };
@@ -158,20 +162,16 @@ const History = (props: any) => {
             </div>
             <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
             <div className="flex py-2 justify-around w-full">
-              <div className="my-auto flex">
-                <div>
-                  <div className="flex">
-                    <CgProfile size={80} />
-                    <div className="my-auto ml-4">
-                      <p className="text-[30px] tracking-wider">
-                        {item.FirstName} {item.LastName}
-                      </p>
-                    </div>
-                  </div>
+              <div className="my-auto">
+                <div className="flex justify-center">
+                  <CgProfile size={100} />
                 </div>
+                <p className="text-[30px] tracking-wider">
+                  {item.FirstName} {item.LastName}
+                </p>
               </div>
               <div className="my-auto text-lg">
-                <div>
+                <div className="tracking-wide">
                   <p className="text-gray-300 text-start pt-2">
                     Phone:{" "}
                     <span className="text-white">
@@ -182,15 +182,15 @@ const History = (props: any) => {
                     Email: <span className="text-white">{item.Email}</span>
                   </p>
                 </div>
-                <div>
+                <div className="tracking-wide">
                   <p className="text-gray-300 mt-2 text-start py-1">
                     Address: <br />
                     <span className="text-white">
-                      {item.Street}, {item.City}
+                      {item.Street} {item.City},
                     </span>
                     <br />
                     <span className="text-white">
-                      {item.State} {item.ZIP}
+                      {item.State}, {item.ZIP}
                     </span>
                   </p>
                 </div>
@@ -209,17 +209,27 @@ const History = (props: any) => {
                   <input type="time" required className={styles.input} />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Generator:</label>
-                    <select required className={styles.input}>
-                      {generators.map((gen, index) => (
-                          <option value="{gen.gID}">{gen.gName}</option>
-                      ))}  
-                    </select>
-                {/*<input type="text" required className={styles.input} />*/}
+                  <label className={styles.label}>
+                    Generator <IoMdArrowDropdown size={25} />
+                  </label>
+                  <select required className={styles.input}>
+                    {generators.map((gen, index) => (
+                      <option key={index} value="{gen.gID}">
+                        {gen.gName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Service Type:</label>
-                  <input type="email" required className={styles.input} />
+                  <label className={styles.label}>
+                    Service Type <IoMdArrowDropdown size={25} />
+                  </label>
+                  <select required className={styles.input}>
+                    <option value="Installation">Installation</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Troubleshoot">Troubleshoot</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
                 <div className="col-span-4">
                   <label className={styles.label}>Notes:</label>
