@@ -15,6 +15,7 @@ const History = (props: any) => {
   const [display, setDisplay] = useState<boolean>(false);
   const [item, setItem] = useState<any>();
   const [generators, setGenerators] = useState<any[]>([{}]);
+  const [jobNotes, setJobNotes] = useState<any>();
   const [work, setWork] = useState<any[]>([{}]);
   const getGenerators = () => {
     axios({
@@ -212,9 +213,9 @@ const History = (props: any) => {
                   <label className={styles.label}>
                     Generator <IoMdArrowDropdown size={25} />
                   </label>
-                  <select required className={styles.input}>
+                  <select required className={styles.input} onChange={((e) => setJobNotes(e.target.value))}>
                     {generators.map((gen, index) => (
-                      <option key={index} value="{gen.gID}">
+                      <option key={index} value={gen.gNotes}>
                         {gen.gName}
                       </option>
                     ))}
@@ -233,7 +234,9 @@ const History = (props: any) => {
                 </div>
                 <div className="col-span-4">
                   <label className={styles.label}>Notes:</label>
-                  <textarea className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white" />
+                  <textarea className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
+                    onChange={(e) => setJobNotes(e.target.value)}
+                    value={jobNotes}/>
                 </div>
               </div>
               <button
