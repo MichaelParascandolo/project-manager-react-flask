@@ -8,7 +8,7 @@ from flask_cors import CORS, cross_origin
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
-from models import db, Employees, Customers, Generators, ServiceRecords
+from models import db, Employees, Customers, Generators, ServiceRecords, Service_Employee_Int
 import csv
 
 

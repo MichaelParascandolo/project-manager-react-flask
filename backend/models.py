@@ -7,7 +7,7 @@ db = SQLAlchemy()
 def get_uuid():
     return uuid4().hex
 
-class User(db.Model):
+class User(db.Model):           #When Restructuring Database, Remove this whole table
     __tablename__ = "users"
     id = db.Column(db.String(32),primary_key=True, unique=True, default=get_uuid)
     email = db.Column(db.String(345), unique=True, nullable = False)
@@ -48,10 +48,17 @@ class ServiceRecords(db.Model):
     Serviceid = db.Column(db.Integer, primary_key=True, unique=True)
     Customerid = db.Column(db.Integer, db.ForeignKey('CUSTOMER.Customerid'), nullable=False)
     ServiceCustomer = db.relationship("Customers", backref=db.backref("CUSTOMER", uselist=False))
-    Employeeid = db.Column(db.Integer, db.ForeignKey('EMPLOYEE.Employeeid'), nullable=False)
-    ServiceEmployee = db.relationship("Employees", backref=db.backref("EMPLOYEE", uselist=False))
+    Employeeid = db.Column(db.Integer, db.ForeignKey('EMPLOYEE.Employeeid'), nullable=False)            #When Restructuring Database, remove this line
+    ServiceEmployee = db.relationship("Employees", backref=db.backref("EMPLOYEE", uselist=False))       #When Returctureing Database, remove this line
     Generatorid = db.Column(db.Integer, db.ForeignKey('GENERATOR.Generatorid'), nullable=False)
     ServiceGenerator = db.relationship("Generators", backref = db.backref("GENERATOR", uselist=False))
     ServicePerformed = db.Column(db.Boolean, nullable=False)
     DatePerformed = db.Column(db.DateTime, nullable=False)
     Notes = db.Column(db.Text, nullable=True)
+
+class Service_Employee_Int(db.Model):
+    __tablename__ = "SERVICE_EMPLOYEE_INT"
+    Serviceid = db.Column(db.Integer, db.ForeignKey('SERVICE_RECORD.Serviceid'), primary_key = True, nullable=False)
+    IntService = db.relationship("ServiceRecords", backref=db.backref("SERVICE_RECORD", uselist=False))
+    Employeeid = db.Column(db.Integer, db.ForeignKey('EMPLOYEE.Employeeid'), primary_key = True, nullable=False)
+    IntEmployee = db.relationship("Employees", backref=db.backref("EMPLOYEES", uselist=False))
