@@ -215,9 +215,11 @@ const Clients = (props: any) => {
           </div>
           {customers.length > 0 ? (
             <>
-              {/* <p className="text-white text-center py-2 text-xl">
-                X Matching Records for {searchTerm}
-              </p> */}
+              {showSearch ? (
+                <p className="text-white capitalize text-center py-2 text-xl">
+                  {customers.length} matching records for {searchTerm}
+                </p>
+              ) : null}
               <ul className="m-4">
                 <div className="grid md:grid-cols-1 gap-4">
                   {customers.map((item, index) => (
