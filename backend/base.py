@@ -322,9 +322,11 @@ def create_service():
     id1 = request.json["ServiceID"]
     customerid1 = request.json["CustomerID"]
     generatorid1 = request.json["GeneratorID"]
-    performed1 = request.json["Service Performed"]
-    startdate1 = request.json["Start Date"]
-    starttime1 = request.json["Start Time"]
+    performed1 = request.json["ServicePerformed"]
+    startdate1 = request.json["Date"]
+    starttime1 = request.json["Time"]
+    reqs = request.get_json()
+    servicetype1 = reqs.get("ServiceType")
     notes1 = request.json["Notes"]
     
     service_exists = ServiceRecords.query.filter_by(Serviceid = id1).first() is not None
@@ -332,14 +334,13 @@ def create_service():
     if service_exists:
         abort(409)
 
-    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Generatorid = generatorid1, ServicePerformed = performed1, StartDate = startdate1, StartTime = starttime1, Notes = notes1)
+    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Generatorid = generatorid1, ServicePerformed = performed1, ServiceType = servicetype1, StartDate = startdate1, StartTime = starttime1, Notes = notes1)
     db.session.add(new_service)
     db.session.commit()
 
     return jsonify({
         "ID": new_service.Serviceid,
         "Customer Name": new_service.Customerid,
-        "Employee Name": new_service.Employeeid,
         "Generator Type": new_service.Generatorid,
         "Service Performed": new_service.ServicePerformed,
         "Start Date": new_service.StartDate,
@@ -368,10 +369,19 @@ def retrieve_services():
     reqs = request.get_json()
     id1 = reqs.get("CustomerID")
     services = []
+    service_exists = ServiceRecords.query.filter_by(Customerid = id1).first() is not None
+
+    if not service_exists:
+        abort(409)
 
     for i in ServiceRecords.query.filter_by(Customerid = id1).all():
+        gName = Generators.query.filter_by(Generatorid = i.Generatorid).first()
         services.append({
-            "notes": i.Notes
+            "Generator": gName.Name,
+            "ServiceType": i.ServiceType,
+            "Date": i.StartDate,
+            "Time": i.StartTime,
+            "Notes": i.Notes,
         })
 
     return services

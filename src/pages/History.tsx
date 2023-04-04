@@ -14,6 +14,10 @@ const History = (props: any) => {
   const { customerID } = useParams();
   const [display, setDisplay] = useState<boolean>(false);
   const [item, setItem] = useState<any>();
+  const [currentGenID, setCurrentGenID] = useState<any>();
+  const [date, setDate] = useState<any>();
+  const [time, setTime] = useState<any>();
+  const [serviceType, setServiceType] = useState<any>();
   const [generators, setGenerators] = useState<any[]>([{}]);
   const [jobNotes, setJobNotes] = useState<any>();
   const [work, setWork] = useState<any[]>([{}]);
@@ -80,6 +84,37 @@ const History = (props: any) => {
     }
   };
 
+  const createJob = (e:any) => {
+    e.preventDefault()
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/service/create",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+      data: {
+        ServiceID: Math.floor(Math.random() * 90000) + 10000,
+        CustomerID: customerID,
+        GeneratorID: currentGenID,
+        ServicePerformed: false,
+        ServiceType: serviceType,
+        Date: date,
+        Time: time,
+        Notes: jobNotes,
+      }
+    })
+    .then((response) => {
+      console.log(response);
+      getWork(Number(customerID))
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+      }
+    });
+
+  }
+
   const getWork = (id: number) => {
     axios({
       method: "POST",
@@ -103,33 +138,7 @@ const History = (props: any) => {
     getWork(Number(customerID));
     getGenerators();
   }, []);
-  // used for testing
-  const jobs = [
-    {
-      serviceType: "installation",
-      serviceDate: "3/19/2023",
-      serviceTime: "11:00AM",
-      generatorName: "Generator Name",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
-    },
-    {
-      serviceType: "installation",
-      serviceDate: "3/19/2023",
-      serviceTime: "11:00AM",
-      generatorName: "Generator Name",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
-    },
-    {
-      serviceType: "installation",
-      serviceDate: "3/19/2023",
-      serviceTime: "11:00AM",
-      generatorName: "Generator Name",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quos suscipit quibusdam sapiente voluptatum? Quam ipsam nostrum eum in voluptatibus.",
-    },
-  ];
+  
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
@@ -203,19 +212,24 @@ const History = (props: any) => {
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
                   <label className={styles.label}>Date:</label>
-                  <input type="date" required className={styles.input} />
+                  <input type="date" required className={styles.input}
+                    onChange={((e) => setDate(e.target.value))}
+                    value={date}/>
                 </div>
                 <div className="col-span-2">
                   <label className={styles.label}>Time:</label>
-                  <input type="time" required className={styles.input} />
+                  <input type="time" required className={styles.input} 
+                  onChange={((e) => setTime(e.target.value))}
+                  value={time}/>
                 </div>
                 <div className="col-span-2">
                   <label className={styles.label}>
                     Generator <IoMdArrowDropdown size={25} />
                   </label>
-                  <select required className={styles.input} onChange={((e) => setJobNotes(e.target.value))}>
+                  <select required className={styles.input} onChange={((e) => {setJobNotes(e.target.value.split(",")[0]);  setCurrentGenID(e.target.value.split(",")[1])})}>
+                    <option value={"default"}>(Please Select a Value)</option>
                     {generators.map((gen, index) => (
-                      <option key={index} value={gen.gNotes}>
+                      <option key={index} value={[gen.gNotes, gen.gID]}>
                         {gen.gName}
                       </option>
                     ))}
@@ -225,7 +239,8 @@ const History = (props: any) => {
                   <label className={styles.label}>
                     Service Type <IoMdArrowDropdown size={25} />
                   </label>
-                  <select required className={styles.input}>
+                  <select required className={styles.input} onChange={((e) => {setServiceType(e.target.value)})}>
+                    <option value={"default"}>(Please Select a Value)</option>
                     <option value="Installation">Installation</option>
                     <option value="Maintenance">Maintenance</option>
                     <option value="Troubleshoot">Troubleshoot</option>
@@ -241,7 +256,7 @@ const History = (props: any) => {
               </div>
               <button
                 type="submit"
-                // onClick={addCustomer}
+                onClick={createJob}
                 className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
               >
                 Create Job
@@ -257,24 +272,24 @@ const History = (props: any) => {
               </div>
             </div>
             {/* job history */}
-            {jobs.map((item, index) => (
+            {work.map((item, index) => (
               <div
                 key={index}
                 className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900"
               >
                 <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
                   <div>
-                    <div className="text-gray-200">{item.generatorName}</div>
-                    <div className="text-gray-400">{item.serviceType}</div>
+                    <div className="text-gray-200">{item.Generator}</div>
+                    <div className="text-gray-400">{item.ServiceType}</div>
                   </div>
                   <div>
-                    <div className="text-gray-200">{item.serviceDate}</div>
-                    <div className="text-gray-400">{item.serviceTime}</div>
+                    <div className="text-gray-200">{item.Date}</div>
+                    <div className="text-gray-400">{item.Time}</div>
                   </div>
                 </div>
                 <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" />
                 <div className="p-2 text-gray-300 tracking-wider capitalize">
-                  {item.notes}
+                  {item.Notes}
                 </div>
               </div>
             ))}
