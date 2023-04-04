@@ -45,7 +45,10 @@ class ServiceRecords(db.Model):
     Generatorid = db.Column(db.Integer, db.ForeignKey('GENERATOR.Generatorid'), nullable=False)
     ServiceGenerator = db.relationship("Generators", backref = db.backref("GENERATOR", uselist=False))
     ServicePerformed = db.Column(db.Boolean, nullable=False)
-    DatePerformed = db.Column(db.DateTime, nullable=False)
+    StartDate = db.Column(db.String(10), nullable=False)
+    StartTime = db.Column(db.String(7), nullable=False)
+    FinishDate = db.Column(db.String(10), nullable=True)
+    FinishTime = db.Column(db.String(7), nullable=True)
     ServiceType = db.Column(db.String(50), nullable=False)
     Notes = db.Column(db.Text, nullable=True)
     
