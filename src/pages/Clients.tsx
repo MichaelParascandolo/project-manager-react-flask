@@ -7,6 +7,7 @@ import axios from "axios";
 
 const Clients = (props: any) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const [customers, setCustomers] = useState<any[]>([{}]);
   const [first, setFirst] = useState<string>("");
   const [last, setLast] = useState<string>("");
@@ -205,7 +206,10 @@ const Clients = (props: any) => {
               onChange={(e) => setSearchTerm(e.target.value)}
               value={searchTerm}
             />
-            <button className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all">
+            <button
+              onClick={() => (setShowSearch(true), getCustomers())}
+              className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
+            >
               <CgSearch size={25} />
             </button>
           </div>
