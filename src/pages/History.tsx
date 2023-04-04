@@ -1,9 +1,5 @@
 import { CgProfile, CgWorkAlt } from "react-icons/cg";
-import {
-  IoMdArrowRoundBack,
-  IoMdTrash,
-  IoMdArrowDropdown,
-} from "react-icons/io";
+import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
 import Footer from "../components/Footer";
 import { formatNumber } from "../components/Customer";
 import { useEffect, useState } from "react";
@@ -17,10 +13,26 @@ const History = (props: any) => {
   const [currentGenID, setCurrentGenID] = useState<any>();
   const [date, setDate] = useState<any>();
   const [time, setTime] = useState<any>();
-  const [serviceType, setServiceType] = useState<any>();
-  const [generators, setGenerators] = useState<any[]>([{}]);
+  const [serviceType, setServiceType] = useState<any>([]);
+  const [generators, setGenerators] = useState<any[]>([]);
   const [jobNotes, setJobNotes] = useState<any>();
   const [work, setWork] = useState<any[]>([{}]);
+
+  const clearFields = () => {
+    setDate("");
+    setTime("");
+    setGenerators([]);
+    setServiceType([]); // does not reset for some reason
+    setJobNotes("");
+  };
+  const serviceTypes: string[] = [
+    "Installation",
+    "Maintenance",
+    "Repair",
+    "Troubleshoot",
+    "Other",
+  ];
+
   const getGenerators = () => {
     axios({
       method: "GET",
@@ -84,8 +96,8 @@ const History = (props: any) => {
     }
   };
 
-  const createJob = (e:any) => {
-    e.preventDefault()
+  const createJob = (e: any) => {
+    e.preventDefault();
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/service/create",
@@ -101,19 +113,19 @@ const History = (props: any) => {
         Date: date,
         Time: time,
         Notes: jobNotes,
-      }
+      },
     })
-    .then((response) => {
-      console.log(response);
-      getWork(Number(customerID))
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-      }
-    });
-
-  }
+      .then((response) => {
+        console.log(response);
+        getWork(Number(customerID));
+        clearFields();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
 
   const getWork = (id: number) => {
     axios({
@@ -138,7 +150,7 @@ const History = (props: any) => {
     getWork(Number(customerID));
     getGenerators();
   }, []);
-  
+
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
@@ -208,25 +220,38 @@ const History = (props: any) => {
             </div>
             <div className="bg-slate-900/50 my-4 rounded-xl h-1 w-full" />
             {/* create job form */}
-            <form>
+            <form onSubmit={createJob}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
                   <label className={styles.label}>Date:</label>
-                  <input type="date" required className={styles.input}
-                    onChange={((e) => setDate(e.target.value))}
-                    value={date}/>
+                  <input
+                    type="date"
+                    required
+                    className={styles.input}
+                    onChange={(e) => setDate(e.target.value)}
+                    value={date}
+                  />
                 </div>
                 <div className="col-span-2">
                   <label className={styles.label}>Time:</label>
-                  <input type="time" required className={styles.input} 
-                  onChange={((e) => setTime(e.target.value))}
-                  value={time}/>
+                  <input
+                    type="time"
+                    required
+                    className={styles.input}
+                    onChange={(e) => setTime(e.target.value)}
+                    value={time}
+                  />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>
-                    Generator <IoMdArrowDropdown size={25} />
-                  </label>
-                  <select required className={styles.input} onChange={((e) => {setJobNotes(e.target.value.split(",")[0]);  setCurrentGenID(e.target.value.split(",")[1])})}>
+                  <label className={styles.label}>Generator:</label>
+                  <select
+                    required
+                    className={styles.input}
+                    onChange={(e) => {
+                      setJobNotes(e.target.value.split(",")[0]);
+                      setCurrentGenID(e.target.value.split(",")[1]);
+                    }}
+                  >
                     <option value={"default"}>(Please Select a Value)</option>
                     {generators.map((gen, index) => (
                       <option key={index} value={[gen.gNotes, gen.gID]}>
@@ -236,27 +261,33 @@ const History = (props: any) => {
                   </select>
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>
-                    Service Type <IoMdArrowDropdown size={25} />
-                  </label>
-                  <select required className={styles.input} onChange={((e) => {setServiceType(e.target.value)})}>
+                  <label className={styles.label}>Service Type:</label>
+                  <select
+                    required
+                    className={styles.input}
+                    onChange={(e) => {
+                      setServiceType(e.target.value);
+                    }}
+                  >
                     <option value={"default"}>(Please Select a Value)</option>
-                    <option value="Installation">Installation</option>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Troubleshoot">Troubleshoot</option>
-                    <option value="Other">Other</option>
+                    {serviceTypes.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="col-span-4">
                   <label className={styles.label}>Notes:</label>
-                  <textarea className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
+                  <textarea
+                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
                     onChange={(e) => setJobNotes(e.target.value)}
-                    value={jobNotes}/>
+                    value={jobNotes}
+                  />
                 </div>
               </div>
               <button
                 type="submit"
-                onClick={createJob}
                 className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
               >
                 Create Job
