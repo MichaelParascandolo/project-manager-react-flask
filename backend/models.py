@@ -54,7 +54,9 @@ class ServiceRecords(db.Model):
     ServiceGenerator = db.relationship("Generators", backref = db.backref("GENERATOR", uselist=False))
     ServicePerformed = db.Column(db.Boolean, nullable=False)
     DatePerformed = db.Column(db.DateTime, nullable=False)
+    #ServiceType = db.Column(db.String(50), nullable=False)         #Uncomment this when resturcturing Database
     Notes = db.Column(db.Text, nullable=True)
+    
 
 class Service_Employee_Int(db.Model):
     __tablename__ = "SERVICE_EMPLOYEE_INT"

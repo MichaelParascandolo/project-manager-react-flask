@@ -250,14 +250,14 @@ def create_customer():
     street1 = request.json["Street"]
     phonenumber1 = request.json["Phone Number"]
     state1 = request.json["State"]
-    ZIP1 = request.json["ZIP Code"]
+    Zip1 = request.json["ZIP Code"]
     
     customer_exists = Customers.query.filter_by(Customerid = id1).first() is not None
 
     if customer_exists:
         abort(409)
 
-    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1, State = state1, ZIP = ZIP1)
+    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1, State = state1, ZIP = Zip1)
     db.session.add(new_customer)
     db.session.commit()
 
@@ -291,6 +291,8 @@ def delete_customer():
 
     return jsonify({"ID": id1})
 
+
+#Should be able to delete all of this route. Just not doing it yet until cleared with team
 #Creating generator route
 @api.route("/generator/create", methods=["POST"])
 @jwt_required()
