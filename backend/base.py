@@ -321,10 +321,10 @@ def create_generator():
 def create_service():
     id1 = request.json["ServiceID"]
     customerid1 = request.json["CustomerID"]
-    employeeid1 = request.json["EmployeeID"]
     generatorid1 = request.json["GeneratorID"]
     performed1 = request.json["Service Performed"]
-    date1 = request.json["Date Performed"]
+    startdate1 = request.json["Start Date"]
+    starttime1 = request.json["Start Time"]
     notes1 = request.json["Notes"]
     
     service_exists = ServiceRecords.query.filter_by(Serviceid = id1).first() is not None
@@ -332,7 +332,7 @@ def create_service():
     if service_exists:
         abort(409)
 
-    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Employeeid = employeeid1, Generatorid = generatorid1, ServicePerformed = performed1, DatePerformed = date1, Notes = notes1)
+    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Generatorid = generatorid1, ServicePerformed = performed1, StartDate = startdate1, StartTime = starttime1, Notes = notes1)
     db.session.add(new_service)
     db.session.commit()
 
@@ -342,7 +342,8 @@ def create_service():
         "Employee Name": new_service.Employeeid,
         "Generator Type": new_service.Generatorid,
         "Service Performed": new_service.ServicePerformed,
-        "Date Performed": new_service.DatePerformed,
+        "Start Date": new_service.StartDate,
+        "Start Time": new_service.StartTime,
         "Notes": new_service.Notes
         })
 
