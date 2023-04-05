@@ -12,11 +12,13 @@ function App() {
   const { token, removeToken, setToken } = useToken();
   return (
     <BrowserRouter>
+      {/* Checks to see if a user has a token and gives one if their token statis is undefined or blank */}
       {!token && token !== "" && token !== undefined ? (
         <Signin setToken={setToken} />
       ) : (
         <>
           <Routes>
+           {/* Brings users to the Home page from the NavBar */}
             <Route
               path={"/*"}
               element={
@@ -34,6 +36,7 @@ function App() {
                 </>
               }
             />
+            {/* Brings users to the Schedule page from the NavBar */}
             <Route
               path="/schedule"
               element={
@@ -51,6 +54,7 @@ function App() {
                 </>
               }
             />
+            {/* Brings users to the Customers page from the NavBar */}
             <Route
               path="/clients"
               element={
@@ -85,6 +89,7 @@ function App() {
                 </>
               }
             />
+            {/* Brings users to the Team page from the NavBar */}
             <Route
               path="/team"
               element={

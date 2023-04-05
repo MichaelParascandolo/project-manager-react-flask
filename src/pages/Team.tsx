@@ -16,7 +16,7 @@ const Team = (props: any) => {
   const [userID, setUserID] = useState<number | undefined>();
   const [access, setAccess] = useState<boolean | undefined>();
   const time = new Date();
-
+  {/* gets the profile of team members as well as their information */}
   function getProfile() {
     axios({
       method: "GET",
@@ -39,7 +39,7 @@ const Team = (props: any) => {
         console.log(error);
       });
   }
-
+  {/* Shows the team member page*/}
   function getTeam() {
     axios({
       method: "GET",
@@ -58,7 +58,7 @@ const Team = (props: any) => {
         }
       });
   }
-
+  {/* Creates new employee and asigns a random employee ID number*/}
   function addEmployee(e: any) {
     e.preventDefault();
     axios({

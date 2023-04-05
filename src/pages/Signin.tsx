@@ -5,6 +5,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
+{/* SignIn function that will check the validity of the login information */}
 function Signin(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

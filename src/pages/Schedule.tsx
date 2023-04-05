@@ -2,6 +2,7 @@ import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import Day from "../components/Day";
 import Footer from "../components/Footer";
 
+{/* schedule page showing month week and each individual day*/}
 const Schedule = (props: any) => {
   return (
     <>

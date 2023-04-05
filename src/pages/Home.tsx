@@ -31,7 +31,7 @@ const Home = (props: any) => {
         }
       });
   }
-
+{/* logs out the user and removes their token*/}
   function logOut() {
     axios({
       method: "POST",
@@ -62,7 +62,7 @@ const Home = (props: any) => {
       "bg-slate-900 text-white p-2 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
     text: "text-2xl mx-auto my-auto font-bold tracking-wide",
   };
-
+{/* Home page layout, references the different pages of the system*/}
   return (
     <>
       <div className="flex justify-center md:mt-20">
