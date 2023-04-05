@@ -7,3 +7,6 @@
 html {
   @apply bg-gradient-to-b from-slate-600 to-slate-900 min-h-screen;
 }
+button {
+  @apply text-white font-semibold !important;
+}

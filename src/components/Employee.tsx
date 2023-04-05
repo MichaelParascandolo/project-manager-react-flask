@@ -1,6 +1,6 @@
 import axios from "axios";
 import { RiAdminLine, RiUserLine } from "react-icons/ri";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { formatNumber } from "./Customer";
 
 const Employee = ({

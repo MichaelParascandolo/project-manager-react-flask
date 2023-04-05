@@ -8,7 +8,8 @@ from flask_cors import CORS, cross_origin
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
-from models import db, Employees, Customers, Generators, ServiceRecords
+from models import db, Employees, Customers, Generators, ServiceRecords, Service_Employee_Int
+import csv
 
 
 
@@ -21,6 +22,17 @@ db.init_app(api)
 
 with api.app_context():
     db.create_all()
+    file_path = 'testFile.csv' # Actual File Path goes here
+    file = open(file_path)
+    reader = csv.reader(file)
+    header = next(reader)  # Pulls the first row of the csv file
+
+    for row in reader:
+        if Generators.query.filter_by(Generatorid = row[1]).first() is None: # Loads every row into a big array full of arrays
+            new_generator = Generators(Generatorid = row[1], Name = row[0], Cost = row[2], Notes = row[3])
+            db.session.add(new_generator)
+            db.session.commit()
+    file.close()
 
 api.config["JWT_SECRET_KEY"] = "aosdflnasldfnaslndflnsdnlnlknlkgtudsrtstr"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
@@ -60,6 +72,7 @@ def create_token():
 
     access_token = create_access_token(identity=email)
     response = {"access_token":access_token}
+
     return response
 
 
@@ -237,14 +250,14 @@ def create_customer():
     street1 = request.json["Street"]
     phonenumber1 = request.json["Phone Number"]
     state1 = request.json["State"]
-    ZIP1 = request.json["ZIP Code"]
+    Zip1 = request.json["ZIP Code"]
     
     customer_exists = Customers.query.filter_by(Customerid = id1).first() is not None
 
     if customer_exists:
         abort(409)
 
-    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1, State = state1, ZIP = ZIP1)
+    new_customer = Customers(Customerid = id1, FirstName = firstname1, LastName = lastname1, Email = email1, City = city1, Street = street1, PhoneNumber = phonenumber1, State = state1, ZIP = Zip1)
     db.session.add(new_customer)
     db.session.commit()
 
@@ -278,11 +291,13 @@ def delete_customer():
 
     return jsonify({"ID": id1})
 
+
+#Should be able to delete all of this route. Just not doing it yet until cleared with team
 #Creating generator route
 @api.route("/generator/create", methods=["POST"])
 @jwt_required()
 def create_generator():
-    id1 = request.json["CustomerID"]
+    id1 = request.json["GeneratorID"]
     name1 = request.json["Name"]
     cost1 = request.json["Price"]
     notes1 = request.json["Notes"]
@@ -290,18 +305,13 @@ def create_generator():
     generator_exists = Generators.query.filter_by(Generatorid = id1).first() is not None
 
     if generator_exists:
-        abort(409)
+       return {"msg": "Generator already exists"}, 401
 
     new_generator = Generators(Generatorid = id1, Name = name1, Cost = cost1, Notes = notes1)
     db.session.add(new_generator)
     db.session.commit()
 
-    return jsonify({
-        "ID": new_generator.Generatorid,
-        "Name": new_generator.Name,
-        "Cost": new_generator.Cost,
-        "Notes": new_generator.Notes
-        })
+    return {"msg": "Generator added"}, 401
 
 
 
@@ -311,10 +321,12 @@ def create_generator():
 def create_service():
     id1 = request.json["ServiceID"]
     customerid1 = request.json["CustomerID"]
-    employeeid1 = request.json["EmployeeID"]
     generatorid1 = request.json["GeneratorID"]
-    performed1 = request.json["Service Performed"]
-    date1 = request.json["Date Performed"]
+    performed1 = request.json["ServicePerformed"]
+    startdate1 = request.json["Date"]
+    starttime1 = request.json["Time"]
+    reqs = request.get_json()
+    servicetype1 = reqs.get("ServiceType")
     notes1 = request.json["Notes"]
     
     service_exists = ServiceRecords.query.filter_by(Serviceid = id1).first() is not None
@@ -322,16 +334,54 @@ def create_service():
     if service_exists:
         abort(409)
 
-    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Employeeid = employeeid1, Generatorid = generatorid1, ServicePerformed = performed1, DatePerformed = date1, Notes = notes1)
+    new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Generatorid = generatorid1, ServicePerformed = performed1, ServiceType = servicetype1, StartDate = startdate1, StartTime = starttime1, Notes = notes1)
     db.session.add(new_service)
     db.session.commit()
 
     return jsonify({
         "ID": new_service.Serviceid,
         "Customer Name": new_service.Customerid,
-        "Employee Name": new_service.Employeeid,
         "Generator Type": new_service.Generatorid,
         "Service Performed": new_service.ServicePerformed,
-        "Date Performed": new_service.DatePerformed,
+        "Start Date": new_service.StartDate,
+        "Start Time": new_service.StartTime,
         "Notes": new_service.Notes
         })
+
+@api.route("/generators/details", methods=["GET"])
+@jwt_required()
+def retrieve_generators():
+    gList = []
+    for g in Generators.query.all():
+        generator =  {
+            "gID" : g.Generatorid,
+            "gName" : g.Name,
+            "gCost" : g.Cost,
+            "gNotes" : g.Notes
+        }
+        gList.append(generator)
+
+    return gList
+
+@api.route("/service/details", methods=["POST"])
+@jwt_required()
+def retrieve_services():
+    reqs = request.get_json()
+    id1 = reqs.get("CustomerID")
+    services = []
+    service_exists = ServiceRecords.query.filter_by(Customerid = id1).first() is not None
+
+    if not service_exists:
+        abort(409)
+
+    for i in ServiceRecords.query.filter_by(Customerid = id1).all():
+        gName = Generators.query.filter_by(Generatorid = i.Generatorid).first()
+        services.append({
+            "Generator": gName.Name,
+            "ServiceType": i.ServiceType,
+            "Date": i.StartDate,
+            "Time": i.StartTime,
+            "Notes": i.Notes,
+        })
+
+    return services

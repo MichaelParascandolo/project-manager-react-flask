@@ -1,9 +1,8 @@
-import { CgProfile, CgPhone, CgWorkAlt } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { FaCity } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
-import getCustomers from "../pages/Clients";
 
 // formats phone number so (xxx) xxx-xxx format
 export const formatNumber = (num: number) => {
@@ -81,7 +80,7 @@ const Customer = ({
         {/* more details */}
         {showDetails ? (
           <>
-            <div className="flex justify-between w-full">
+            <div className="flex justify-around w-full">
               <div className="flex">
                 <div className="my-auto mx-8">
                   <CgProfile size={70} />

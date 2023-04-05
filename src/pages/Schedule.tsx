@@ -1,8 +1,6 @@
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { useEffect } from "react";
 import Day from "../components/Day";
 import Footer from "../components/Footer";
-import axios from "axios";
 
 const Schedule = (props: any) => {
   return (

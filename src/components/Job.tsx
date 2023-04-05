@@ -1,4 +1,3 @@
-import { GoPerson } from "react-icons/go";
 import { AiFillEdit, AiFillDelete, AiOutlineCheck } from "react-icons/ai";
 import { useState } from "react";
 
