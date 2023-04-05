@@ -12,13 +12,13 @@ function App() {
   const { token, removeToken, setToken } = useToken();
   return (
     <BrowserRouter>
-      {/* Checks to see if a user has a token and gives one if their token statis is undefined or blank */}
+      {/* Checks to see if a user has a token and gives one if their token status is undefined or blank */}
       {!token && token !== "" && token !== undefined ? (
         <Signin setToken={setToken} />
       ) : (
         <>
           <Routes>
-           {/* Brings users to the Home page from the NavBar */}
+            {/* Brings users to the Home page from the NavBar */}
             <Route
               path={"/*"}
               element={

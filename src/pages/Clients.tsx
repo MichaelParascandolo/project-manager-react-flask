@@ -107,6 +107,7 @@ const Clients = (props: any) => {
             <h2 className="text-white cap font-roboto my-2 text-center text-4xl tracking-wide">
               Manage Clients
             </h2>
+            {/* form to add a new client */}
             <form onSubmit={addCustomer}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
@@ -208,7 +209,7 @@ const Clients = (props: any) => {
               </button>
             </form>
           </div>
-
+          {/* search bar for clients */}
           <div className="h-1 rounded-full mt-6 bg-slate-900/50" />
           <p className="text-white pt-2 text-2xl">Search Clients</p>
           <div className="flex justify-center">
@@ -227,6 +228,7 @@ const Clients = (props: any) => {
               <CgSearch size={25} />
             </button>
           </div>
+          {/* displays customers */}
           {customers.length > 0 ? (
             <>
               <p className="text-gray-400 text-[15px] uppercase text-center pt-4">
