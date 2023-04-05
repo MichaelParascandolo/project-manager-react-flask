@@ -7,7 +7,9 @@ import axios from "axios";
 
 const Clients = (props: any) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<string>(
+    "displaying all customers"
+  );
   const [customers, setCustomers] = useState<any[]>([{}]);
   const [first, setFirst] = useState<string>("");
   const [last, setLast] = useState<string>("");
@@ -39,6 +41,11 @@ const Clients = (props: any) => {
     }).then((response) => {
       const customers = response.data;
       setCustomers(customers);
+      if (searchTerm != "") {
+        setShowSearch(`${customers.length} result(s) for "${searchTerm}"`);
+      } else {
+        setShowSearch("displaying all customers");
+      }
     });
   }
 
@@ -207,7 +214,7 @@ const Clients = (props: any) => {
               value={searchTerm}
             />
             <button
-              onClick={() => (setShowSearch(true), getCustomers())}
+              onClick={() => getCustomers()}
               className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
             >
               <CgSearch size={25} />
@@ -215,11 +222,10 @@ const Clients = (props: any) => {
           </div>
           {customers.length > 0 ? (
             <>
-              {showSearch ? (
-                <p className="text-white capitalize text-center py-2 text-xl">
-                  {customers.length} matching records for {searchTerm}
-                </p>
-              ) : null}
+              <p className="text-gray-400 text-[15px] uppercase text-center pt-4">
+                {showSearch}
+              </p>
+
               <ul className="m-4">
                 <div className="grid md:grid-cols-1 gap-4">
                   {customers.map((item, index) => (
@@ -234,7 +240,9 @@ const Clients = (props: any) => {
               </ul>
             </>
           ) : (
-            <p className="text-white">Loading . . .</p>
+            <p className="text-gray-400 text-[15px] uppercase text-center pt-4">
+              no results found
+            </p>
           )}
           <Footer />
         </div>

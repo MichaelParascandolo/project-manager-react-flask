@@ -80,7 +80,7 @@ const Customer = ({
         {/* more details */}
         {showDetails ? (
           <>
-            <div className="flex justify-between w-full">
+            <div className="flex justify-around w-full">
               <div className="flex">
                 <div className="my-auto mx-8">
                   <CgProfile size={70} />
