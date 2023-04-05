@@ -1,5 +1,6 @@
 import { CgProfile, CgWorkAlt } from "react-icons/cg";
 import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
+import { toast, Toaster } from "react-hot-toast";
 import Footer from "../components/Footer";
 import { formatNumber } from "../components/Customer";
 import { useEffect, useState } from "react";
@@ -116,11 +117,14 @@ const History = (props: any) => {
       },
     })
       .then((response) => {
+        toast.success("Job Added");
         console.log(response);
         getWork(Number(customerID));
         clearFields();
       })
       .catch((error) => {
+        toast.error("Something Went Wrong");
+        clearFields();
         if (error.response) {
           console.log(error.response);
         }
@@ -160,6 +164,7 @@ const History = (props: any) => {
   };
   return (
     <>
+      <Toaster />
       <div className="bg-slate-800 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-900 text-white p-4 rounded-lg shadow-lg shadow-slate-900">
         {display ? (
           <>
