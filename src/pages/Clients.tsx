@@ -83,6 +83,12 @@ const Clients = (props: any) => {
         }
       });
   }
+  // when enter key is pressed run the search function
+  const onKeyDownHandler = (e: any) => {
+    if (e.keyCode === 13) {
+      getCustomers();
+    }
+  };
   useEffect(() => {
     getCustomers();
   }, []);
@@ -211,6 +217,7 @@ const Clients = (props: any) => {
               type={"text"}
               placeholder="Search Customers . . ."
               onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => onKeyDownHandler(e)}
               value={searchTerm}
             />
             <button
