@@ -369,19 +369,34 @@ def retrieve_services():
     reqs = request.get_json()
     id1 = reqs.get("CustomerID")
     services = []
-    service_exists = ServiceRecords.query.filter_by(Customerid = id1).first() is not None
 
-    if not service_exists:
-        abort(409)
+    if id1 is None:
+        # If no CustomerID provided, return all service records for all customers
+        for i in ServiceRecords.query.all():
+            gName = Generators.query.filter_by(Generatorid = i.Generatorid).first()
+            services.append({
+                "CustomerID": i.Customerid,
+                "Generator": gName.Name,
+                "ServiceType": i.ServiceType,
+                "Date": i.StartDate,
+                "Time": i.StartTime,
+                "Notes": i.Notes,
+            })
+    else:
+        # If a CustomerID is provided, return service records for that customer
+        service_exists = ServiceRecords.query.filter_by(Customerid = id1).first() is not None
 
-    for i in ServiceRecords.query.filter_by(Customerid = id1).all():
-        gName = Generators.query.filter_by(Generatorid = i.Generatorid).first()
-        services.append({
-            "Generator": gName.Name,
-            "ServiceType": i.ServiceType,
-            "Date": i.StartDate,
-            "Time": i.StartTime,
-            "Notes": i.Notes,
-        })
+        if not service_exists:
+            abort(409)
+
+        for i in ServiceRecords.query.filter_by(Customerid = id1).all():
+            gName = Generators.query.filter_by(Generatorid = i.Generatorid).first()
+            services.append({
+                "Generator": gName.Name,
+                "ServiceType": i.ServiceType,
+                "Date": i.StartDate,
+                "Time": i.StartTime,
+                "Notes": i.Notes,
+            })
 
     return services
