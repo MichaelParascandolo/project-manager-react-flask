@@ -165,7 +165,7 @@ const History = (props: any) => {
   return (
     <>
       <Toaster />
-      <div className="bg-slate-900 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-800 text-white p-4 rounded-lg shadow-lg shadow-slate-900">
+      <div className="bg-slate-900 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-800 text-white p-4 rounded-lg shadow-lg shadow-black">
         {display ? (
           <>
             <div className="flex justify-between w-full">

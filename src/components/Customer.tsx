@@ -54,7 +54,10 @@ const Customer = ({
   return (
     <>
       <li className="bg-slate-900 border-2 border-slate-800 text-white px-4 py-2 rounded-lg shadow-md shadow-black">
-        <div className="flex justify-between w-full">
+        <div
+          onClick={() => setShowDetails(!showDetails)}
+          className="flex justify-between w-full cursor-pointer"
+        >
           <div className="flex">
             <div className="my-auto">
               <CgProfile className="text-white" size={30} />
