@@ -57,5 +57,5 @@ class Service_Employee_Int(db.Model):
     __tablename__ = "SERVICE_EMPLOYEE_INT"
     Serviceid = db.Column(db.Integer, db.ForeignKey('SERVICE_RECORD.Serviceid'), primary_key = True, nullable=False)
     IntService = db.relationship("ServiceRecords", backref=db.backref("SERVICE_RECORD", uselist=False))
-    Employeeid = db.Column(db.Integer, db.ForeignKey('EMPLOYEE.Employeeid'), primary_key = True, nullable=False)
+    Employeeid = db.Column(db.Integer, db.ForeignKey('EMPLOYEE.Employeeid'), primary_key = True, nullable=True)
     IntEmployee = db.relationship("Employees", backref=db.backref("EMPLOYEES", uselist=False))
