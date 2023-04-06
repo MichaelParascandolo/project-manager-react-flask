@@ -3,7 +3,7 @@
 from flask import Flask, request, jsonify, json, abort
 from flask_bcrypt import Bcrypt
 from config import ApplicationConfig
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from flask_cors import CORS, cross_origin
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
@@ -335,6 +335,7 @@ def create_service():
         abort(409)
 
     new_service = ServiceRecords(Serviceid = id1, Customerid = customerid1, Generatorid = generatorid1, ServicePerformed = performed1, ServiceType = servicetype1, StartDate = startdate1, StartTime = starttime1, Notes = notes1)
+    
     db.session.add(new_service)
     db.session.commit()
 
@@ -400,3 +401,172 @@ def retrieve_services():
             })
 
     return services
+
+
+
+
+#edit jobs from schedule page
+#Doable by admin accounts
+@api.route("/schedule/edit", methods=["POST"])
+@jwt_required()
+def edit_Job():
+    #Checking that user is Admin
+    empID = request.json.get("EmployeeID", None)
+    user = Employees.query.filter_by(Employeeid = empID).first()
+
+    if user.Admin == True:
+        reqs = request.get_json()
+        sid = reqs.get("ServiceID")
+        tid1 = request.json["First EmployeeID"]
+        tid2 = request.json["Second EmployeeID"]
+        generatorid = request.json["GeneratorID"]
+        startdate = request.json["Date"]
+        starttime = request.json["Time"]
+        servicetype = request.json["ServiceType"]
+        notes = request.json["Notes"]
+        service = ServiceRecords.query.filter_by(Serviceid = sid).first()
+        service.Generatorid = generatorid
+        service.StartDate = startdate
+        service.StartTime = starttime
+        service.ServiceType = servicetype
+        service.Notes = notes
+
+        techs = []
+        for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
+            techs.append(i)
+        techs[1].Employeeid = tid1
+        techs[2].Employeeid = tid2
+        db.session.commit()
+    
+    return jsonify({
+        "ServiceID": service.Serviceid,
+        "Customer Name": service.Customerid,
+        "Generator Type": service.Generatorid,
+        "Start Date": service.StartDate,
+        "Start Time": service.StartTime,
+        "Notes": service.Notes,
+        "First EmployeeID": techs[1].Employeeid,
+        "Second EmployeeID": techs[2].Employeeid
+        })
+    
+#Adds technicians to jobs
+#Doable by admins
+@api.route("/schedule/techs", methods = ["Post"])
+@jwt_required()
+def add_techs():
+
+    #Checking that user is Admin
+    empID = request.json.get("EmployeeID", None)
+    user = Employees.query.filter_by(Employeeid = empID).first()
+
+    if user.Admin == True:
+        reqs = request.get_json()
+        sid = reqs.get("ServiceID")
+        tech_name = []
+        tech_id = []
+        tech_name.append(request.json["First Employee Name"])
+        tech_name.append(request.json["Second Employee Name"])
+        tech_name.append(request.json["Third Employee Name"])
+        tech_name.append(request.json["Fourth Employee Name"])
+        records = []
+        
+        for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
+            records.append(i)
+        
+        for i in tech_name:         
+            if not i == None:
+                emp = Employees.query.filter_by(LastName = i).first()
+                tech_id.append(emp.Employeeid)
+            
+            
+        for j in tech_id:
+            ser_emp_rec = Service_Employee_Int.query.filter(and_(Serviceid = sid,
+                                        Employeeid = j)) is not None
+            if not ser_emp_rec:
+                add_tech = Service_Employee_Int(Serviceid = sid, Employeeid = j)
+                db.add(add_tech)
+                db.commit()
+        
+        count = 0
+        for z in records:
+            for x in tech_id:
+                if z.Employeeid is not x:
+                    count = count + 1
+                if count == 4:
+                    db.delete(z)
+                    db.commit()
+            count = 0
+                
+
+
+# Completes a job from the schedule page and sets the finish date/time 
+# Doable by everyone who this shows up for
+@api.route("/schedule/complete", methods = ["POST"])
+@jwt_required()
+def complete_job():
+    reqs = request.get_json()
+    sid = reqs.get("ServiceID")
+    finishdate = reqs.get("Finish Date")
+    finishtime = reqs.get("Finish Time")
+    service = ServiceRecords.query.filter_by(Serviceid = sid).first()
+    service.ServicePerformed = True
+    service.FinishDate = finishdate
+    service.FinishTime = finishtime
+
+    return jsonify({
+        "ServiceID": service.Serviceid,
+        "Service Performed": service.ServicePerformed,
+        "Finish Date": service.FinishDate,
+        "Finish Time": service.FinishTime
+    })
+
+#Displays Upcoming Services
+@api.route("/schedule/display", methods = ["GET"])
+@jwt_required()
+def display_job():
+    reqs = request.get_json()
+    startdate = reqs.get("Start Date")
+    services = []
+    for i in ServiceRecords.query.filter_by(StartDate = startdate).all():
+        customer = Customers.query.filter_by(Customerid = i.Customerid).all()
+        gen = Generators.query.filter_by(Generatorid = i.generatorid).all()
+
+        services.append({
+            "Customer First Name": customer.FirstName,
+            "Customer Last Name": customer.LastName,
+            "City": customer.City,
+            "Street": customer.Street,
+            "ServiceType": i.ServiceType,
+            "StartDate": i.StartDate,
+            "StartTime": i.StartTime,
+            "FinishDate": i.FinishDate,
+            "FinishTime": i.FinishTime,
+            "Generator": gen.Name,
+            "Notes": i.Notes
+        })
+    return services
+
+
+#Deletes Jobs from the schedule page
+#Doable by Admins
+@api.route("/schedule/delete", methods = ["POST"])
+@jwt_required()
+def delete_job():
+    
+    #Checking that user is Admin
+    empID = request.json.get("EmployeeID", None)
+    user = Employees.query.filter_by(Employeeid = empID).first()
+
+    if user.Admin == True:
+        reqs = request.get_json()
+        id1 = reqs.get("ServiceID")
+
+        service_exists = ServiceRecords.query.filter_by(Serviceid = id1).first() is not None
+
+        if not service_exists:
+            abort(409)
+
+        ServiceRecords.query.filter_by(Serviceid = id1).delete()
+        db.session.commit()
+
+    return jsonify({"ID": id1})
