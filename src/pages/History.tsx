@@ -17,7 +17,7 @@ const History = (props: any) => {
   const [serviceType, setServiceType] = useState<any>([]);
   const [generators, setGenerators] = useState<any[]>([]);
   const [jobNotes, setJobNotes] = useState<any>();
-  const [work, setWork] = useState<any[]>([{}]);
+  const [work, setWork] = useState<any[]>([]);
 
   const clearFields = () => {
     setDate("");
@@ -165,7 +165,7 @@ const History = (props: any) => {
   return (
     <>
       <Toaster />
-      <div className="bg-slate-800 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-900 text-white p-4 rounded-lg shadow-lg shadow-slate-900">
+      <div className="bg-slate-900 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-800 text-white p-4 rounded-lg shadow-lg shadow-black">
         {display ? (
           <>
             <div className="flex justify-between w-full">
@@ -187,7 +187,7 @@ const History = (props: any) => {
                 </div>
               </div>
             </div>
-            <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
+            <div className="bg-slate-700 mt-2 rounded-xl h-0.5 w-full" />
             <div className="flex py-2 justify-around w-full">
               <div className="my-auto">
                 <div className="flex justify-center">
@@ -195,6 +195,9 @@ const History = (props: any) => {
                 </div>
                 <p className="text-[30px] tracking-wider">
                   {item.FirstName} {item.LastName}
+                </p>
+                <p className="text-gray-400 text-center text-sm">
+                  Client: #{item.ID}
                 </p>
               </div>
               <div className="my-auto text-lg">
@@ -223,7 +226,7 @@ const History = (props: any) => {
                 </div>
               </div>
             </div>
-            <div className="bg-slate-900/50 my-4 rounded-xl h-1 w-full" />
+            <div className="bg-slate-700 my-4 rounded-xl h-0.5 w-full" />
             {/* create job form */}
             <form onSubmit={createJob}>
               <div className="grid md:grid-cols-4 gap-2">
@@ -298,16 +301,21 @@ const History = (props: any) => {
                 Create Job
               </button>
             </form>
-            <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
-            <div className="hidden md:flex my-2 justify-center">
-              <div className="my-auto">
-                <CgWorkAlt className="text-white" size={30} />
-              </div>
-              <div className="my-auto ml-2">
-                <p className="tracking-wider text-lg">Job History</p>
-              </div>
-            </div>
-            {/* job history */}
+            {/* job history for client */}
+            {work.length > 0 ? (
+              <>
+                <div className="bg-slate-700 mt-1 rounded-xl h-0.5 w-full" />
+                <div className="hidden md:flex my-2 justify-center">
+                  <div className="my-auto">
+                    <CgWorkAlt className="text-white" size={30} />
+                  </div>
+                  <div className="my-auto ml-2 mt-1">
+                    <p className="tracking-wider text-lg">Job History</p>
+                  </div>
+                </div>
+              </>
+            ) : null}
+            {/* display each individual job */}
             {work.map((item, index) => (
               <div
                 key={index}
@@ -329,11 +337,8 @@ const History = (props: any) => {
                 </div>
               </div>
             ))}
-            <p className="text-gray-400 text-center mt-2">Client: {item.ID}</p>
           </>
-        ) : (
-          <p className="text-white">Loading . . .</p>
-        )}
+        ) : null}
       </div>
       <Footer />
     </>

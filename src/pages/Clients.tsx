@@ -236,7 +236,7 @@ const Clients = (props: any) => {
               </p>
 
               <ul className="m-4">
-                <div className="grid md:grid-cols-1 gap-4">
+                <div className="grid md:grid-cols-1 gap-6">
                   {customers.map((item, index) => (
                     <Customer
                       item={item}
