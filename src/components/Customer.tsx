@@ -53,7 +53,7 @@ const Customer = ({
   };
   return (
     <>
-      <li className="bg-slate-800 border-2 border-slate-900 text-white px-4 pt-2 rounded-lg shadow-lg shadow-slate-900">
+      <li className="bg-slate-900 border-2 border-slate-800 text-white px-4 py-2 rounded-lg shadow-md shadow-black">
         <div className="flex justify-between w-full">
           <div className="flex">
             <div className="my-auto">
@@ -67,19 +67,21 @@ const Customer = ({
           </div>
           <div className="my-auto flex flex-wrap">
             <FaCity className="text-white" size={30} />
-            <p className="tracking-wider my-auto ml-2">{item.City}</p>
+            <p className="tracking-wider my-auto mx-2">{item.City}</p>
+            <div className="bg-slate-700 rounded-xl mx-4 my-auto h-8 w-0.5" />
+            <button onClick={() => setShowDetails(!showDetails)}>
+              {!showDetails ? (
+                <MdExpandMore size={35} />
+              ) : (
+                <MdExpandLess size={35} />
+              )}
+            </button>
           </div>
-          {/* <div className="my-auto flex flex-wrap">
-            <CgPhone className="text-white" size={30} />
-            <p className="tracking-wider my-auto ml-2">
-              {formatNumber(item.Phone)}
-            </p>
-          </div> */}
         </div>
-        <div className="bg-slate-900/50 mt-2 rounded-xl h-1 w-full" />
         {/* more details */}
         {showDetails ? (
           <>
+            <div className="bg-slate-700 mt-2 rounded-xl h-0.5 w-full" />
             <div className="flex justify-around w-full">
               <div className="flex">
                 <div className="my-auto mx-8">
@@ -105,7 +107,7 @@ const Customer = ({
               </div>
               <div className="my-auto flex flex-col">
                 <a href={`/history/${item.ID}`}>
-                  <button className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] mt-2 hover:bg-blue-700 transition-all ease-in-out duration-300">
+                  <button className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg w-[200px] hover:bg-blue-700 transition-all ease-in-out duration-300">
                     View Jobs
                   </button>
                 </a>
@@ -117,16 +119,16 @@ const Customer = ({
                 </button>
               </div>
             </div>
-            <div className="bg-slate-900/50 mt-1 rounded-xl h-1 w-full" />
+            {/* <div className="bg-slate-800 mt-1 rounded-xl h-0.5 w-full" /> */}
           </>
         ) : null}
-        <button onClick={() => setShowDetails(!showDetails)}>
+        {/* <button onClick={() => setShowDetails(!showDetails)}>
           {!showDetails ? (
             <MdExpandMore size={35} />
           ) : (
             <MdExpandLess size={35} />
           )}
-        </button>
+        </button> */}
       </li>
     </>
   );

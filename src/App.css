@@ -3,9 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* maybe slate-600/700 */
 html {
-  @apply bg-gradient-to-b from-slate-600 to-slate-900 min-h-screen;
+  @apply bg-gradient-to-b from-slate-600 to-slate-900/95 min-h-screen;
 }
 button {
   @apply text-white font-semibold !important;
