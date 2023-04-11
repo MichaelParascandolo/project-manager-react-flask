@@ -523,28 +523,26 @@ def complete_job():
 #Displays Upcoming Services
 @api.route("/schedule/display", methods = ["GET"])
 @jwt_required()
-def display_job():
-    reqs = request.get_json()
-    startdate = reqs.get("Start Date")
+def get_all_services():
     services = []
-    for i in ServiceRecords.query.filter_by(StartDate = startdate).all():
-        customer = Customers.query.filter_by(Customerid = i.Customerid).all()
-        gen = Generators.query.filter_by(Generatorid = i.generatorid).all()
-
+    for service in ServiceRecords.query.all():
+        customer = Customers.query.filter_by(Customerid=service.Customerid).first()
+        generator = Generators.query.filter_by(Generatorid=service.Generatorid).first()
         services.append({
-            "Customer First Name": customer.FirstName,
-            "Customer Last Name": customer.LastName,
-            "City": customer.City,
-            "Street": customer.Street,
-            "ServiceType": i.ServiceType,
-            "StartDate": i.StartDate,
-            "StartTime": i.StartTime,
-            "FinishDate": i.FinishDate,
-            "FinishTime": i.FinishTime,
-            "Generator": gen.Name,
-            "Notes": i.Notes
+            'service_id': service.Serviceid,
+            'customer_first_name': customer.FirstName,
+            'customer_last_name': customer.LastName,
+            'city': customer.City,
+            'street': customer.Street,
+            'generator_name': generator.Name,
+            'service_type': service.ServiceType,
+            'start_date': service.StartDate,
+            'start_time': service.StartTime,
+            'finish_date': service.FinishDate,
+            'finish_time': service.FinishTime,
+            'notes': service.Notes
         })
-    return services
+    return jsonify(services)
 
 
 #Deletes Jobs from the schedule page

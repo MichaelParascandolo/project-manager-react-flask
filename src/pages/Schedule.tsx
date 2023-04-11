@@ -1,4 +1,6 @@
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
+import { CgProfile, CgWorkAlt } from "react-icons/cg";
 import Day from "../components/Day";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
@@ -9,22 +11,31 @@ const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
   const getSchedule = () => {
     axios({
-      method: "POST",
-      url: "http://127.0.0.1:3000/service/details",
+      method: "GET",
+      url: "http://127.0.0.1:3000/schedule/display",
       headers: {
         Authorization: "Bearer " + props.token,
       },
-      data: { CustomerID: null },
+      // data: { "Start Date": "2023-04-02" },
     })
       .then((response) => {
-        setSchedule(response.data);
-        console.log(schedule);
+        setSchedule(sortArray(response.data));
+        // console.log(schedule);
       })
       .catch((error) => {
         if (error.response) {
           console.log(error.response);
         }
       });
+  };
+  // sorts the jobs into newest to oldest
+  const sortArray = (arr: any) => {
+    arr.sort((a: any, b: any) => {
+      const aDateTime = new Date(`${a.start_date} ${a.start_time}`);
+      const bDateTime = new Date(`${b.start_date} ${b.start_time}`);
+      return aDateTime.getTime() - bDateTime.getTime();
+    });
+    return arr;
   };
   useEffect(() => {
     getSchedule();
@@ -47,22 +58,52 @@ const Schedule = (props: any) => {
         {schedule.map((item: any, index: number) => (
           <div
             key={index}
-            className="bg-slate-900 hidden md:block border-2 border-slate-800 text-white p-4 my-2 rounded-lg shadow-lg shadow-black hover:scale-105 transition-all ease-in-out duration-300"
+            className="bg-slate-900 pb-6 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black"
           >
-            <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
-              <div>
-                <div className="text-gray-200">{item.Generator}</div>
-                <div className="text-gray-400">{item.ServiceType}</div>
-              </div>
-              <div>
-                <div className="text-gray-200">{item.Date}</div>
-                <div className="text-gray-400">{item.Time}</div>
+            <div className="text-white tracking-widest ml-4">
+              <div className="flex justify-between">
+                <div>
+                  {/* <CgProfile size={30} /> */}
+                  <p className="my-auto">
+                    {item.customer_first_name} {item.customer_last_name}
+                  </p>
+                  <p>
+                    {item.street}, {item.city}
+                  </p>
+                </div>
+                <button className="mr-4">
+                  <IoMdTrash size={30} />
+                </button>
               </div>
             </div>
-            <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" />
-            <div className="p-2 text-gray-300 tracking-wider capitalize">
-              {item.Notes}
+            <div className="bg-slate-700 hidden md:block text-white p-4 my-2 border-l-2 border-r-2 border-slate-800 border-t-2 border-t-white border-b-2 border-b-white">
+              <div className="text-sm px-2 tracking-wider capitalize">
+                <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
+                  {item.service_type}
+                  <p className="text-gray-400">{item.generator_name}</p>
+                </p>
+                <div className="flex justify-between"></div>
+                <div className="flex justify-evenly text-center">
+                  <div>
+                    <p className="text-gray-200">{item.start_date}</p>
+                    <p className="text-gray-400">{item.start_time}</p>
+                  </div>
+                  <p className="text-gray-400 text-[30px]">-</p>
+                  <div>
+                    {/* <p className="text-gray-200">{item.finish_date}</p>
+                    <p className="text-gray-400">{item.finish_time}</p> */}
+                    <p className="text-gray-200">{item.start_date}</p>
+                    <p className="text-gray-400">{item.start_time}</p>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" /> */}
             </div>
+            <p className="ml-4 text-gray-300 tracking-wider capitalize">
+              {item.notes}
+            </p>
+            {/* <button>Delete Job</button>
+            <button>Complete Job</button> */}
           </div>
         ))}
       </div>
