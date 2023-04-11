@@ -417,8 +417,6 @@ def edit_Job():
     if user.Admin == True:
         reqs = request.get_json()
         sid = reqs.get("ServiceID")
-        tid1 = request.json["First EmployeeID"]
-        tid2 = request.json["Second EmployeeID"]
         generatorid = request.json["GeneratorID"]
         startdate = request.json["Date"]
         starttime = request.json["Time"]
@@ -430,12 +428,6 @@ def edit_Job():
         service.StartTime = starttime
         service.ServiceType = servicetype
         service.Notes = notes
-
-        techs = []
-        for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
-            techs.append(i)
-        techs[1].Employeeid = tid1
-        techs[2].Employeeid = tid2
         db.session.commit()
     
     return jsonify({
@@ -444,17 +436,15 @@ def edit_Job():
         "Generator Type": service.Generatorid,
         "Start Date": service.StartDate,
         "Start Time": service.StartTime,
-        "Notes": service.Notes,
-        "First EmployeeID": techs[1].Employeeid,
-        "Second EmployeeID": techs[2].Employeeid
+        "Notes": service.Notes
         })
     
 #Adds technicians to jobs
 #Doable by admins
-@api.route("/schedule/techs", methods = ["Post"])
+@api.route("/schedule/techs", methods = ["POST"])
 @jwt_required()
-def add_techs():
-
+def add_techs():  
+    
     #Checking that user is Admin
     empID = request.json.get("EmployeeID", None)
     user = Employees.query.filter_by(Employeeid = empID).first()
@@ -468,35 +458,29 @@ def add_techs():
         tech_name.append(request.json["Second Employee Name"])
         tech_name.append(request.json["Third Employee Name"])
         tech_name.append(request.json["Fourth Employee Name"])
-        records = []
-        
+
         for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
-            records.append(i)
-        
-        for i in tech_name:         
-            if not i == None:
-                emp = Employees.query.filter_by(LastName = i).first()
+            db.session.delete(i)
+
+        for j in tech_name:         
+            if not j == None:
+                emp = Employees.query.filter_by(LastName = j).first()
                 tech_id.append(emp.Employeeid)
-            
-            
-        for j in tech_id:
-            ser_emp_rec = Service_Employee_Int.query.filter(and_(Serviceid = sid,
-                                        Employeeid = j)) is not None
-            if not ser_emp_rec:
-                add_tech = Service_Employee_Int(Serviceid = sid, Employeeid = j)
-                db.add(add_tech)
-                db.commit()
+
+        for k in tech_id:
+            assigned = Service_Employee_Int(Serviceid = sid, Employeeid = k)
+            db.session.add(assigned)
         
-        count = 0
-        for z in records:
-            for x in tech_id:
-                if z.Employeeid is not x:
-                    count = count + 1
-                if count == 4:
-                    db.delete(z)
-                    db.commit()
-            count = 0
-                
+        db.session.commit()
+
+        return jsonify({
+            "ServiceID": sid,
+            "First_Employee_Name": tech_name[1],
+            "Second_Employee_Name": tech_name[2],
+            "Third_Employee_Name": tech_name[3],
+            "Fourth_Employee_Name": tech_name[4],
+        })
+
 
 
 # Completes a job from the schedule page and sets the finish date/time 
@@ -513,6 +497,8 @@ def complete_job():
     service.FinishDate = finishdate
     service.FinishTime = finishtime
 
+    db.session.commit()
+
     return jsonify({
         "ServiceID": service.Serviceid,
         "Service Performed": service.ServicePerformed,
@@ -525,9 +511,17 @@ def complete_job():
 @jwt_required()
 def get_all_services():
     services = []
+    techs = []
     for service in ServiceRecords.query.all():
         customer = Customers.query.filter_by(Customerid=service.Customerid).first()
         generator = Generators.query.filter_by(Generatorid=service.Generatorid).first()
+        for ser_emp_int in Service_Employee_Int.query.filter_by(Serviceid = service.Serviceid).all():
+            emp = Employees.query.filter_by(Employeeid = ser_emp_int.Employeeid).first()
+            techs.append({
+                'service_id': service.Serviceid,
+                'employee_first_name': emp.FirstName,
+                'employee_last_name': emp.LastName
+            })
         services.append({
             'service_id': service.Serviceid,
             'customer_first_name': customer.FirstName,
@@ -542,8 +536,9 @@ def get_all_services():
             'finish_time': service.FinishTime,
             'notes': service.Notes
         })
-    return jsonify(services)
-
+    return jsonify({'services': services, 'techs': techs})
+    #Old code it just
+    #return jsonify(services)
 
 #Deletes Jobs from the schedule page
 #Doable by Admins
@@ -564,7 +559,11 @@ def delete_job():
         if not service_exists:
             abort(409)
 
-        ServiceRecords.query.filter_by(Serviceid = id1).delete()
+        badrecord = ServiceRecords.query.filter_by(Serviceid = id1).first()
+        #Deletes ser_emp_int records that go with the service record being deleted
+        for i in Service_Employee_Int.query.filter_by(Serviceid = id1).all():
+            db.session.delete(i)
+        db.session.delete(badrecord)
         db.session.commit()
 
     return jsonify({"ID": id1})
