@@ -9,6 +9,9 @@ import axios from "axios";
 /* schedule page showing month week and each individual day*/
 const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
+  const [employees, setEmployees] = useState<any>([]);
+
+  // returns all service records with customer info
   const getSchedule = () => {
     axios({
       method: "GET",
@@ -19,8 +22,8 @@ const Schedule = (props: any) => {
       // data: { "Start Date": "2023-04-02" },
     })
       .then((response) => {
-        setSchedule(sortArray(response.data));
-        // console.log(schedule);
+        setSchedule(sortArray(response.data.services));
+        console.log(response.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -37,9 +40,38 @@ const Schedule = (props: any) => {
     });
     return arr;
   };
+
+  /* Shows the team member page*/
+  function getTeam() {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/employees",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        setEmployees(response.data);
+        console.log(employees);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  }
   useEffect(() => {
     getSchedule();
+    getTeam();
   }, []);
+
+  const styles = {
+    links:
+      "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
+    label: "text-white py-2",
+    input:
+      "w-full rounded-lg border-2 appearance-none tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+  };
   return (
     <>
       <div className="flex justify-center mt-5">
@@ -80,7 +112,8 @@ const Schedule = (props: any) => {
               <div className="text-sm px-2 tracking-wider capitalize">
                 <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
                   {item.service_type}
-                  <p className="text-gray-400">{item.generator_name}</p>
+                  <br />
+                  <span className="text-gray-400">{item.generator_name}</span>
                 </p>
                 <div className="flex justify-between"></div>
                 <div className="flex justify-evenly text-center">
@@ -99,11 +132,37 @@ const Schedule = (props: any) => {
               </div>
               {/* <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" /> */}
             </div>
-            <p className="ml-4 text-gray-300 tracking-wider capitalize">
-              {item.notes}
-            </p>
-            {/* <button>Delete Job</button>
-            <button>Complete Job</button> */}
+            <div>
+              <p className="ml-4 text-gray-300 tracking-wider capitalize">
+                {item.notes}
+              </p>
+            </div>
+            <div>
+              <select required className={styles.input}>
+                <option value={"default"}>Employee 1</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index}>{item.fN}</option>
+                ))}
+              </select>
+              <select required className={styles.input}>
+                <option value={"default"}>Employee 2</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index}>{item.fN}</option>
+                ))}
+              </select>
+              <select required className={styles.input}>
+                <option value={"default"}>Employee 3</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index}>{item.fN}</option>
+                ))}
+              </select>
+              <select required className={styles.input}>
+                <option value={"default"}>Employee 4</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index}>{item.fN}</option>
+                ))}
+              </select>
+            </div>
           </div>
         ))}
       </div>
