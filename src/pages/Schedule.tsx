@@ -70,7 +70,7 @@ const Schedule = (props: any) => {
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full rounded-lg border-2 appearance-none tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full border-2 appearance-none tracking-wider border-slate-900 p-2 my-1 bg-slate-700 text-white",
   };
   return (
     <>
@@ -90,7 +90,7 @@ const Schedule = (props: any) => {
         {schedule.map((item: any, index: number) => (
           <div
             key={index}
-            className="bg-slate-900 pb-6 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black"
+            className="bg-slate-900 pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black"
           >
             <div className="text-white tracking-widest ml-4">
               <div className="flex justify-between">
@@ -123,10 +123,10 @@ const Schedule = (props: any) => {
                   </div>
                   <p className="text-gray-400 text-[30px]">-</p>
                   <div>
-                    {/* <p className="text-gray-200">{item.finish_date}</p>
-                    <p className="text-gray-400">{item.finish_time}</p> */}
-                    <p className="text-gray-200">{item.start_date}</p>
-                    <p className="text-gray-400">{item.start_time}</p>
+                    <p className="text-gray-200">
+                      {item.finish_date ? item.finish_date : "PENDING"}
+                    </p>
+                    <p className="text-gray-400">{item.finish_time}</p>
                   </div>
                 </div>
               </div>
@@ -137,31 +137,42 @@ const Schedule = (props: any) => {
                 {item.notes}
               </p>
             </div>
-            <div>
+            <div className="grid grid-cols-2 mt-2 px-2 gap-1">
               <select required className={styles.input}>
                 <option value={"default"}>Employee 1</option>
                 {employees.map((item: any, index: number) => (
-                  <option key={index}>{item.fN}</option>
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
                 ))}
               </select>
               <select required className={styles.input}>
                 <option value={"default"}>Employee 2</option>
                 {employees.map((item: any, index: number) => (
-                  <option key={index}>{item.fN}</option>
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
                 ))}
               </select>
               <select required className={styles.input}>
                 <option value={"default"}>Employee 3</option>
                 {employees.map((item: any, index: number) => (
-                  <option key={index}>{item.fN}</option>
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
                 ))}
               </select>
               <select required className={styles.input}>
                 <option value={"default"}>Employee 4</option>
                 {employees.map((item: any, index: number) => (
-                  <option key={index}>{item.fN}</option>
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
                 ))}
               </select>
+              <button className="bg-blue-500 col-span-2 items-end border-2 font-bold border-blue-800 text-lg ml-1 px-4 py-2 rounded-lg mt-4 hover:bg-blue-700 transition-all ease-in-out duration-300">
+                Mark Completed
+              </button>
             </div>
           </div>
         ))}
