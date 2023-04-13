@@ -1,5 +1,7 @@
 import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
 import { CgProfile, CgWorkAlt } from "react-icons/cg";
+import { useState } from "react";
+const [employees, setEmployees] = useState<boolean>(false);
 const styles = {
   links:
     "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
@@ -20,11 +22,11 @@ const ServiceRecord = ({
     <>
       <div
         key={index}
-        className="bg-slate-900 pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black"
+        className="bg-slate-900 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black"
       >
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
-            <div>
+            <div className="text-[15px] w-[150px]">
               {/* <CgProfile size={30} /> */}
               <p className="my-auto">
                 {item.customer_first_name} {item.customer_last_name}
@@ -38,7 +40,7 @@ const ServiceRecord = ({
             </button>
           </div>
         </div>
-        <div className="bg-slate-700 hidden md:block text-white p-4 my-2 border-l-2 border-r-2 border-slate-800 border-t-2 border-t-white border-b-2 border-b-white">
+        <div className="bg-slate-700 hidden md:block text-white p-4 my-2 border-l-2 border-r-2 border-slate-800 border-b-2 border-b-white">
           <div className="text-sm px-2 tracking-wider capitalize">
             <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
               {item.service_type}
@@ -62,7 +64,7 @@ const ServiceRecord = ({
           </div>
           {/* <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" /> */}
         </div>
-        <div>
+        <div className="h-[60px] overflow-y-auto border-b-2 border-b-white">
           <p className="ml-4 text-gray-300 tracking-wider capitalize">
             {item.notes}
           </p>
