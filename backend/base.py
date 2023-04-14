@@ -112,7 +112,7 @@ def my_profile():
     response_body = {
         "firstName": user.FirstName,
         "Admin": user.Admin,
-        "ID": user.Employeeid,
+        "ID": user.Employeeid
     }
 
     return response_body
@@ -496,7 +496,7 @@ def complete_job():
     service.ServicePerformed = True
     service.FinishDate = finishdate
     service.FinishTime = finishtime
-
+ 
     db.session.commit()
 
     return jsonify({
@@ -507,35 +507,62 @@ def complete_job():
     })
 
 #Displays Upcoming Services
-@api.route("/schedule/display", methods = ["GET"])
+@api.route("/schedule/display", methods = ["POST"])
 @jwt_required()
 def get_all_services():
+    reqs = request.get_json()
+    eid = reqs.get("EmployeeID")
     services = []
     techs = []
+    user = Employees.query.filter_by(Employeeid = eid).first()
     for service in ServiceRecords.query.all():
         customer = Customers.query.filter_by(Customerid=service.Customerid).first()
         generator = Generators.query.filter_by(Generatorid=service.Generatorid).first()
-        for ser_emp_int in Service_Employee_Int.query.filter_by(Serviceid = service.Serviceid).all():
-            emp = Employees.query.filter_by(Employeeid = ser_emp_int.Employeeid).first()
-            techs.append({
+        if user.Admin == True:
+            for ser_emp_int in Service_Employee_Int.query.filter_by(Serviceid = service.Serviceid).all():
+                    emp = Employees.query.filter_by(Employeeid = ser_emp_int.Employeeid).first()
+                    techs.append({
+                        'service_id': service.Serviceid,
+                        'employee_first_name': emp.FirstName,
+                        'employee_last_name': emp.LastName
+                    })
+            services.append({
                 'service_id': service.Serviceid,
-                'employee_first_name': emp.FirstName,
-                'employee_last_name': emp.LastName
+                'customer_first_name': customer.FirstName,
+                'customer_last_name': customer.LastName,
+                'city': customer.City,
+                'street': customer.Street,
+                'generator_name': generator.Name,
+                'service_type': service.ServiceType,
+                'start_date': service.StartDate,
+                'start_time': service.StartTime,
+                'finish_date': service.FinishDate,
+                'finish_time': service.FinishTime,
+                'notes': service.Notes
             })
-        services.append({
-            'service_id': service.Serviceid,
-            'customer_first_name': customer.FirstName,
-            'customer_last_name': customer.LastName,
-            'city': customer.City,
-            'street': customer.Street,
-            'generator_name': generator.Name,
-            'service_type': service.ServiceType,
-            'start_date': service.StartDate,
-            'start_time': service.StartTime,
-            'finish_date': service.FinishDate,
-            'finish_time': service.FinishTime,
-            'notes': service.Notes
-        })
+        else:
+            for guy in Service_Employee_Int.query.filter_by(Employee = eid).all():
+                techs.append({
+                        'service_id': service.Serviceid,
+                        'employee_first_name': guy.FirstName,
+                        'employee_last_name': guy.LastName
+                    })
+                services.append({
+                    'service_id': service.Serviceid,
+                    'customer_first_name': customer.FirstName,
+                    'customer_last_name': customer.LastName,
+                    'city': customer.City,
+                    'street': customer.Street,
+                    'generator_name': generator.Name,
+                    'service_type': service.ServiceType,
+                    'start_date': service.StartDate,
+                    'start_time': service.StartTime,
+                    'finish_date': service.FinishDate,
+                    'finish_time': service.FinishTime,
+                    'notes': service.Notes
+                })
+
+        
     return jsonify({'services': services, 'techs': techs})
     #Old code it just
     #return jsonify(services)

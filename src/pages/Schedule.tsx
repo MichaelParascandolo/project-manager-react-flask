@@ -9,22 +9,42 @@ import ServiceRecord from "../components/ServiceRecord";
 
 /* schedule page showing month week and each individual day*/
 const Schedule = (props: any) => {
+  const [userID, setUserID] = useState<number | undefined>();
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
 
-  // returns all service records with customer info
-  const getSchedule = () => {
+  function getData() {
     axios({
       method: "GET",
+      url: "http://127.0.0.1:3000/profile",
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        res.access_token && props.setToken(res.access_token);
+        setUserID(res.ID);
+        getSchedule()
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // returns all service records with customer info
+  function getSchedule() {
+    axios({
+      method: "POST",
       url: "http://127.0.0.1:3000/schedule/display",
       headers: {
         Authorization: "Bearer " + props.token,
       },
-      // data: { "Start Date": "2023-04-02" },
+       data: { EmployeeID: userID },
     })
       .then((response) => {
         setSchedule(sortArray(response.data.services));
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -62,6 +82,7 @@ const Schedule = (props: any) => {
       });
   }
   useEffect(() => {
+    getData();
     getSchedule();
     getTeam();
   }, []);
