@@ -454,10 +454,10 @@ def add_techs():
         sid = reqs.get("ServiceID")
         tech_name = []
         tech_id = []
-        tech_name.append(request.json["First Employee Name"])
-        tech_name.append(request.json["Second Employee Name"])
-        tech_name.append(request.json["Third Employee Name"])
-        tech_name.append(request.json["Fourth Employee Name"])
+        tech_name.append(request.json["FirstEmployeeID"])
+        tech_name.append(request.json["SecondEmployeeID"])
+        tech_name.append(request.json["ThirdEmployeeID"])
+        tech_name.append(request.json["FourthEmployeeID"])
 
         for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
             db.session.delete(i)

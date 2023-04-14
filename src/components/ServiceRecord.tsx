@@ -23,6 +23,10 @@ const ServiceRecord = ({
 }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const time = new Date();
+  const [currentFEmpID, setCurrentFEmpID] = useState<any>();
+  const [currentSEmpID, setCurrentSEmpID] = useState<any>();
+  const [currentTEmpID, setCurrentTEmpID] = useState<any>();
+  const [currentFoEmpID, setCurrentFoEmpID] = useState<any>();
   const deleteRecord = () => {
     if (
       confirm(
@@ -89,6 +93,35 @@ const ServiceRecord = ({
         });
     }
   };
+
+  const addTech = (e: any) => {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/schedule/techs",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: {
+        ServiceID: item.service_id,
+        FirstEmployeeID: currentFEmpID,
+        SecondEmployeeID: currentSEmpID,
+        ThirdEmployeeID: currentTEmpID,
+        FourthEmployeeID: currentFoEmpID,
+      },
+    })
+      .then((response) => {
+        toast.success("Tech Added");
+        console.log(response);
+      })
+      .catch((error) => {
+        toast.error("Something Went Wrong");
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
+
   return (
     <>
       <Toaster />
@@ -148,7 +181,11 @@ const ServiceRecord = ({
         </div>
         {openMenu ? (
           <div className="grid grid-cols-2 mt-2 px-2 gap-1">
-            <select required className={styles.input}>
+            <select required className={styles.input}
+              onChange={(e) => {
+              setCurrentFEmpID(e.target.value.split(",")[1]);
+            }}
+            >
               <option value={"default"}>Employee 1</option>
               {employees.map((item: any, index: number) => (
                 <option key={index} value={item.id}>
@@ -156,7 +193,11 @@ const ServiceRecord = ({
                 </option>
               ))}
             </select>
-            <select required className={styles.input}>
+            <select required className={styles.input}
+            onChange={(e) => {
+              setCurrentSEmpID(e.target.value.split(",")[1]);
+            }}
+            >
               <option value={"default"}>Employee 2</option>
               {employees.map((item: any, index: number) => (
                 <option key={index} value={item.id}>
@@ -164,7 +205,11 @@ const ServiceRecord = ({
                 </option>
               ))}
             </select>
-            <select required className={styles.input}>
+            <select required className={styles.input}
+            onChange={(e) => {
+              setCurrentTEmpID(e.target.value.split(",")[1]);
+            }}
+            >
               <option value={"default"}>Employee 3</option>
               {employees.map((item: any, index: number) => (
                 <option key={index} value={item.id}>
@@ -172,7 +217,11 @@ const ServiceRecord = ({
                 </option>
               ))}
             </select>
-            <select required className={styles.input}>
+            <select required className={styles.input}
+            onChange={(e) => {
+              setCurrentFoEmpID(e.target.value.split(",")[1]);
+            }}
+            >
               <option value={"default"}>Employee 4</option>
               {employees.map((item: any, index: number) => (
                 <option key={index} value={item.id}>
