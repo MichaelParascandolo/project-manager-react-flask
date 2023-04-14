@@ -490,8 +490,8 @@ def add_techs():
 def complete_job():
     reqs = request.get_json()
     sid = reqs.get("ServiceID")
-    finishdate = reqs.get("Finish Date")
-    finishtime = reqs.get("Finish Time")
+    finishdate = reqs.get("completeDate")
+    finishtime = reqs.get("completeTime")
     service = ServiceRecords.query.filter_by(Serviceid = sid).first()
     service.ServicePerformed = True
     service.FinishDate = finishdate

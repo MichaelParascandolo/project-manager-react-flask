@@ -22,6 +22,7 @@ const ServiceRecord = ({
   getSchedule: any;
 }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const time = new Date();
   const deleteRecord = () => {
     if (
       confirm(
@@ -41,6 +42,42 @@ const ServiceRecord = ({
       })
         .then((response) => {
           toast.success("Record Delete");
+          getSchedule();
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("Something Went Wrong");
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+    }
+  };
+  const completeRecord = () => {
+     {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/schedule/complete",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: {
+          EmployeeID: 77879, // forcing admin privileges we can change this later
+          ServiceID: item.service_id,
+          completeDate:
+          time.getFullYear() +
+          "-" +
+          (time.getMonth() + 1) +
+          "-" +
+          time.getDate(),
+          completeTime:
+          time.getHours() +
+          ":" +
+          time.getMinutes(),
+        },
+      })
+        .then((response) => {
+          toast.success("Record Completed");
           getSchedule();
           console.log(response);
         })
@@ -91,7 +128,7 @@ const ServiceRecord = ({
                     item.finish_date
                   ) : (
                     <>
-                      <button className="bg-blue-500 border-2 font-bold border-blue-800 text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
+                      <button onClick={() => completeRecord()} className="bg-blue-500 border-2 font-bold border-blue-800 text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
                         Complete
                       </button>
                     </>

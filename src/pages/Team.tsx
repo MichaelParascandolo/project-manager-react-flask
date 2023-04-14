@@ -78,9 +78,9 @@ const Team = (props: any) => {
         hiredDate:
           time.getMonth() +
           1 +
-          " / " +
+          "/" +
           time.getDate() +
-          " / " +
+          "/" +
           time.getFullYear(),
       },
     })
