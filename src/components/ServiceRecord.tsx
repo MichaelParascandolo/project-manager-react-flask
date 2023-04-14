@@ -1,6 +1,8 @@
 import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
 import { CgProfile, CgWorkAlt } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 const styles = {
   links:
     "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
@@ -10,20 +12,50 @@ const styles = {
 };
 const ServiceRecord = ({
   item,
-  index,
   employees,
+  token,
+  getSchedule,
 }: {
   item: any;
-  index: number;
   employees: any;
+  token: string;
+  getSchedule: any;
 }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const deleteRecord = () => {
+    if (
+      confirm(
+        "Are you sure you want to delete this record?\nThis action cannot be undone."
+      ) == true
+    ) {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/schedule/delete",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: {
+          EmployeeID: 77879, // forcing admin privileges we can change this later
+          ServiceID: item.service_id,
+        },
+      })
+        .then((response) => {
+          toast.success("Record Delete");
+          getSchedule();
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("Something Went Wrong");
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+    }
+  };
   return (
     <>
-      <div
-        key={index}
-        className="bg-slate-900 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black"
-      >
+      <Toaster />
+      <div className="bg-slate-900 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black">
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
             <div className="text-[15px] w-[150px]">
@@ -35,7 +67,7 @@ const ServiceRecord = ({
                 {item.street}, {item.city}
               </p>
             </div>
-            <button className="mr-4">
+            <button onClick={() => deleteRecord()} className="mr-4">
               <IoMdTrash size={30} />
             </button>
           </div>
@@ -121,6 +153,7 @@ const ServiceRecord = ({
             {openMenu ? "Cancel" : "Assign Job"}
           </button>
         </div>
+        {/* <p className="text-gray-500">{item.service_id}</p> */}
       </div>
     </>
   );

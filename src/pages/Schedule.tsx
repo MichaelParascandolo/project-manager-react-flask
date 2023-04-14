@@ -24,7 +24,7 @@ const Schedule = (props: any) => {
     })
       .then((response) => {
         setSchedule(sortArray(response.data.services));
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -53,7 +53,7 @@ const Schedule = (props: any) => {
     })
       .then((response) => {
         setEmployees(response.data);
-        console.log(employees);
+        // console.log(employees);
       })
       .catch((error) => {
         if (error.response) {
@@ -89,7 +89,13 @@ const Schedule = (props: any) => {
       <div className="h-1 rounded-full w-[95%] mx-auto my-2 bg-slate-900/50" />
       <div className="grid grid-cols-4 gap-4 w-[90%] m-auto">
         {schedule.map((item: any, index: number) => (
-          <ServiceRecord item={item} index={index} employees={employees} />
+          <ServiceRecord
+            item={item}
+            key={index}
+            employees={employees}
+            token={props.token}
+            getSchedule={getSchedule}
+          />
         ))}
       </div>
       <Footer />
