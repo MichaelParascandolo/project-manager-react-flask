@@ -563,7 +563,7 @@ def get_all_services():
                 })
 
         
-    return jsonify({'services': services, 'techs': techs})
+    return jsonify({'services': services, 'techs': techs, 'team': team()})
     #Old code it just
     #return jsonify(services)
 

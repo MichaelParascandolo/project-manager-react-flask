@@ -9,7 +9,6 @@ import ServiceRecord from "../components/ServiceRecord";
 
 /* schedule page showing month week and each individual day*/
 const Schedule = (props: any) => {
-  const [userID, setUserID] = useState<number | undefined>();
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
 
@@ -22,10 +21,8 @@ const Schedule = (props: any) => {
       },
     })
       .then((response) => {
-        const res = response.data;
-        res.access_token && props.setToken(res.access_token);
-        setUserID(res.ID);
-        getSchedule()
+        // console.log(response.data.ID);
+        getSchedule(response.data.ID);
       })
       .catch((error) => {
         console.log(error);
@@ -33,25 +30,26 @@ const Schedule = (props: any) => {
   }
 
   // returns all service records with customer info
-  function getSchedule() {
+  function getSchedule(id: number) {
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/schedule/display",
       headers: {
         Authorization: "Bearer " + props.token,
       },
-       data: { EmployeeID: userID },
+      data: { EmployeeID: id },
     })
       .then((response) => {
+        // console.log(response.data);
         setSchedule(sortArray(response.data.services));
-        console.log(response.data);
+        setEmployees(response.data.team);
       })
       .catch((error) => {
         if (error.response) {
           console.log(error.response);
         }
       });
-  };
+  }
   // sorts the jobs into newest to oldest
   const sortArray = (arr: any) => {
     arr.sort((a: any, b: any) => {
@@ -62,29 +60,8 @@ const Schedule = (props: any) => {
     return arr;
   };
 
-  /* Shows the team member page*/
-  function getTeam() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/employees",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-    })
-      .then((response) => {
-        setEmployees(response.data);
-        // console.log(employees);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
-  }
   useEffect(() => {
     getData();
-    getSchedule();
-    getTeam();
   }, []);
 
   const styles = {
