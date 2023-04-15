@@ -12,32 +12,14 @@ const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
 
-  function getData() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/profile",
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-    })
-      .then((response) => {
-        // console.log(response.data.ID);
-        getSchedule(response.data.ID);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   // returns all service records with customer info
-  function getSchedule(id: number) {
+  function getSchedule() {
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/schedule/display",
       headers: {
         Authorization: "Bearer " + props.token,
       },
-      data: { EmployeeID: id },
     })
       .then((response) => {
         // console.log(response.data);
@@ -61,7 +43,7 @@ const Schedule = (props: any) => {
   };
 
   useEffect(() => {
-    getData();
+    getSchedule();
   }, []);
 
   const styles = {

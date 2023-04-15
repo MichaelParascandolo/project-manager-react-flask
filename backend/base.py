@@ -510,11 +510,13 @@ def complete_job():
 @api.route("/schedule/display", methods = ["POST"])
 @jwt_required()
 def get_all_services():
-    reqs = request.get_json()
-    eid = reqs.get("EmployeeID")
+    # reqs = request.get_json() old code
+    # eid = reqs.get("EmployeeID") old code
     services = []
     techs = []
-    user = Employees.query.filter_by(Employeeid = eid).first()
+    # user = Employees.query.filter_by(Employeeid = eid).first() old code
+    # finds the user from their json web token
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
     for service in ServiceRecords.query.all():
         customer = Customers.query.filter_by(Customerid=service.Customerid).first()
         generator = Generators.query.filter_by(Generatorid=service.Generatorid).first()
