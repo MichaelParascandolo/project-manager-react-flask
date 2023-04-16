@@ -1,6 +1,6 @@
-import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
-import { CgProfile, CgWorkAlt } from "react-icons/cg";
+import { IoMdTrash, IoMdCheckmarkCircle } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 const styles = {
@@ -58,7 +58,7 @@ const ServiceRecord = ({
     }
   };
   const completeRecord = () => {
-     {
+    {
       axios({
         method: "POST",
         url: "http://localhost:3000/schedule/complete",
@@ -69,15 +69,12 @@ const ServiceRecord = ({
           EmployeeID: 77879, // forcing admin privileges we can change this later
           ServiceID: item.service_id,
           completeDate:
-          time.getFullYear() +
-          "-" +
-          (time.getMonth() + 1) +
-          "-" +
-          time.getDate(),
-          completeTime:
-          time.getHours() +
-          ":" +
-          time.getMinutes(),
+            time.getFullYear() +
+            "-" +
+            (time.getMonth() + 1) +
+            "-" +
+            time.getDate(),
+          completeTime: time.getHours() + ":" + time.getMinutes(),
         },
       })
         .then((response) => {
@@ -161,8 +158,8 @@ const ServiceRecord = ({
                     item.finish_date
                   ) : (
                     <>
-                      <button onClick={() => completeRecord()} className="bg-blue-500 border-2 font-bold border-blue-800 text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
-                        Complete
+                      <button onClick={() => completeRecord()}>
+                        <IoMdCheckmarkCircle size={30} />
                       </button>
                     </>
                   )}
@@ -171,75 +168,84 @@ const ServiceRecord = ({
               </div>
             </div>
           </div>
-          {/* <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" /> */}
-        </div>
-        {/* <p className="ml-4 text-gray-300 tracking-wider capitalize mb-2">
-          Notes:
-        </p> */}
-        <div className="h-[60px] overflow-y-auto border-b-2 border-b-gray-500 border-t-2 border-t-gray-500">
-          <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
         </div>
         {openMenu ? (
-          <div className="grid grid-cols-2 mt-2 px-2 gap-1">
-            <select required className={styles.input}
-              onChange={(e) => {
-              setCurrentFEmpID(e.target.value.split(",")[1]);
-            }}
-            >
-              <option value={"default"}>Employee 1</option>
-              {employees.map((item: any, index: number) => (
-                <option key={index} value={item.id}>
-                  {item.fN}
-                </option>
-              ))}
-            </select>
-            <select required className={styles.input}
-            onChange={(e) => {
-              setCurrentSEmpID(e.target.value.split(",")[1]);
-            }}
-            >
-              <option value={"default"}>Employee 2</option>
-              {employees.map((item: any, index: number) => (
-                <option key={index} value={item.id}>
-                  {item.fN}
-                </option>
-              ))}
-            </select>
-            <select required className={styles.input}
-            onChange={(e) => {
-              setCurrentTEmpID(e.target.value.split(",")[1]);
-            }}
-            >
-              <option value={"default"}>Employee 3</option>
-              {employees.map((item: any, index: number) => (
-                <option key={index} value={item.id}>
-                  {item.fN}
-                </option>
-              ))}
-            </select>
-            <select required className={styles.input}
-            onChange={(e) => {
-              setCurrentFoEmpID(e.target.value.split(",")[1]);
-            }}
-            >
-              <option value={"default"}>Employee 4</option>
-              {employees.map((item: any, index: number) => (
-                <option key={index} value={item.id}>
-                  {item.fN}
-                </option>
-              ))}
-            </select>
-          </div>
+          <>
+            <div className="h-[65px] overflow-y-auto border-b-2 border-b-gray-800">
+              <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
+            </div>
+            <div className="grid grid-cols-2 mt-2 px-2 gap-1">
+              <select
+                required
+                className={styles.input}
+                onChange={(e) => {
+                  setCurrentFEmpID(e.target.value.split(",")[1]);
+                }}
+              >
+                <option value={"default"}>Employee 1</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
+                ))}
+              </select>
+              <select
+                required
+                className={styles.input}
+                onChange={(e) => {
+                  setCurrentSEmpID(e.target.value.split(",")[1]);
+                }}
+              >
+                <option value={"default"}>Employee 2</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
+                ))}
+              </select>
+              <select
+                required
+                className={styles.input}
+                onChange={(e) => {
+                  setCurrentTEmpID(e.target.value.split(",")[1]);
+                }}
+              >
+                <option value={"default"}>Employee 3</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
+                ))}
+              </select>
+              <select
+                required
+                className={styles.input}
+                onChange={(e) => {
+                  setCurrentFoEmpID(e.target.value.split(",")[1]);
+                }}
+              >
+                <option value={"default"}>Employee 4</option>
+                {employees.map((item: any, index: number) => (
+                  <option key={index} value={item.id}>
+                    {item.fN}
+                  </option>
+                ))}
+              </select>
+              <button className="bg-blue-500 border-2 font-bold border-blue-800 text-lg py-1 col-span-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
+                Assign Job
+              </button>
+            </div>
+          </>
         ) : null}
-        <div className="flex justify-center mt-4">
-          <button
-            onClick={() => setOpenMenu(!openMenu)}
-            className="bg-blue-500 border-2 w-[250px] font-bold border-blue-800 text-lg px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
-          >
-            {openMenu ? "Cancel" : "Assign Job"}
+        <div className="flex justify-center">
+          <button onClick={() => setOpenMenu(!openMenu)}>
+            {!openMenu ? (
+              <MdExpandMore size={30} className="text-white -mb-4" />
+            ) : (
+              <MdExpandLess size={30} className="text-white -mb-4" />
+            )}
           </button>
         </div>
-        {/* <p className="text-gray-500">{item.service_id}</p> */}
       </div>
     </>
   );
