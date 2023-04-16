@@ -1,4 +1,8 @@
-import { IoMdTrash, IoMdCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
+import {
+  IoMdTrash,
+  IoMdCheckmarkCircle,
+  IoMdCloseCircle,
+} from "react-icons/io";
 import { useEffect, useState } from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import axios from "axios";
@@ -23,13 +27,14 @@ const ServiceRecord = ({
   getSchedule: any;
 }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  // const [showDelete, setShowDelete] = useState<boolean>(false); for a future change
   const time = new Date();
   const [currentFEmpID, setCurrentFEmpID] = useState<any>("default");
   const [currentSEmpID, setCurrentSEmpID] = useState<any>("default");
   const [currentTEmpID, setCurrentTEmpID] = useState<any>("default");
   const [currentFoEmpID, setCurrentFoEmpID] = useState<any>("default");
   const [admin, setAdmin] = useState<Boolean>();
-  
+
   function getData() {
     axios({
       method: "GET",
@@ -102,12 +107,9 @@ const ServiceRecord = ({
         },
       })
         .then((response) => {
-          if (response.data.Service_Performed == true)
-          {
+          if (response.data.Service_Performed == true) {
             toast.success("Record Completed");
-            
-          }
-          else{
+          } else {
             toast.success("Record Incompleted");
           }
           getSchedule();
@@ -171,8 +173,8 @@ const ServiceRecord = ({
             </div>
             {admin ? (
               <button onClick={() => deleteRecord()} className="mr-4">
-              <IoMdTrash size={30} />
-            </button>
+                <IoMdTrash size={30} />
+              </button>
             ) : null}
           </div>
         </div>
@@ -184,12 +186,12 @@ const ServiceRecord = ({
                 {item.generator_name}
               </p>
             </p>
-            <div className="flex justify-evenly text-center">
-              <div className="font font-semibold">
+            <div className="flex justify-evenly text-center rounded-lg bg-slate-900 p-2">
+              <div>
                 <p className="text-gray-200">{item.start_date}</p>
                 <p className="text-gray-400">{item.start_time}</p>
               </div>
-              <p className="text-gray-300 text-[50px]">-</p>
+              <p className="text-gray-300 text-[30px]">-</p>
               <div>
                 <p className="text-gray-200">
                   {item.finish_date ? (
@@ -202,18 +204,13 @@ const ServiceRecord = ({
                     </>
                   )}
                   {item.finish_date && admin ? (
-                    <>
-                    <button onClick={() => completeRecord()}>
-                      <IoMdCloseCircle size={30} />
-                    </button>
-                  </>
-                  ) : (
-                    null
-                  )}
-                </p>
-                
-                <p className="text-gray-400">{item.finish_time}</p>
-                <p className="text-gray-200">
+                    <div className="flex justify-center">
+                      <p className="text-gray-400">{item.finish_time}</p>
+                      <button className="ml-1" onClick={() => completeRecord()}>
+                        <IoMdCloseCircle size={20} />
+                      </button>
+                    </div>
+                  ) : null}
                 </p>
               </div>
             </div>
@@ -226,69 +223,70 @@ const ServiceRecord = ({
             </div>
             {admin ? (
               <div className="grid grid-cols-2 mt-2 px-2 gap-1">
-            
-              <select
-                required
-                className={styles.input}
-                onChange={(e) => {
-                  setCurrentFEmpID(e.target.value);
-                }}
-              >
-                <option value={"default"}>Employee 1</option>
-                {employees.map((item: any, index: number) => (
-                  <option key={index} value={item.id}>
-                    {item.fN}
-                  </option>
-                ))}
-              </select>
-              <select
-                required
-                className={styles.input}
-                onChange={(e) => {
-                  setCurrentSEmpID(e.target.value);
-                }}
-              >
-                <option value={"default"}>Employee 2</option>
-                {employees.map((item: any, index: number) => (
-                  <option key={index} value={item.id}>
-                    {item.fN}
-                  </option>
-                ))}
-              </select>
-              <select
-                required
-                className={styles.input}
-                onChange={(e) => {
-                  setCurrentTEmpID(e.target.value);
-                }}
-              >
-                <option value={"default"}>Employee 3</option>
-                {employees.map((item: any, index: number) => (
-                  <option key={index} value={item.id}>
-                    {item.fN}
-                  </option>
-                ))}
-              </select>
-              <select
-                required
-                className={styles.input}
-                onChange={(e) => {
-                  setCurrentFoEmpID(e.target.value);
-                }}
-              >
-                <option value={"default"}>Employee 4</option>
-                {employees.map((item: any, index: number) => (
-                  <option key={index} value={item.id}>
-                    {item.fN}
-                  </option>
-                ))}
-              </select>
-              <button className="bg-blue-500 border-2 font-bold border-blue-800 text-lg py-1 col-span-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
-                onClick={addTech}>
-                Assign Job
-              </button>
-            </div>
-              ) : null}
+                <select
+                  required
+                  className={styles.input}
+                  onChange={(e) => {
+                    setCurrentFEmpID(e.target.value);
+                  }}
+                >
+                  <option value={"default"}>Employee 1</option>
+                  {employees.map((item: any, index: number) => (
+                    <option key={index} value={item.id}>
+                      {item.fN}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  required
+                  className={styles.input}
+                  onChange={(e) => {
+                    setCurrentSEmpID(e.target.value);
+                  }}
+                >
+                  <option value={"default"}>Employee 2</option>
+                  {employees.map((item: any, index: number) => (
+                    <option key={index} value={item.id}>
+                      {item.fN}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  required
+                  className={styles.input}
+                  onChange={(e) => {
+                    setCurrentTEmpID(e.target.value);
+                  }}
+                >
+                  <option value={"default"}>Employee 3</option>
+                  {employees.map((item: any, index: number) => (
+                    <option key={index} value={item.id}>
+                      {item.fN}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  required
+                  className={styles.input}
+                  onChange={(e) => {
+                    setCurrentFoEmpID(e.target.value);
+                  }}
+                >
+                  <option value={"default"}>Employee 4</option>
+                  {employees.map((item: any, index: number) => (
+                    <option key={index} value={item.id}>
+                      {item.fN}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className="bg-blue-500 border-2 font-bold border-blue-800 text-lg py-1 col-span-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
+                  onClick={addTech}
+                >
+                  Assign Job
+                </button>
+              </div>
+            ) : null}
           </>
         ) : null}
         <div className="flex justify-center">
