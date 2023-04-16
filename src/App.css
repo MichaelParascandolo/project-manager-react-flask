@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 html {
-  @apply bg-gradient-to-b from-slate-600 to-slate-900/95 min-h-screen;
+  @apply bg-gradient-to-b from-slate-500 to-slate-700 min-h-screen;
 }
 button {
   @apply text-white font-semibold !important;

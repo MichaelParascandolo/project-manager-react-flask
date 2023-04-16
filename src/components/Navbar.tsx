@@ -72,10 +72,10 @@ const Navbar = (props: any) => {
   }, []);
   return (
     <>
-      <div className="h-[50px] w-full bg-slate-900 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-900">
+      <div className="h-[50px] w-full bg-slate-700 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-800">
         <div className="my-auto px-4 flex">
           <p>Hello 👋, {name}</p>
-          <p className="ml-2 mt-2 text-gray-500 text-[10px]">
+          <p className="ml-2 mt-2 text-gray-400 text-[10px]">
             {admin ? "ADMIN" : "USER"}
           </p>
         </div>
@@ -125,7 +125,7 @@ const Navbar = (props: any) => {
       >
         {nav ? (
           <>
-            <div className="bg-slate-900 border-2 border-slate-800 w-[50%] p-4 h-screen">
+            <div className="bg-slate-700 border-2 border-slate-400 w-[50%] p-4 h-screen">
               <div className="select-none">
                 <h1
                   className={`font-pacifico text-center tracking-wide text-white text-[25px]`}
@@ -147,7 +147,7 @@ const Navbar = (props: any) => {
                           {item.title}
                           <CgChevronRight size={20} className={"mr-2"} />
                         </li>
-                        <div className="bg-slate-800/70 w-full h-0.5 rounded-lg" />
+                        <div className="bg-slate-700/70 w-full h-0.5 rounded-lg" />
                       </a>
                     ) : !item.adminRequired ? (
                       <a href={item.path} key={index}>
@@ -155,7 +155,7 @@ const Navbar = (props: any) => {
                           {item.title}
                           <CgChevronRight size={20} className={"mr-2"} />
                         </li>
-                        <div className="bg-slate-800/70 w-full h-0.5 rounded-lg" />
+                        <div className="bg-slate-700/70 w-full h-0.5 rounded-lg" />
                       </a>
                     ) : null
                   )}

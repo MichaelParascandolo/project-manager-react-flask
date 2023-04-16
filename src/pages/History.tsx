@@ -158,14 +158,14 @@ const History = (props: any) => {
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
-      "w-full rounded-lg border-2 tracking-wider appearance-none border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider appearance-none border-slate-400 p-2 bg-slate-700 text-white",
     button:
-      "flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-slate-600 hover:bg-blue-500 transition-all ease-in-out duration-300",
+      "flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-slate-400 hover:bg-blue-500 transition-all ease-in-out duration-300",
   };
   return (
     <>
       <Toaster />
-      <div className="bg-slate-900 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-800 text-white p-4 rounded-lg shadow-lg shadow-black">
+      <div className="bg-slate-700 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-400 text-white p-4 rounded-lg shadow-lg shadow-slate-800">
         {display ? (
           <>
             <div className="flex justify-between w-full">
@@ -288,7 +288,7 @@ const History = (props: any) => {
                 <div className="col-span-4">
                   <label className={styles.label}>Notes:</label>
                   <textarea
-                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
+                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-400 p-2 bg-slate-700 text-white"
                     onChange={(e) => setJobNotes(e.target.value)}
                     value={jobNotes}
                   />
@@ -319,7 +319,7 @@ const History = (props: any) => {
             {work.map((item, index) => (
               <div
                 key={index}
-                className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900"
+                className="bg-slate-700 hidden md:block border-2 border-slate-400 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-700"
               >
                 <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
                   <div>

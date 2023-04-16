@@ -71,12 +71,12 @@ const Employee = ({
     <>
       <div
         className={
-          "bg-slate-900 text-white p-4 w-full rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:scale-105 duration-300 ease-in-out transition-all"
+          "bg-slate-700 text-white p-4 w-full rounded-lg border-2 border-slate-400 shadow-md shadow-slate-800 hover:scale-105 duration-300 ease-in-out transition-all"
         }
       >
         <div className="flex justify-evenly">
           <div className="my-auto hidden sm:block">
-            <div className="bg-slate-800 border-2 text-white border-slate-700 p-3 m-4 rounded-full">
+            <div className="bg-slate-700 border-2 text-white border-slate-400 p-3 m-4 rounded-full">
               {item.admin ? (
                 <RiAdminLine size={70} />
               ) : (
@@ -101,7 +101,7 @@ const Employee = ({
                 </p>
               </div>
             </div>
-            <div className="h-0.5 w-full my-2 bg-slate-800 rounded-xl" />
+            <div className="h-0.5 w-full my-2 bg-slate-700 rounded-xl" />
             <p className="text-md py-0.5 tracking-wide text-gray-200">
               Number:
               <span className="ml-2">{formatNumber(item.phone)}</span>

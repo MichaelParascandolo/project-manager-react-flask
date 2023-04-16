@@ -57,7 +57,7 @@ function Signin(props: any) {
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider border-slate-300 p-2 bg-slate-700 text-white",
   };
   return (
     <div className="flex min-h-screen justify-center">
@@ -67,7 +67,7 @@ function Signin(props: any) {
           <div className="-mb-6">
             <Logo />
           </div>
-          <div className="mt-10 bg-slate-800 shadow-xl shadow-black rounded-xl border-2 border-slate-900 h-[400px]">
+          <div className="mt-10 bg-slate-700 shadow-xl shadow-slate-800 rounded-xl border-2 border-slate-400 h-[400px]">
             <div className="flex justify-center">
               <div className="w-[500px] p-8">
                 <h2 className="text-white cap font-bold text-center text-xl tracking-wide">

@@ -13,7 +13,7 @@ const styles = {
     "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
   label: "text-white py-2",
   input:
-    "w-full border-2 appearance-none tracking-wider border-slate-900 p-2 my-1 bg-slate-700 text-white",
+    "w-full border-2 appearance-none tracking-wider border-slate-400 p-2 my-1 bg-slate-700 text-white",
 };
 const ServiceRecord = ({
   item,
@@ -160,7 +160,7 @@ const ServiceRecord = ({
   return (
     <>
       <Toaster />
-      <div className="bg-slate-900 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-800 shadow-black">
+      <div className="bg-slate-700 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-400 shadow-slate-800">
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
             <div className="text-[15px] w-[150px]">
@@ -179,7 +179,7 @@ const ServiceRecord = ({
             ) : null}
           </div>
         </div>
-        <div className="bg-slate-700 hidden md:block text-white p-4 mt-2 border-l-2 border-r-2 border-slate-800">
+        <div className="bg-slate-500 hidden md:block text-white p-4 mt-2">
           <div className="text-sm px-2 tracking-wider capitalize">
             <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
               {item.service_type}
@@ -187,7 +187,7 @@ const ServiceRecord = ({
                 {item.generator_name}
               </p>
             </p>
-            <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-900 p-2">
+            <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-700 p-2">
               <div>
                 <p className="text-gray-200">{item.start_date}</p>
                 <p className="text-gray-400">{item.start_time}</p>

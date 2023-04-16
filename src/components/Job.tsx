@@ -18,13 +18,13 @@ const Job = ({
 
   const styles = {
     notCompleted:
-      "text-white mb-6 pb-4 bg-slate-900 mx-2 my-4 rounded-lg shadow-md shadow-black",
+      "text-white mb-6 pb-4 bg-slate-700 mx-2 my-4 rounded-lg shadow-md shadow-slate-800",
     completed:
-      "text-white mb-6 pb-4 bg-green-600 mx-2 my-4 rounded-lg shadow-md shadow-black",
+      "text-white mb-6 pb-4 bg-green-600 mx-2 my-4 rounded-lg shadow-md shadow-slate-800",
     button:
       "bg-blue-500 border-2 border-blue-800 text-lg p-2 rounded-full hover:bg-blue-700 transition-all ease-in-out duration-300 text-gray-200",
     input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 my-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider border-slate-400 p-2 my-2 bg-slate-700 text-white",
   };
   return (
     <>

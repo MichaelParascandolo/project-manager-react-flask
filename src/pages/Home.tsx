@@ -31,7 +31,9 @@ const Home = (props: any) => {
         }
       });
   }
-{/* logs out the user and removes their token*/}
+  {
+    /* logs out the user and removes their token*/
+  }
   function logOut() {
     axios({
       method: "POST",
@@ -57,12 +59,14 @@ const Home = (props: any) => {
   const iconSize: number = 60;
   const styles = {
     container:
-      "bg-slate-900 text-white p-2 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
+      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-400 shadow-md shadow-slate-800 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
     container2:
-      "bg-slate-900 text-white p-2 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
+      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-400 shadow-md shadow-slate-800 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
     text: "text-2xl mx-auto my-auto font-bold tracking-wide",
   };
-{/* Home page layout, references the different pages of the system*/}
+  {
+    /* Home page layout, references the different pages of the system*/
+  }
   return (
     <>
       <div className="flex justify-center md:mt-20">

@@ -9,7 +9,7 @@ function NotFound() {
         <div className="-mb-6">
           <Logo />
         </div>
-        <div className="mt-10 bg-slate-800 shadow-lg shadow-black rounded-xl border-2 border-slate-900 h-[250px]">
+        <div className="mt-10 bg-slate-700 shadow-lg shadow-slate-800 rounded-xl border-2 border-slate-400 h-[250px]">
           <div className="flex justify-center">
             <div className="w-[500px] p-8">
               <div className="text-white flex justify-center mb-2">
