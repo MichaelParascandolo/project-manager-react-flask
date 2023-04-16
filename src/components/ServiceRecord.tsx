@@ -126,6 +126,7 @@ const ServiceRecord = ({
 
   const addTech = (e: any) => {
     e.preventDefault();
+    setOpenMenu(false);
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/schedule/techs",
@@ -186,32 +187,34 @@ const ServiceRecord = ({
                 {item.generator_name}
               </p>
             </p>
-            <div className="flex justify-evenly text-center rounded-lg bg-slate-900 p-2">
+            <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-900 p-2">
               <div>
                 <p className="text-gray-200">{item.start_date}</p>
                 <p className="text-gray-400">{item.start_time}</p>
               </div>
-              <p className="text-gray-300 text-[30px]">-</p>
+              {item.finish_date && admin ? (
+                <div>
+                  <p className="text-gray-300 text-[25px]">-</p>
+                  <button onClick={() => completeRecord()}>
+                    <IoMdCloseCircle size={20} />
+                  </button>
+                </div>
+              ) : (
+                <p className="text-gray-300 text-[25px] my-auto">-</p>
+              )}
               <div>
-                <p className="text-gray-200">
-                  {item.finish_date ? (
-                    item.finish_date
-                  ) : (
-                    <>
-                      <button onClick={() => completeRecord()}>
-                        <IoMdCheckmarkCircle size={30} />
-                      </button>
-                    </>
-                  )}
-                  {item.finish_date && admin ? (
-                    <div className="flex justify-center">
-                      <p className="text-gray-400">{item.finish_time}</p>
-                      <button className="ml-1" onClick={() => completeRecord()}>
-                        <IoMdCloseCircle size={20} />
-                      </button>
-                    </div>
-                  ) : null}
-                </p>
+                {item.finish_date ? (
+                  <div>
+                    <p className="text-gray-200">{item.finish_date}</p>
+                    <p className="text-gray-400">{item.finish_time}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <button onClick={() => completeRecord()}>
+                      <IoMdCheckmarkCircle size={35} />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
