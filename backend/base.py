@@ -446,39 +446,33 @@ def edit_Job():
 def add_techs():  
     
     #Checking that user is Admin
-    empID = request.json.get("EmployeeID", None)
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
 
     if user.Admin == True:
         reqs = request.get_json()
         sid = reqs.get("ServiceID")
-        tech_name = []
         tech_id = []
-        tech_name.append(request.json["FirstEmployeeID"])
-        tech_name.append(request.json["SecondEmployeeID"])
-        tech_name.append(request.json["ThirdEmployeeID"])
-        tech_name.append(request.json["FourthEmployeeID"])
+        tech_id.append(request.json["FirstEmployeeID"])
+        tech_id.append(request.json["SecondEmployeeID"])
+        tech_id.append(request.json["ThirdEmployeeID"])
+        tech_id.append(request.json["FourthEmployeeID"])
 
         for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
             db.session.delete(i)
 
-        for j in tech_name:         
-            if not j == None:
-                emp = Employees.query.filter_by(LastName = j).first()
-                tech_id.append(emp.Employeeid)
-
         for k in tech_id:
-            assigned = Service_Employee_Int(Serviceid = sid, Employeeid = k)
-            db.session.add(assigned)
+            if k != "default":
+                assigned = Service_Employee_Int(Serviceid = sid, Employeeid = k)
+                db.session.add(assigned)
         
         db.session.commit()
 
         return jsonify({
             "ServiceID": sid,
-            "First_Employee_Name": tech_name[1],
-            "Second_Employee_Name": tech_name[2],
-            "Third_Employee_Name": tech_name[3],
-            "Fourth_Employee_Name": tech_name[4],
+            "First_Employee_ID": tech_id[0],
+            "Second_Employee_ID": tech_id[1],
+            "Third_Employee_ID": tech_id[2],
+            "Fourth_Employee_ID": tech_id[3],
         })
 
 
@@ -493,15 +487,23 @@ def complete_job():
     finishdate = reqs.get("completeDate")
     finishtime = reqs.get("completeTime")
     service = ServiceRecords.query.filter_by(Serviceid = sid).first()
-    service.ServicePerformed = True
-    service.FinishDate = finishdate
-    service.FinishTime = finishtime
+    
+    if service.ServicePerformed == False:
+        service.ServicePerformed = True
+        service.FinishDate = finishdate
+        service.FinishTime = finishtime
+    else:
+        service.ServicePerformed = False
+        service.FinishDate = None
+        service.FinishTime = None
+    
+    
  
     db.session.commit()
 
     return jsonify({
         "ServiceID": service.Serviceid,
-        "Service Performed": service.ServicePerformed,
+        "Service_Performed": service.ServicePerformed,
         "Finish Date": service.FinishDate,
         "Finish Time": service.FinishTime
     })
@@ -543,26 +545,27 @@ def get_all_services():
                 'notes': service.Notes
             })
         else:
-            for guy in Service_Employee_Int.query.filter_by(Employee = eid).all():
-                techs.append({
+            for guy in Service_Employee_Int.query.filter_by(Employeeid = user.Employeeid).all():
+                if service.Serviceid == guy.Serviceid:
+                    techs.append({
+                            'service_id': service.Serviceid,
+                            'employee_first_name': user.FirstName,
+                            'employee_last_name': user.LastName
+                        })
+                    services.append({
                         'service_id': service.Serviceid,
-                        'employee_first_name': guy.FirstName,
-                        'employee_last_name': guy.LastName
+                        'customer_first_name': customer.FirstName,
+                        'customer_last_name': customer.LastName,
+                        'city': customer.City,
+                        'street': customer.Street,
+                        'generator_name': generator.Name,
+                        'service_type': service.ServiceType,
+                        'start_date': service.StartDate,
+                        'start_time': service.StartTime,
+                        'finish_date': service.FinishDate,
+                        'finish_time': service.FinishTime,
+                        'notes': service.Notes
                     })
-                services.append({
-                    'service_id': service.Serviceid,
-                    'customer_first_name': customer.FirstName,
-                    'customer_last_name': customer.LastName,
-                    'city': customer.City,
-                    'street': customer.Street,
-                    'generator_name': generator.Name,
-                    'service_type': service.ServiceType,
-                    'start_date': service.StartDate,
-                    'start_time': service.StartTime,
-                    'finish_date': service.FinishDate,
-                    'finish_time': service.FinishTime,
-                    'notes': service.Notes
-                })
 
         
     return jsonify({'services': services, 'techs': techs, 'team': team()})

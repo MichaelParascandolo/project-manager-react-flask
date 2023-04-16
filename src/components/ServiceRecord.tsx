@@ -1,4 +1,4 @@
-import { IoMdTrash, IoMdCheckmarkCircle } from "react-icons/io";
+import { IoMdTrash, IoMdCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import axios from "axios";
@@ -24,10 +24,34 @@ const ServiceRecord = ({
 }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const time = new Date();
-  const [currentFEmpID, setCurrentFEmpID] = useState<any>();
-  const [currentSEmpID, setCurrentSEmpID] = useState<any>();
-  const [currentTEmpID, setCurrentTEmpID] = useState<any>();
-  const [currentFoEmpID, setCurrentFoEmpID] = useState<any>();
+  const [currentFEmpID, setCurrentFEmpID] = useState<any>("default");
+  const [currentSEmpID, setCurrentSEmpID] = useState<any>("default");
+  const [currentTEmpID, setCurrentTEmpID] = useState<any>("default");
+  const [currentFoEmpID, setCurrentFoEmpID] = useState<any>("default");
+  const [admin, setAdmin] = useState<Boolean>();
+  
+  function getData() {
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:3000/profile",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        res.access_token;
+        setAdmin(Boolean(res.Admin));
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }
+
   const deleteRecord = () => {
     if (
       confirm(
@@ -67,7 +91,6 @@ const ServiceRecord = ({
           Authorization: "Bearer " + token,
         },
         data: {
-          EmployeeID: 77879, // forcing admin privileges we can change this later
           ServiceID: item.service_id,
           completeDate:
             time.getFullYear() +
@@ -79,7 +102,14 @@ const ServiceRecord = ({
         },
       })
         .then((response) => {
-          toast.success("Record Completed");
+          if (response.data.Service_Performed == true)
+          {
+            toast.success("Record Completed");
+            
+          }
+          else{
+            toast.success("Record Incompleted");
+          }
           getSchedule();
           console.log(response);
         })
@@ -120,6 +150,10 @@ const ServiceRecord = ({
       });
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <Toaster />
@@ -135,9 +169,11 @@ const ServiceRecord = ({
                 {item.street}, {item.city}
               </p>
             </div>
-            <button onClick={() => deleteRecord()} className="mr-4">
+            {admin ? (
+              <button onClick={() => deleteRecord()} className="mr-4">
               <IoMdTrash size={30} />
             </button>
+            ) : null}
           </div>
         </div>
         <div className="bg-slate-700 hidden md:block text-white p-4 mt-2 border-l-2 border-r-2 border-slate-800">
@@ -165,8 +201,20 @@ const ServiceRecord = ({
                       </button>
                     </>
                   )}
+                  {item.finish_date && admin ? (
+                    <>
+                    <button onClick={() => completeRecord()}>
+                      <IoMdCloseCircle size={30} />
+                    </button>
+                  </>
+                  ) : (
+                    null
+                  )}
                 </p>
+                
                 <p className="text-gray-400">{item.finish_time}</p>
+                <p className="text-gray-200">
+                </p>
               </div>
             </div>
           </div>
@@ -176,12 +224,14 @@ const ServiceRecord = ({
             <div className="h-[65px] overflow-y-auto border-b-2 border-b-gray-800">
               <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
             </div>
-            <div className="grid grid-cols-2 mt-2 px-2 gap-1">
+            {admin ? (
+              <div className="grid grid-cols-2 mt-2 px-2 gap-1">
+            
               <select
                 required
                 className={styles.input}
                 onChange={(e) => {
-                  setCurrentFEmpID(e.target.value.split(",")[1]);
+                  setCurrentFEmpID(e.target.value);
                 }}
               >
                 <option value={"default"}>Employee 1</option>
@@ -195,7 +245,7 @@ const ServiceRecord = ({
                 required
                 className={styles.input}
                 onChange={(e) => {
-                  setCurrentSEmpID(e.target.value.split(",")[1]);
+                  setCurrentSEmpID(e.target.value);
                 }}
               >
                 <option value={"default"}>Employee 2</option>
@@ -209,7 +259,7 @@ const ServiceRecord = ({
                 required
                 className={styles.input}
                 onChange={(e) => {
-                  setCurrentTEmpID(e.target.value.split(",")[1]);
+                  setCurrentTEmpID(e.target.value);
                 }}
               >
                 <option value={"default"}>Employee 3</option>
@@ -223,7 +273,7 @@ const ServiceRecord = ({
                 required
                 className={styles.input}
                 onChange={(e) => {
-                  setCurrentFoEmpID(e.target.value.split(",")[1]);
+                  setCurrentFoEmpID(e.target.value);
                 }}
               >
                 <option value={"default"}>Employee 4</option>
@@ -233,10 +283,12 @@ const ServiceRecord = ({
                   </option>
                 ))}
               </select>
-              <button className="bg-blue-500 border-2 font-bold border-blue-800 text-lg py-1 col-span-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300">
+              <button className="bg-blue-500 border-2 font-bold border-blue-800 text-lg py-1 col-span-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
+                onClick={addTech}>
                 Assign Job
               </button>
             </div>
+              ) : null}
           </>
         ) : null}
         <div className="flex justify-center">
