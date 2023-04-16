@@ -5,7 +5,9 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-{/* SignIn function that will check the validity of the login information */}
+{
+  /* SignIn function that will check the validity of the login information */
+}
 function Signin(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,8 +39,12 @@ function Signin(props: any) {
           toast.error(error.response.data.msg, {
             id: toastId,
           });
-          setEmail("");
-          setPassword("");
+          if (error.response.data.msg == "Invalid Password") {
+            setPassword("");
+          } else {
+            setPassword("");
+            setEmail("");
+          }
         }
       });
   }
