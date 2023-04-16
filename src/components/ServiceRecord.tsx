@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { CgProfile } from "react-icons/cg";
 const styles = {
   links:
     "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
@@ -126,7 +127,7 @@ const ServiceRecord = ({
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
             <div className="text-[15px] w-[150px]">
-              {/* <CgProfile size={30} /> */}
+              {/* <CgProfile size={20} /> */}
               <p className="my-auto">
                 {item.customer_first_name} {item.customer_last_name}
               </p>
@@ -143,15 +144,16 @@ const ServiceRecord = ({
           <div className="text-sm px-2 tracking-wider capitalize">
             <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
               {item.service_type}
-              <br />
-              <span className="text-gray-400">{item.generator_name}</span>
+              <p className="text-gray-400 tracking-wide font-semibold">
+                {item.generator_name}
+              </p>
             </p>
             <div className="flex justify-evenly text-center">
-              <div>
+              <div className="font font-semibold">
                 <p className="text-gray-200">{item.start_date}</p>
                 <p className="text-gray-400">{item.start_time}</p>
               </div>
-              <p className="text-gray-400 text-[30px]">-</p>
+              <p className="text-gray-300 text-[50px]">-</p>
               <div>
                 <p className="text-gray-200">
                   {item.finish_date ? (
