@@ -59,3 +59,10 @@ class Service_Employee_Int(db.Model):
     IntService = db.relationship("ServiceRecords", backref=db.backref("SERVICE_RECORD", uselist=False))
     Employeeid = db.Column(db.Integer, db.ForeignKey('EMPLOYEE.Employeeid'), primary_key = True, nullable=True)
     IntEmployee = db.relationship("Employees", backref=db.backref("EMPLOYEES", uselist=False))
+
+class Password_Recovery(db.Model):
+    __tablename__ = "PASSWORD_RECOVERY"
+    Code = db.Column(db.Text, primary_key =True, nullable = False, unique = True)
+    Email = db.Column(db.String(345), nullable = False, unique = False)
+    Password = db.Column(db.Text, nullable = False)
+    DateMade = db.Column(db.String(345), nullable = False)

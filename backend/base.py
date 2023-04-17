@@ -8,8 +8,10 @@ from flask_cors import CORS, cross_origin
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
-from models import db, Employees, Customers, Generators, ServiceRecords, Service_Employee_Int
+from models import db, Employees, Customers, Generators, ServiceRecords, Service_Employee_Int, Password_Recovery
 import csv
+import secrets
+import string
 
 
 
@@ -104,6 +106,38 @@ def team():
         team_list.append(employee)
     return team_list
     
+#Password Recovery Route, creates a new code for the user
+@api.route("/recovery/create", methods=["POST"])
+def create_code():
+    email = request.json["Email"]
+    datemade = request.json["DateCreated"]
+
+    user = Employees.query.filter_by(Email = email).first()
+    for i in Password_Recovery.query.filter_by(Email = email).all():
+        db.delete(i)
+    
+
+    code = ("".join(secrets.choice(string.ascii_upper + string.ascii_lowercase + string.digits, k =10)))
+    new_recovery = Password_Recovery(Code = code, Email = email, Password = user.Password, DateMade = datemade)
+    db.add(new_recovery)
+    
+    db.commit()
+
+#Password Recovery Route, checks that the code is correct and displays your password
+@api.route("/recovery/check", methods=["POST"])
+def check_code():
+    email = request.json["Email"]
+    code = request.json["Code"]
+
+    recovery = Password_Recovery.query.filter_by(Email = email).first()
+    if recovery.Code == code:
+        password = recovery.Password
+        db.delete(recovery)
+        db.commit()
+        return password
+    else:
+        return {"msg": "Invalid Code"}, 401
+
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])
 @jwt_required()
