@@ -546,24 +546,32 @@ def complete_job():
 @api.route("/schedule/display", methods = ["POST"])
 @jwt_required()
 def get_all_services():
-    # reqs = request.get_json() old code
-    # eid = reqs.get("EmployeeID") old code
+    start_date = request.json.get("startDate", None)
+    end_date = request.json.get("endDate", None)
     services = []
     techs = []
-    # user = Employees.query.filter_by(Employeeid = eid).first() old code
-    # finds the user from their json web token
     user = Employees.query.filter_by(Email=get_jwt_identity()).first()
-    for service in ServiceRecords.query.all():
+
+    if start_date is None and end_date is None:
+        service_records = ServiceRecords.query.all()
+    else:
+        service_records = ServiceRecords.query.filter(ServiceRecords.StartDate >= start_date, ServiceRecords.StartDate <= end_date).all()
+    if not service_records:
+        return jsonify({'message': 'no jobs found'})
+
+    for service in service_records:
         customer = Customers.query.filter_by(Customerid=service.Customerid).first()
         generator = Generators.query.filter_by(Generatorid=service.Generatorid).first()
+
         if user.Admin == True:
             for ser_emp_int in Service_Employee_Int.query.filter_by(Serviceid = service.Serviceid).all():
-                    emp = Employees.query.filter_by(Employeeid = ser_emp_int.Employeeid).first()
-                    techs.append({
-                        'service_id': service.Serviceid,
-                        'employee_first_name': emp.FirstName,
-                        'employee_last_name': emp.LastName
-                    })
+                emp = Employees.query.filter_by(Employeeid = ser_emp_int.Employeeid).first()
+                techs.append({
+                    'service_id': service.Serviceid,
+                    'employee_first_name': emp.FirstName,
+                    'employee_last_name': emp.LastName
+                })
+
             services.append({
                 'service_id': service.Serviceid,
                 'customer_first_name': customer.FirstName,
@@ -578,14 +586,16 @@ def get_all_services():
                 'finish_time': service.FinishTime,
                 'notes': service.Notes
             })
+
         else:
             for guy in Service_Employee_Int.query.filter_by(Employeeid = user.Employeeid).all():
                 if service.Serviceid == guy.Serviceid:
                     techs.append({
-                            'service_id': service.Serviceid,
-                            'employee_first_name': user.FirstName,
-                            'employee_last_name': user.LastName
-                        })
+                        'service_id': service.Serviceid,
+                        'employee_first_name': user.FirstName,
+                        'employee_last_name': user.LastName
+                    })
+
                     services.append({
                         'service_id': service.Serviceid,
                         'customer_first_name': customer.FirstName,
@@ -601,10 +611,7 @@ def get_all_services():
                         'notes': service.Notes
                     })
 
-        
-    return jsonify({'services': services, 'techs': techs, 'team': team()})
-    #Old code it just
-    #return jsonify(services)
+    return jsonify({'services': services, 'techs': techs, 'team': team(),})
 
 #Deletes Jobs from the schedule page
 #Doable by Admins

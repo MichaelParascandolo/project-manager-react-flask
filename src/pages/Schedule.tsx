@@ -13,21 +13,23 @@ const Schedule = (props: any) => {
     endDate: null,
   });
   const handleValueChange = (newValue: any) => {
-    console.log("newValue:", newValue);
     setValue(newValue);
+    // console.log(value);
   };
 
   // returns all service records with customer info
   function getSchedule() {
+    console.log(value);
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/schedule/display",
       headers: {
         Authorization: "Bearer " + props.token,
       },
+      data: { startDate: value.startDate, endDate: value.endDate },
     })
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data.services);
         setSchedule(sortArray(response.data.services));
         setEmployees(response.data.team);
       })
@@ -49,7 +51,7 @@ const Schedule = (props: any) => {
 
   useEffect(() => {
     getSchedule();
-  }, []);
+  }, [value]);
 
   const styles = {
     links:
@@ -69,7 +71,7 @@ const Schedule = (props: any) => {
             {schedule.length} upcoming jobs
           </h3> */}
           <Datepicker
-            useRange={true}
+            useRange={false}
             placeholder="DISPLAYING ALL JOBS"
             inputClassName={styles.input}
             // containerClassName={""}
