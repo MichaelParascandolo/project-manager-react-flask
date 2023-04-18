@@ -1,16 +1,21 @@
-import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { IoMdArrowRoundBack, IoMdTrash } from "react-icons/io";
-import { CgProfile, CgWorkAlt } from "react-icons/cg";
-import Day from "../components/Day";
-import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Footer from "../components/Footer";
 import ServiceRecord from "../components/ServiceRecord";
+import Datepicker from "react-tailwindcss-datepicker";
 
 /* schedule page showing month week and each individual day*/
 const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
+  const [value, setValue] = useState<any>({
+    startDate: null,
+    endDate: null,
+  });
+  const handleValueChange = (newValue: any) => {
+    console.log("newValue:", newValue);
+    setValue(newValue);
+  };
 
   // returns all service records with customer info
   function getSchedule() {
@@ -51,7 +56,7 @@ const Schedule = (props: any) => {
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full border-2 appearance-none tracking-wider border-slate-900 p-2 my-1 bg-slate-700 text-white",
+      "w-full border-2 appearance-none rounded-lg tracking-wider border-slate-900 p-2 my-1 bg-slate-700 text-white",
   };
   return (
     <>
@@ -60,9 +65,19 @@ const Schedule = (props: any) => {
           <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
             Job Schedule
           </h2>
-          <h3 className="text-gray-500 uppercase text-sm my-1 text-center tracking-wider">
+          {/* <h3 className="text-gray-500 uppercase text-sm my-1 text-center tracking-wider">
             {schedule.length} upcoming jobs
-          </h3>
+          </h3> */}
+          <Datepicker
+            useRange={true}
+            placeholder="DISPLAYING ALL JOBS"
+            inputClassName={styles.input}
+            // containerClassName={""}
+            showShortcuts={true}
+            separator={"-"}
+            value={value}
+            onChange={handleValueChange}
+          />
         </div>
       </div>
       {/* schedule */}
