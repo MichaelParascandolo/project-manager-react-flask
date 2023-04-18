@@ -133,7 +133,7 @@ const Team = (props: any) => {
                     <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
                       Manage Employees
                     </h2>
-                    <h3 className="text-gray-500 uppercase text-sm my-1 text-center tracking-wider">
+                    <h3 className="text-gray-300 uppercase text-sm my-1 text-center tracking-wider">
                       {teamMembers.length} Total Employees
                     </h3>
                     <div className="flex justify-center">

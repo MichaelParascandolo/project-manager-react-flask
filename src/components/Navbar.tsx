@@ -72,7 +72,7 @@ const Navbar = (props: any) => {
   }, []);
   return (
     <>
-      <div className="h-[50px] w-full bg-slate-700 select-none text-white border-b-2 border-slate-500 flex justify-between tracking-wide shadow-lg shadow-slate-700">
+      <div className="h-[50px] w-full bg-slate-700 select-none text-white border-b-2 border-slate-500 flex justify-between tracking-wide shadow-lg shadow-slate-600">
         <div className="my-auto px-4 flex">
           <p>Hello 👋, {name}</p>
           <p className="ml-2 mt-2 text-gray-400 text-[10px]">

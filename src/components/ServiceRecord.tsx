@@ -179,11 +179,11 @@ const ServiceRecord = ({
             ) : null}
           </div>
         </div>
-        <div className="bg-slate-500 hidden md:block text-white p-4 mt-2">
+        <div className="bg-slate-400 hidden md:block text-white p-4 mt-2">
           <div className="text-sm px-2 tracking-wider capitalize">
-            <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
+            <p className="text-gray-900 uppercase mb-2 font-bold text-center text-[16px]">
               {item.service_type}
-              <p className="text-gray-700 tracking-wide font-semibold">
+              <p className="text-gray-700 tracking-wide font-semibold text-[14px]">
                 {item.generator_name}
               </p>
             </p>
