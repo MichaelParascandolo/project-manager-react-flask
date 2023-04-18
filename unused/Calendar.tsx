@@ -30,7 +30,7 @@ const Calendar = () => {
   }, [activeMonth]);
 
   return (
-    <div className="p-4 bg-white  dark:bg-slate-700 border-2 border-slate-400 mt-20 mx-4">
+    <div className="p-4 bg-white  dark:bg-slate-700 border-2 border-slate-500 mt-20 mx-4">
       <div className="w-full h-[500px] rounded">
         <div className="flex items-center justify-between mb-4">
           <div className="font-bold text-xl text-white">

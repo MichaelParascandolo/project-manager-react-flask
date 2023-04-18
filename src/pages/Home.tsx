@@ -59,9 +59,9 @@ const Home = (props: any) => {
   const iconSize: number = 60;
   const styles = {
     container:
-      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-400 shadow-md shadow-slate-800 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
+      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-500 shadow-lg shadow-slate-700 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
     container2:
-      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-400 shadow-md shadow-slate-800 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
+      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-500 shadow-lg shadow-slate-700 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
     text: "text-2xl mx-auto my-auto font-bold tracking-wide",
   };
   {
@@ -74,7 +74,7 @@ const Home = (props: any) => {
           <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, {name}
           </div>
-          <h2 className="font-roboto uppercase text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
+          <h2 className="font-roboto uppercase text-center mb-4 -mt-2 text-gray-600 font-bold text-xl tracking-wider select-none">
             {admin ? "Admin" : "User"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">

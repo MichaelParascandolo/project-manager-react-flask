@@ -72,7 +72,7 @@ const Navbar = (props: any) => {
   }, []);
   return (
     <>
-      <div className="h-[50px] w-full bg-slate-700 select-none text-white flex justify-between tracking-wide shadow-md shadow-slate-800">
+      <div className="h-[50px] w-full bg-slate-700 select-none text-white border-b-2 border-slate-500 flex justify-between tracking-wide shadow-lg shadow-slate-700">
         <div className="my-auto px-4 flex">
           <p>Hello 👋, {name}</p>
           <p className="ml-2 mt-2 text-gray-400 text-[10px]">
@@ -125,7 +125,7 @@ const Navbar = (props: any) => {
       >
         {nav ? (
           <>
-            <div className="bg-slate-700 border-2 border-slate-400 w-[50%] p-4 h-screen">
+            <div className="bg-slate-700 border-2 border-slate-500 w-[50%] p-4 h-screen">
               <div className="select-none">
                 <h1
                   className={`font-pacifico text-center tracking-wide text-white text-[25px]`}

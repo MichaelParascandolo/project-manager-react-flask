@@ -3,7 +3,7 @@ import Job from "./Job";
 const Day = ({ day, date }: { day: string; date?: number }) => {
   return (
     <>
-      <div className="bg-slate-700 rounded-lg shadow-lg shadow-slate-800 border-2 border-slate-400">
+      <div className="bg-slate-700 rounded-lg shadow-lg shadow-slate-700 border-2 border-slate-500">
         <h1 className="text-white text-center font-mono tracking-wider m-1 text-[25px] bg-slate-700/50 block rounded-lg font-bold">
           {date}
         </h1>

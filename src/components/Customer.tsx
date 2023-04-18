@@ -53,7 +53,7 @@ const Customer = ({
   };
   return (
     <>
-      <li className="bg-slate-700 border-2 border-slate-400 text-white px-4 py-2 rounded-lg shadow-md shadow-slate-800">
+      <li className="bg-slate-700 border-2 border-slate-500 text-white px-4 py-2 rounded-lg shadow-lg shadow-slate-700">
         <div
           onClick={() => setShowDetails(!showDetails)}
           className="flex justify-between w-full select-none cursor-pointer"

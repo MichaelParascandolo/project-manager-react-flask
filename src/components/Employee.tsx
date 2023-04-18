@@ -71,12 +71,12 @@ const Employee = ({
     <>
       <div
         className={
-          "bg-slate-700 text-white p-4 w-full rounded-lg border-2 border-slate-400 shadow-md shadow-slate-800 hover:scale-105 duration-300 ease-in-out transition-all"
+          "bg-slate-700 text-white p-4 w-full rounded-lg border-2 border-slate-500 shadow-md shadow-slate-700 hover:scale-105 duration-300 ease-in-out transition-all"
         }
       >
         <div className="flex justify-evenly">
           <div className="my-auto hidden sm:block">
-            <div className="bg-slate-700 border-2 text-white border-slate-400 p-3 m-4 rounded-full">
+            <div className="bg-slate-500 border-2 text-white border-slate-500 p-3 m-4 rounded-full">
               {item.admin ? (
                 <RiAdminLine size={70} />
               ) : (

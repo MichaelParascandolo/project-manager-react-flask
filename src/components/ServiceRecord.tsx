@@ -13,7 +13,7 @@ const styles = {
     "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
   label: "text-white py-2",
   input:
-    "w-full border-2 appearance-none tracking-wider border-slate-400 p-2 my-1 bg-slate-700 text-white",
+    "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white appearance-none",
 };
 const ServiceRecord = ({
   item,
@@ -160,7 +160,7 @@ const ServiceRecord = ({
   return (
     <>
       <Toaster />
-      <div className="bg-slate-700 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-400 shadow-slate-800">
+      <div className="bg-slate-700 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-700">
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
             <div className="text-[15px] w-[150px]">
@@ -183,7 +183,7 @@ const ServiceRecord = ({
           <div className="text-sm px-2 tracking-wider capitalize">
             <p className="text-gray-200 uppercase mb-2 font-bold text-center text-[16px]">
               {item.service_type}
-              <p className="text-gray-400 tracking-wide font-semibold">
+              <p className="text-gray-700 tracking-wide font-semibold">
                 {item.generator_name}
               </p>
             </p>
@@ -221,7 +221,7 @@ const ServiceRecord = ({
         </div>
         {openMenu ? (
           <>
-            <div className="h-[65px] overflow-y-auto border-b-2 border-b-gray-800">
+            <div className="h-[65px] overflow-y-auto border-b-2 border-b-gray-500">
               <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
             </div>
             {admin ? (

@@ -51,12 +51,12 @@ const Schedule = (props: any) => {
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full border-2 appearance-none tracking-wider border-slate-400 p-2 my-1 bg-slate-700 text-white",
+      "w-full border-2 appearance-none tracking-wider border-slate-500 p-2 my-1 bg-slate-700 text-white",
   };
   return (
     <>
       <div className="flex justify-center mt-5">
-        <div className="w-[500px] p-4 bg-slate-700 border-2 border-slate-400 shadow-md shadow-slate-800 mb-2 rounded-xl h-full transition-all duration-300 ease-in-out">
+        <div className="w-[500px] p-4 bg-slate-700 border-2 border-slate-500 shadow-md shadow-slate-700 mb-2 rounded-xl h-full transition-all duration-300 ease-in-out">
           <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
             Job Schedule
           </h2>
