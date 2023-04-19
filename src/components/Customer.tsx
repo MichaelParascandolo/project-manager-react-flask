@@ -84,7 +84,7 @@ const Customer = ({
         {/* more details */}
         {showDetails ? (
           <>
-            <div className="bg-slate-700 mt-2 rounded-xl h-0.5 w-full" />
+            <div className="bg-slate-500 mt-2 rounded-xl h-0.5 w-full" />
             <div className="flex justify-around w-full">
               <div className="flex">
                 <div className="my-auto mx-8">

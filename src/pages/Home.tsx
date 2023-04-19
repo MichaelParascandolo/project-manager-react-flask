@@ -71,7 +71,7 @@ const Home = (props: any) => {
     <>
       <div className="flex justify-center md:mt-20">
         <div className="w-[600px]">
-          <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
+          <div className="text-gray-100 text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, {name}
           </div>
           <h2 className="font-roboto uppercase text-center mb-4 -mt-2 text-gray-600 font-bold text-xl tracking-wider select-none">
