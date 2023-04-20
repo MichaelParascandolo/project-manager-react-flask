@@ -62,7 +62,6 @@ const ServiceRecord = ({
           Authorization: "Bearer " + token,
         },
         data: {
-          EmployeeID: 77879, // forcing admin privileges we can change this later
           ServiceID: item.service_id,
         },
       })

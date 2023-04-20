@@ -619,9 +619,8 @@ def get_all_services():
 @jwt_required()
 def delete_job():
     
-    #Checking that user is Admin
-    empID = request.json.get("EmployeeID", None)
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    #Checking if logged in user is an admin
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
 
     if user.Admin == True:
         reqs = request.get_json()

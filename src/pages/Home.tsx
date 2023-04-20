@@ -59,8 +59,6 @@ const Home = (props: any) => {
   const styles = {
     container:
       "bg-slate-700 text-white select-none draggable-none p-2 flex rounded-lg border-2 border-slate-500 shadow-lg shadow-slate-700 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
-    container2:
-      "bg-slate-700 text-white select-none p-2 flex rounded-lg border-2 border-slate-500 shadow-lg shadow-slate-700 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
     text: "text-2xl mx-auto my-auto font-bold tracking-wide",
   };
 
@@ -80,28 +78,30 @@ const Home = (props: any) => {
               <a href="/team">
                 <div className={styles.container}>
                   <RiTeamFill size={iconSize} />
-                  <p className={styles.text}>Team</p>
+                  <h3 className={styles.text}>Team</h3>
                 </div>
               </a>
             ) : null}
             <a href="/clients">
               <div className={styles.container}>
                 <BsPersonFill size={iconSize} />
-                <p className={styles.text}>Clients</p>
+                <h3 className={styles.text}>Clients</h3>
               </div>
             </a>
             <a href="/schedule">
               <div className={styles.container}>
                 <BsCalendarFill size={iconSize} />
-                <p className={styles.text}>Schedule</p>
+                <h3 className={styles.text}>Schedule</h3>
               </div>
             </a>
             <div
-              className={admin ? styles.container : styles.container2}
+              className={`${styles.container} ${
+                !admin ? "md:col-span-2" : null
+              }`}
               onClick={logOut}
             >
               <BiLogOut size={iconSize} />
-              <p className={styles.text}>Logout</p>
+              <h3 className={styles.text}>Logout</h3>
             </div>
           </div>
         </div>
