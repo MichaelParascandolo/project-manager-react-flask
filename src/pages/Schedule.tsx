@@ -58,7 +58,7 @@ const Schedule = (props: any) => {
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full border-2 appearance-none tracking-wider border-slate-500 p-2 my-1 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
   };
   return (
     <>
