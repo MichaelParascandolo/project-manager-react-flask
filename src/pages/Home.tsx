@@ -31,7 +31,9 @@ const Home = (props: any) => {
         }
       });
   }
-{/* logs out the user and removes their token*/}
+  {
+    /* logs out the user and removes their token*/
+  }
   function logOut() {
     axios({
       method: "POST",
@@ -57,20 +59,22 @@ const Home = (props: any) => {
   const iconSize: number = 60;
   const styles = {
     container:
-      "bg-slate-900 text-white p-2 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
+      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-500 shadow-lg shadow-slate-700 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all",
     container2:
-      "bg-slate-900 text-white p-2 flex rounded-lg border-2 border-slate-800 shadow-md shadow-black hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
+      "bg-slate-700 text-white p-2 flex rounded-lg border-2 border-slate-500 shadow-lg shadow-slate-700 hover:bg-blue-600 hover:scale-105 duration-300 ease-in-out transition-all md:col-span-2",
     text: "text-2xl mx-auto my-auto font-bold tracking-wide",
   };
-{/* Home page layout, references the different pages of the system*/}
+  {
+    /* Home page layout, references the different pages of the system*/
+  }
   return (
     <>
       <div className="flex justify-center md:mt-20">
         <div className="w-[600px]">
-          <div className="text-white text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
+          <div className="text-gray-100 text-[40px] md:text-[50px] font-pacifico tracking-wider text-center mt-4 select-none">
             Welcome, {name}
           </div>
-          <h2 className="font-roboto uppercase text-center mb-4 -mt-2 text-gray-400 text-xl tracking-widest select-none">
+          <h2 className="font-roboto uppercase text-center mb-4 -mt-2 text-gray-600 font-bold text-xl tracking-wider select-none">
             {admin ? "Admin" : "User"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4">

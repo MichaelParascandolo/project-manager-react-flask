@@ -96,14 +96,14 @@ const Clients = (props: any) => {
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
   };
   return (
     <>
       <Toaster />
       <div className="flex justify-center w-full min-h-screen">
         <div className="w-[80%] max-w-[900px] text-center">
-          <div className="bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mt-5 p-4 rounded-xl transition-all duration-300 ease-in-out">
+          <div className="bg-slate-700 border-2 border-slate-500 shadow-md shadow-slate-700 mt-5 p-4 rounded-xl transition-all duration-300 ease-in-out">
             <h2 className="text-white cap font-roboto my-2 text-center text-4xl tracking-wide">
               Manage Clients
             </h2>
@@ -210,11 +210,11 @@ const Clients = (props: any) => {
             </form>
           </div>
           {/* search bar for clients */}
-          <div className="h-1 rounded-full mt-6 bg-slate-900/50" />
+          <div className="h-1 rounded-full mt-6 bg-slate-700/50" />
           <p className="text-white pt-2 text-2xl">Search Clients</p>
           <div className="flex justify-center">
             <input
-              className="mt-4 rounded-lg border-2 tracking-wider border-slate-800 p-2 bg-slate-900 text-white w-full"
+              className="mt-4 rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-700 text-white w-full"
               type={"text"}
               placeholder="Search Customers . . ."
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -223,7 +223,7 @@ const Clients = (props: any) => {
             />
             <button
               onClick={() => getCustomers()}
-              className="border-slate-800 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-900 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
+              className="border-slate-500 mt-4 ml-2 p-2 rounded-lg h-[45px] border-2 bg-slate-700 text-white hover:bg-blue-500 ease-in-out duration-300 transition-all"
             >
               <CgSearch size={25} />
             </button>
@@ -231,7 +231,7 @@ const Clients = (props: any) => {
           {/* displays customers */}
           {customers.length > 0 ? (
             <>
-              <p className="text-gray-400 text-[15px] uppercase text-center pt-4">
+              <p className="text-gray-300 text-[15px] uppercase text-center pt-4">
                 {showSearch}
               </p>
 

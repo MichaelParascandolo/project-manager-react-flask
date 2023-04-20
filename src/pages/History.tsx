@@ -158,19 +158,21 @@ const History = (props: any) => {
   const styles = {
     label: "text-white flex ml-1 text-md tracking-wider",
     input:
-      "w-full rounded-lg border-2 tracking-wider appearance-none border-slate-900 p-2 bg-slate-700 text-white",
-    button:
-      "flex uppercase bg-slate-700 px-4 py-1.5 rounded-lg text-sm border-slate-600 hover:bg-blue-500 transition-all ease-in-out duration-300",
+      "w-full rounded-lg border-2 tracking-wider border-slate-500 appearance-none p-2 bg-slate-600 text-white",
   };
   return (
     <>
       <Toaster />
-      <div className="bg-slate-900 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-800 text-white p-4 rounded-lg shadow-lg shadow-black">
+      <div className="bg-slate-700 w-full max-w-[900px] my-5 mx-auto border-2 border-slate-500 text-white p-4 rounded-lg shadow-lg shadow-slate-700">
         {display ? (
           <>
             <div className="flex justify-between w-full">
               <a href="/clients">
-                <button className={styles.button}>
+                <button
+                  className={
+                    "flex uppercase px-4 py-1.5 rounded-lg text-sm border-slate-500 hover:bg-blue-500 transition-all ease-in-out duration-300"
+                  }
+                >
                   <IoMdArrowRoundBack className="text-white mr-2" size={20} />{" "}
                   back
                 </button>
@@ -179,7 +181,9 @@ const History = (props: any) => {
                 <div className="my-auto">
                   <button
                     onClick={() => deleteCustomer(item.ID)}
-                    className={styles.button}
+                    className={
+                      "flex uppercase px-4 py-1.5 rounded-lg text-sm border-slate-500 hover:bg-red-500 transition-all ease-in-out duration-300"
+                    }
                   >
                     <IoMdTrash className="text-white mr-2" size={20} />
                     Delete Customer
@@ -226,7 +230,7 @@ const History = (props: any) => {
                 </div>
               </div>
             </div>
-            <div className="bg-slate-700 my-4 rounded-xl h-0.5 w-full" />
+            <div className="bg-slate-500 my-4 rounded-xl h-0.5 w-full" />
             {/* create job form */}
             <form onSubmit={createJob}>
               <div className="grid md:grid-cols-4 gap-2">
@@ -288,7 +292,7 @@ const History = (props: any) => {
                 <div className="col-span-4">
                   <label className={styles.label}>Notes:</label>
                   <textarea
-                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
+                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-700 text-white"
                     onChange={(e) => setJobNotes(e.target.value)}
                     value={jobNotes}
                   />
@@ -304,7 +308,7 @@ const History = (props: any) => {
             {/* job history for client */}
             {work.length > 0 ? (
               <>
-                <div className="bg-slate-700 mt-1 rounded-xl h-0.5 w-full" />
+                <div className="bg-slate-500 mt-1 rounded-xl h-0.5 w-full" />
                 <div className="hidden md:flex my-2 justify-center">
                   <div className="my-auto">
                     <CgWorkAlt className="text-white" size={30} />
@@ -319,20 +323,20 @@ const History = (props: any) => {
             {work.map((item, index) => (
               <div
                 key={index}
-                className="bg-slate-700 hidden md:block border-2 border-slate-900 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-900"
+                className="bg-slate-600 hidden md:block border-2 border-slate-500 text-white p-4 my-2 rounded-lg shadow-md shadow-slate-700"
               >
                 <div className="flex text-sm justify-between px-2 tracking-wider capitalize">
                   <div>
-                    <div className="text-gray-200">{item.Generator}</div>
-                    <div className="text-gray-400">{item.ServiceType}</div>
+                    <div className="text-gray-100">{item.Generator}</div>
+                    <div className="text-gray-200">{item.ServiceType}</div>
                   </div>
                   <div>
-                    <div className="text-gray-200">{item.Date}</div>
-                    <div className="text-gray-400">{item.Time}</div>
+                    <div className="text-gray-100">{item.Date}</div>
+                    <div className="text-gray-200">{item.Time}</div>
                   </div>
                 </div>
-                <div className="bg-slate-300/50 mt-2 rounded-xl h-0.5 w-full" />
-                <div className="p-2 text-gray-300 tracking-wider capitalize">
+                <div className="bg-slate-500 mt-2 rounded-xl h-0.5 w-full" />
+                <div className="p-2 text-gray-200 tracking-wider capitalize">
                   {item.Notes}
                 </div>
               </div>

@@ -53,7 +53,7 @@ const Customer = ({
   };
   return (
     <>
-      <li className="bg-slate-900 border-2 border-slate-800 text-white px-4 py-2 rounded-lg shadow-md shadow-black">
+      <li className="bg-slate-700 border-2 border-slate-500 text-white px-4 py-2 rounded-lg shadow-lg shadow-slate-700">
         <div
           onClick={() => setShowDetails(!showDetails)}
           className="flex justify-between w-full select-none cursor-pointer"
@@ -84,7 +84,7 @@ const Customer = ({
         {/* more details */}
         {showDetails ? (
           <>
-            <div className="bg-slate-700 mt-2 rounded-xl h-0.5 w-full" />
+            <div className="bg-slate-500 mt-2 rounded-xl h-0.5 w-full" />
             <div className="flex justify-around w-full">
               <div className="flex">
                 <div className="my-auto mx-8">
@@ -122,7 +122,7 @@ const Customer = ({
                 </button>
               </div>
             </div>
-            {/* <div className="bg-slate-800 mt-1 rounded-xl h-0.5 w-full" /> */}
+            {/* <div className="bg-slate-700 mt-1 rounded-xl h-0.5 w-full" /> */}
           </>
         ) : null}
         {/* <button onClick={() => setShowDetails(!showDetails)}>

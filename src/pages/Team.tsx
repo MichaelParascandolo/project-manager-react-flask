@@ -16,7 +16,9 @@ const Team = (props: any) => {
   const [userID, setUserID] = useState<number | undefined>();
   const [access, setAccess] = useState<boolean | undefined>();
   const time = new Date();
-  {/* gets the profile of team members as well as their information */}
+  {
+    /* gets the profile of team members as well as their information */
+  }
   function getProfile() {
     axios({
       method: "GET",
@@ -39,7 +41,9 @@ const Team = (props: any) => {
         console.log(error);
       });
   }
-  {/* Shows the team member page*/}
+  {
+    /* Shows the team member page*/
+  }
   function getTeam() {
     axios({
       method: "GET",
@@ -58,7 +62,9 @@ const Team = (props: any) => {
         }
       });
   }
-  {/* Creates new employee and asigns a random employee ID number*/}
+  {
+    /* Creates new employee and asigns a random employee ID number*/
+  }
   function addEmployee(e: any) {
     e.preventDefault();
     axios({
@@ -76,12 +82,7 @@ const Team = (props: any) => {
         "Phone Number": num,
         Admin: admin,
         hiredDate:
-          time.getMonth() +
-          1 +
-          "/" +
-          time.getDate() +
-          "/" +
-          time.getFullYear(),
+          time.getMonth() + 1 + "/" + time.getDate() + "/" + time.getFullYear(),
       },
     })
       .then((response) => {
@@ -111,7 +112,7 @@ const Team = (props: any) => {
       "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
     label: "text-white py-2",
     input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white",
+      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
   };
   return (
     <>
@@ -123,8 +124,8 @@ const Team = (props: any) => {
               <div
                 className={
                   menu
-                    ? "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-2 rounded-xl h-[640px] transition-all duration-300 ease-in-out"
-                    : "bg-slate-900 border-2 border-slate-800 shadow-md shadow-black mb-2 rounded-xl md:h-[150px] transition-all duration-300 ease-in-out"
+                    ? "bg-slate-700 border-2 border-slate-500 shadow-md shadow-slate-700 mb-2 rounded-xl h-[640px] transition-all duration-300 ease-in-out"
+                    : "bg-slate-700 border-2 border-slate-500 shadow-md shadow-slate-700 mb-2 rounded-xl md:h-[150px] transition-all duration-300 ease-in-out"
                 }
               >
                 <div className="flex justify-center">
@@ -132,7 +133,7 @@ const Team = (props: any) => {
                     <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
                       Manage Employees
                     </h2>
-                    <h3 className="text-gray-500 uppercase text-sm my-1 text-center tracking-wider">
+                    <h3 className="text-gray-300 uppercase text-sm my-1 text-center tracking-wider">
                       {teamMembers.length} Total Employees
                     </h3>
                     <div className="flex justify-center">
@@ -233,7 +234,7 @@ const Team = (props: any) => {
                   </div>
                 </div>
               </div>
-              <div className="h-1 rounded-full bg-slate-900/50" />
+              <div className="h-1 rounded-full bg-slate-500" />
               {/* list of employees */}
               {teamMembers.map((item: any) => (
                 <Employee

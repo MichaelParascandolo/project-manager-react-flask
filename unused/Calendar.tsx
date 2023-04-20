@@ -30,7 +30,7 @@ const Calendar = () => {
   }, [activeMonth]);
 
   return (
-    <div className="p-4 bg-white  dark:bg-slate-700 border-2 border-slate-900 mt-20 mx-4">
+    <div className="p-4 bg-white  dark:bg-slate-700 border-2 border-slate-500 mt-20 mx-4">
       <div className="w-full h-[500px] rounded">
         <div className="flex items-center justify-between mb-4">
           <div className="font-bold text-xl text-white">
@@ -38,7 +38,7 @@ const Calendar = () => {
           </div>
           <div className="flex space-x-4">
             <button
-              className="py-2 px-6 rounded bg-slate-900 text-white"
+              className="py-2 px-6 rounded bg-slate-700 text-white"
               onClick={() => {
                 if (prevMonth.current === 0) {
                   setActiveYear(activeYear - 1);
@@ -61,7 +61,7 @@ const Calendar = () => {
               </svg>
             </button>
             <button
-              className="py-2 px-6 rounded bg-slate-900 text-white"
+              className="py-2 px-6 rounded bg-slate-700 text-white"
               onClick={() => {
                 if (prevMonth.current === 11) {
                   setActiveYear(activeYear + 1);
