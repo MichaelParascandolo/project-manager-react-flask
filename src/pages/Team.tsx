@@ -234,7 +234,7 @@ const Team = (props: any) => {
                   </div>
                 </div>
               </div>
-              <div className="h-1 rounded-full bg-slate-700/50" />
+              <div className="h-1 rounded-full bg-slate-500" />
               {/* list of employees */}
               {teamMembers.map((item: any) => (
                 <Employee

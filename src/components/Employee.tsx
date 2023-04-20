@@ -101,7 +101,7 @@ const Employee = ({
                 </p>
               </div>
             </div>
-            <div className="h-0.5 w-full my-2 bg-slate-700 rounded-xl" />
+            <div className="h-0.5 w-full my-2 bg-slate-500 rounded-xl" />
             <p className="text-md py-0.5 tracking-wide text-gray-200">
               Number:
               <span className="ml-2">{formatNumber(item.phone)}</span>
