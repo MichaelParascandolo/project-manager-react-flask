@@ -189,16 +189,18 @@ def create_employee():
 def delete_employee():
     reqs = request.get_json()
     id1 = reqs.get("EmployeeID")
+    user = Employees.query.filter_by(Employeeid = empID).first()
 
-    employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
+    if user.Admin:
+        employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
 
-    if not employee_exists:
-        abort(409)
+        if not employee_exists:
+            abort(409)
+            
+        Employees.query.filter_by(Employeeid = id1).delete()
+        db.session.commit()
         
-    Employees.query.filter_by(Employeeid = id1).delete()
-    db.session.commit()
-    
-    return jsonify({"ID": id1})
+        return jsonify({"ID": id1})
 
 
 #Changes user between admin/user
@@ -228,6 +230,7 @@ def display_customers():
     reqs = request.get_json()
     searchTerm = reqs.get("Search")
     customer_list = []
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
     for i in Customers.query.filter(or_(Customers.FirstName.like('%' + searchTerm + '%'),
                                         Customers.LastName.like('%' + searchTerm + '%'))):
         customer = {
@@ -242,7 +245,7 @@ def display_customers():
             "ZIP": i.ZIP
         }
         customer_list.append(customer)
-    return customer_list
+    return jsonify({"customers":customer_list, "admin": user.Admin})
 
 
 #Shows all of a single customer's details
@@ -252,7 +255,7 @@ def display_customers():
 def customer_details():
     reqs = request.get_json()
     id1 = reqs.get("clientID")
-
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
     i = Customers.query.filter_by(Customerid = id1).first()
 
     customer = {
@@ -267,7 +270,7 @@ def customer_details():
             "ZIP": i.ZIP
         }
 
-    return customer
+    return jsonify({"details":customer, "admin": user.Admin})
 
 
 

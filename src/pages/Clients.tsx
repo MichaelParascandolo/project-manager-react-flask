@@ -11,6 +11,7 @@ const Clients = (props: any) => {
     "displaying all customers"
   );
   const [customers, setCustomers] = useState<any[]>([{}]);
+  const [admin, setAdmin] = useState<boolean>(false);
   const [first, setFirst] = useState<string>("");
   const [last, setLast] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -39,8 +40,10 @@ const Clients = (props: any) => {
       },
       data: { Search: searchTerm },
     }).then((response) => {
-      const customers = response.data;
+      // console.log(response);
+      const customers = response.data.customers;
       setCustomers(customers);
+      setAdmin(response.data.admin);
       if (searchTerm != "") {
         setShowSearch(`${customers.length} result(s) for "${searchTerm}"`);
       } else {
@@ -230,6 +233,7 @@ const Clients = (props: any) => {
                       key={index}
                       token={props.token}
                       getCustomers={getCustomers}
+                      admin={admin}
                     />
                   ))}
                 </div>

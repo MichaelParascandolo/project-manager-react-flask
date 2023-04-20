@@ -6,8 +6,10 @@ import { formatNumber } from "../components/Customer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { FaSmileWink } from "react-icons/fa";
 
 const History = (props: any) => {
+  const [admin, setAdmin] = useState<boolean>(false);
   const { customerID } = useParams();
   const [display, setDisplay] = useState<boolean>(false);
   const [item, setItem] = useState<any>();
@@ -61,8 +63,9 @@ const History = (props: any) => {
       data: { clientID: id },
     })
       .then((response) => {
-        setItem(response.data);
+        setItem(response.data.details);
         setDisplay(true);
+        setAdmin(response.data.admin);
       })
       .catch((error) => {
         if (error.response) {
@@ -174,15 +177,17 @@ const History = (props: any) => {
               </a>
               <div className="flex">
                 <div className="my-auto">
-                  <button
-                    onClick={() => deleteCustomer(item.ID)}
-                    className={
-                      "flex uppercase px-4 py-1.5 rounded-lg text-sm border-slate-500 hover:bg-red-500 transition-all ease-in-out duration-300"
-                    }
-                  >
-                    <IoMdTrash className="text-white mr-2" size={20} />
-                    Delete Customer
-                  </button>
+                  {admin ? (
+                    <button
+                      onClick={() => deleteCustomer(item.ID)}
+                      className={
+                        "flex uppercase px-4 py-1.5 rounded-lg text-sm border-slate-500 hover:bg-red-500 transition-all ease-in-out duration-300"
+                      }
+                    >
+                      <IoMdTrash className="text-white mr-2" size={20} />
+                      Delete Customer
+                    </button>
+                  ) : null}
                 </div>
               </div>
             </div>

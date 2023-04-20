@@ -21,10 +21,12 @@ const Customer = ({
   item,
   token,
   getCustomers,
+  admin,
 }: {
   item: any;
   token: string;
   getCustomers: any;
+  admin: boolean;
 }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
 
@@ -116,24 +118,18 @@ const Customer = ({
                     View Jobs
                   </button>
                 </a>
-                <button
-                  onClick={() => deleteCustomer(item.ID)}
-                  className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300"
-                >
-                  Delete Customer
-                </button>
+                {admin ? (
+                  <button
+                    onClick={() => deleteCustomer(item.ID)}
+                    className="bg-red-500 border-2 text-black border-red-800 text-lg px-4 py-2 rounded-lg mt-2 w-[200px] hover:bg-red-700 transition-all ease-in-out duration-300"
+                  >
+                    Delete Customer
+                  </button>
+                ) : null}
               </div>
             </div>
-            {/* <div className="bg-slate-700 mt-1 rounded-xl h-0.5 w-full" /> */}
           </>
         ) : null}
-        {/* <button onClick={() => setShowDetails(!showDetails)}>
-          {!showDetails ? (
-            <MdExpandMore size={35} />
-          ) : (
-            <MdExpandLess size={35} />
-          )}
-        </button> */}
       </li>
     </>
   );
