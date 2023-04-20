@@ -82,24 +82,19 @@ const Home = (props: any) => {
                 </div>
               </a>
             ) : null}
+            <a href="/schedule" className={!admin ? "md:col-span-2" : ""}>
+              <div className={styles.container}>
+                <BsCalendarFill size={iconSize} />
+                <h3 className={styles.text}>Schedule</h3>
+              </div>
+            </a>
             <a href="/clients">
               <div className={styles.container}>
                 <BsPersonFill size={iconSize} />
                 <h3 className={styles.text}>Clients</h3>
               </div>
             </a>
-            <a href="/schedule">
-              <div className={styles.container}>
-                <BsCalendarFill size={iconSize} />
-                <h3 className={styles.text}>Schedule</h3>
-              </div>
-            </a>
-            <div
-              className={`${styles.container} ${
-                !admin ? "md:col-span-2" : null
-              }`}
-              onClick={logOut}
-            >
+            <div className={styles.container} onClick={logOut}>
               <BiLogOut size={iconSize} />
               <h3 className={styles.text}>Logout</h3>
             </div>
