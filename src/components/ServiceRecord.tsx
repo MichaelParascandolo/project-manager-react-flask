@@ -182,15 +182,14 @@ const ServiceRecord = ({
             ) : null}
           </div>
         </div>
-        <div className="bg-slate-600 hidden md:block text-white p-4 mt-2">
+        <div className="bg-slate-600 text-white p-4 mt-2">
           <div className="text-sm px-2 tracking-wider capitalize">
-            <p className="text-white uppercase mb-2 font-bold text-center text-[16px]">
+            <p className="text-white uppercase font-bold text-center text-[16px]">
               {item.service_type}
             </p>
-            <br />
-            <span className="text-gray-300 tracking-wide font-semibold text-[14px]">
+            <p className="text-gray-300 mb-2 text-center tracking-wide font-semibold text-[14px]">
               {item.generator_name}
-            </span>
+            </p>
             <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-800/70 p-2 border-2 border-slate-600">
               <div>
                 <p className="text-gray-200">{item.start_date}</p>
