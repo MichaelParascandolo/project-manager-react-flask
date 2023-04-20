@@ -107,13 +107,7 @@ const Team = (props: any) => {
   useEffect(() => {
     getProfile();
   }, []);
-  const styles = {
-    links:
-      "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
-    label: "text-white py-2",
-    input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
-  };
+
   return (
     <>
       <Toaster />
@@ -164,48 +158,43 @@ const Team = (props: any) => {
                       {menu ? (
                         <>
                           <form onSubmit={addEmployee}>
-                            <p className={styles.label}>First name</p>
+                            <label>First name</label>
                             <input
                               type="text"
-                              className={styles.input}
                               placeholder="John"
                               onChange={(e) => setFirst(e.target.value)}
                               value={first}
                               required
                             />
-                            <p className={styles.label}>Last name</p>
+                            <label>Last name</label>
                             <input
                               type="text"
-                              className={styles.input}
                               placeholder="Smith"
                               onChange={(e) => setLast(e.target.value)}
                               value={last}
                               required
                             />
-                            <p className={styles.label}>Phone number</p>
+                            <label>Phone number</label>
                             <input
                               type="text"
                               pattern="[1-9]{1}[0-9]{9}"
                               maxLength={10}
-                              className={styles.input}
                               placeholder="1-234-6789"
                               onChange={(e) => setNum(e.target.value)}
                               value={num}
                               required
                             />
-                            <p className={styles.label}>Email:</p>
+                            <label>Email:</label>
                             <input
                               type="email"
-                              className={styles.input}
                               placeholder="Johnsmith@gmail.com"
                               onChange={(e) => setEmail(e.target.value)}
                               value={email}
                               required
                             />
-                            <p className={styles.label}>Password:</p>
+                            <label>Password:</label>
                             <input
                               type="password"
-                              className={styles.input}
                               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                               onChange={(e) => setPassword(e.target.value)}
                               value={password}

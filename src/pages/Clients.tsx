@@ -93,11 +93,6 @@ const Clients = (props: any) => {
     getCustomers();
   }, []);
 
-  const styles = {
-    label: "text-white flex ml-1 text-md tracking-wider",
-    input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
-  };
   return (
     <>
       <Toaster />
@@ -111,29 +106,27 @@ const Clients = (props: any) => {
             <form onSubmit={addCustomer}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
-                  <label className={styles.label}>First Name:</label>
+                  <label>First Name:</label>
                   <input
                     type="text"
                     placeholder="First Name"
                     onChange={(e) => setFirst(e.target.value)}
                     value={first}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Last Name:</label>
+                  <label>Last Name:</label>
                   <input
                     type="text"
                     placeholder="Last Name"
                     onChange={(e) => setLast(e.target.value)}
                     value={last}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Phone Number:</label>
+                  <label>Phone Number:</label>
                   <input
                     type="tel"
                     pattern="[1-9]{1}[0-9]{9}"
@@ -142,62 +135,56 @@ const Clients = (props: any) => {
                     onChange={(e) => setPhone(e.target.value)}
                     value={phone}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Email:</label>
+                  <label>Email:</label>
                   <input
                     type="email"
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
-                  <label className={styles.label}>Street Address:</label>
+                  <label>Street Address:</label>
                   <input
                     type="text"
                     placeholder="Street"
                     onChange={(e) => setStreet(e.target.value)}
                     value={street}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
-                  <label className={styles.label}>City:</label>
+                  <label>City:</label>
                   <input
                     type="text"
                     placeholder="City"
                     onChange={(e) => setCity(e.target.value)}
                     value={city}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
-                  <label className={styles.label}>State:</label>
+                  <label>State:</label>
                   <input
                     type="text"
                     placeholder="State"
                     onChange={(e) => setState(e.target.value)}
                     value={state}
                     required
-                    className={styles.input}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
-                  <label className={styles.label}>ZIP Code:</label>
+                  <label>ZIP Code:</label>
                   <input
                     type="text"
                     placeholder="ZIP Code"
                     onChange={(e) => setZIP(e.target.value)}
                     value={ZIP}
                     required
-                    className={styles.input}
                   />
                 </div>
               </div>

@@ -5,9 +5,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-{
-  /* SignIn function that will check the validity of the login information */
-}
+// SignIn function that will check the validity of the login information
 function Signin(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,13 +50,6 @@ function Signin(props: any) {
     navigate("/"); // resets browser path back to /
   }, []);
 
-  const styles = {
-    links:
-      "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
-    label: "text-white py-2",
-    input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
-  };
   return (
     <div className="flex min-h-screen justify-center">
       <Toaster />
@@ -74,20 +65,18 @@ function Signin(props: any) {
                   Sign in to your account
                 </h2>
                 <form onSubmit={logMeIn}>
-                  <p className={styles.label}>Email</p>
+                  <label>Email</label>
                   <input
                     type="email"
                     value={email}
-                    className={styles.input}
                     placeholder="name@company.com"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                  <p className={styles.label}>Password</p>
+                  <label>Password</label>
                   <input
                     type="password"
                     value={password}
-                    className={styles.input}
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -100,7 +89,12 @@ function Signin(props: any) {
                       />
                       <p className="text-gray-300">Remember me</p>
                     </div>
-                    <a href="#" className={styles.links}>
+                    <a
+                      href="#"
+                      className={
+                        "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300"
+                      }
+                    >
                       Forgot password?
                     </a>
                   </div>
@@ -115,10 +109,6 @@ function Signin(props: any) {
                 </form>
                 <div className="mt-4">
                   <p className="text-center text-gray-300 text-md">
-                    {/* Don't have an account?{" "}
-                    <a href="/signup" className={styles.links}>
-                      Sign up
-                    </a> */}
                     Contact your admin for registration.
                   </p>
                 </div>

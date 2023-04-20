@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import ServiceRecord from "../components/ServiceRecord";
 import Datepicker from "react-tailwindcss-datepicker";
 
-/* schedule page showing month week and each individual day*/
+// schedule page showing month week and each individual day
 const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
@@ -53,13 +53,6 @@ const Schedule = (props: any) => {
     getSchedule();
   }, [value]);
 
-  const styles = {
-    links:
-      "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300",
-    label: "text-white py-2",
-    input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-600 text-white",
-  };
   return (
     <>
       <div className="flex justify-center mt-5">
@@ -73,7 +66,7 @@ const Schedule = (props: any) => {
           <Datepicker
             useRange={false}
             placeholder="DISPLAYING ALL JOBS"
-            inputClassName={styles.input}
+            inputClassName={"search"}
             // containerClassName={""}
             showShortcuts={true}
             separator={"-"}

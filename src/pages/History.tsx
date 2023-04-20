@@ -155,11 +155,6 @@ const History = (props: any) => {
     getGenerators();
   }, []);
 
-  const styles = {
-    label: "text-white flex ml-1 text-md tracking-wider",
-    input:
-      "w-full rounded-lg border-2 tracking-wider border-slate-500 appearance-none p-2 bg-slate-600 text-white",
-  };
   return (
     <>
       <Toaster />
@@ -235,30 +230,27 @@ const History = (props: any) => {
             <form onSubmit={createJob}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
-                  <label className={styles.label}>Date:</label>
+                  <label>Date:</label>
                   <input
                     type="date"
                     required
-                    className={styles.input}
                     onChange={(e) => setDate(e.target.value)}
                     value={date}
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Time:</label>
+                  <label>Time:</label>
                   <input
                     type="time"
                     required
-                    className={styles.input}
                     onChange={(e) => setTime(e.target.value)}
                     value={time}
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Generator:</label>
+                  <label>Generator:</label>
                   <select
                     required
-                    className={styles.input}
                     onChange={(e) => {
                       setJobNotes(e.target.value.split(",")[0]);
                       setCurrentGenID(e.target.value.split(",")[1]);
@@ -273,10 +265,9 @@ const History = (props: any) => {
                   </select>
                 </div>
                 <div className="col-span-2">
-                  <label className={styles.label}>Service Type:</label>
+                  <label>Service Type:</label>
                   <select
                     required
-                    className={styles.input}
                     onChange={(e) => {
                       setServiceType(e.target.value);
                     }}
@@ -290,9 +281,9 @@ const History = (props: any) => {
                   </select>
                 </div>
                 <div className="col-span-4">
-                  <label className={styles.label}>Notes:</label>
+                  <label>Notes:</label>
                   <textarea
-                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-500 p-2 bg-slate-700 text-white"
+                    className="h-[100px]"
                     onChange={(e) => setJobNotes(e.target.value)}
                     value={jobNotes}
                   />

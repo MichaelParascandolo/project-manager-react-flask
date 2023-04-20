@@ -16,6 +16,7 @@ export const formatNumber = (num: number) => {
   }
   return null;
 };
+
 const Customer = ({
   item,
   token,
@@ -26,6 +27,7 @@ const Customer = ({
   getCustomers: any;
 }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
+
   const deleteCustomer = (id: number) => {
     if (
       confirm(
