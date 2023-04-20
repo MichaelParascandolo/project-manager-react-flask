@@ -67,7 +67,7 @@ const Schedule = (props: any) => {
           <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
             Job Schedule
           </h2>
-          <h3 className="text-gray-300 uppercase text-sm my-1 text-center tracking-wider">
+          {/* <h3 className="text-gray-300 uppercase text-sm my-1 text-center tracking-wider">
             {schedule.length} upcoming jobs
           </h3> */}
           <Datepicker
