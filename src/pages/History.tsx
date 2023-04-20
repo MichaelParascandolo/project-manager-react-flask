@@ -6,7 +6,6 @@ import { formatNumber } from "../components/Customer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { FaSmileWink } from "react-icons/fa";
 
 const History = (props: any) => {
   const [admin, setAdmin] = useState<boolean>(false);

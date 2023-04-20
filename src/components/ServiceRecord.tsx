@@ -19,7 +19,6 @@ const ServiceRecord = ({
   getSchedule: any;
 }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  // const [showDelete, setShowDelete] = useState<boolean>(false); for a future change
   const time = new Date();
   const [currentFEmpID, setCurrentFEmpID] = useState<any>("default");
   const [currentSEmpID, setCurrentSEmpID] = useState<any>("default");
