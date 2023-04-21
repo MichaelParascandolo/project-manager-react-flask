@@ -189,7 +189,7 @@ def create_employee():
 def delete_employee():
     reqs = request.get_json()
     id1 = reqs.get("EmployeeID")
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    user = Employees.query.filter_by(Employeeid = id1).first()
 
     if user.Admin:
         employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
@@ -454,13 +454,14 @@ def edit_Job():
     if user.Admin == True:
         reqs = request.get_json()
         sid = reqs.get("ServiceID")
-        generatorid = request.json["GeneratorID"]
+        generatorname = request.json["GeneratorName"]
         startdate = request.json["Date"]
         starttime = request.json["Time"]
         servicetype = request.json["ServiceType"]
         notes = request.json["Notes"]
+        generator = Generators.query.filter_by(Name = generatorname).first()
         service = ServiceRecords.query.filter_by(Serviceid = sid).first()
-        service.Generatorid = generatorid
+        service.Generatorid = generator.Generatorid
         service.StartDate = startdate
         service.StartTime = starttime
         service.ServiceType = servicetype
@@ -512,6 +513,20 @@ def add_techs():
             "Fourth_Employee_ID": tech_id[3],
         })
 
+@api.route("/schedule/workers", methods = ["POST"])
+@jwt_required()
+def get_workers():
+    reqs = request.get_json()
+    sid = reqs.get("ServiceID")
+    workers = []
+    for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
+        emp = Employees.query.filter_by(Employeeid = i.Employeeid).first()
+        workers.append({
+            "EmployeeID": emp.Employeeid,
+            "FirstName": emp.FirstName,
+        })
+
+    return workers
 
 
 # Completes a job from the schedule page and sets the finish date/time 
