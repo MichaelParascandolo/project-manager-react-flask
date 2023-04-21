@@ -3,6 +3,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import ServiceRecord from "../components/ServiceRecord";
 import Datepicker from "react-tailwindcss-datepicker";
+import toast, { Toaster } from "react-hot-toast";
 
 // schedule page showing month week and each individual day
 const Schedule = (props: any) => {
@@ -30,8 +31,15 @@ const Schedule = (props: any) => {
     })
       .then((response) => {
         console.log(response.data.services);
-        setSchedule(sortArray(response.data.services));
-        setEmployees(response.data.team);
+        if (response.data.services.length != 0)
+        {
+          setSchedule(sortArray(response.data.services));
+          setEmployees(response.data.team);
+        }
+        else
+        {
+          toast.error("No Jobs Found From " + value.startDate + " to " + value.endDate)
+        }
       })
       .catch((error) => {
         if (error.response) {

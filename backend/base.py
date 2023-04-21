@@ -554,13 +554,14 @@ def get_all_services():
     services = []
     techs = []
     user = Employees.query.filter_by(Email=get_jwt_identity()).first()
-
     if start_date is None and end_date is None:
         service_records = ServiceRecords.query.all()
     else:
-        service_records = ServiceRecords.query.filter(ServiceRecords.StartDate >= start_date, ServiceRecords.StartDate <= end_date).all()
-    if not service_records:
-        return jsonify({'message': 'no jobs found'})
+        service_records = ServiceRecords.query.filter(ServiceRecords.StartDate.between(start_date, end_date)).all()
+    
+    #This Code May No Longer Be Necessary
+    #if not service_records:
+       # return jsonify({'message': 'no jobs found'})
 
     for service in service_records:
         customer = Customers.query.filter_by(Customerid=service.Customerid).first()
