@@ -83,10 +83,7 @@ function Signin(props: any) {
                   />
                   <div className="flex justify-between mt-4">
                     <div className="flex">
-                      <input
-                        type="checkbox"
-                        className="w-4 h-4 mr-2 mt-1 accent-blue-500"
-                      />
+                      <input type="checkbox" className="mr-2 mt-1" />
                       <p className="text-gray-300">Remember me</p>
                     </div>
                     <a
