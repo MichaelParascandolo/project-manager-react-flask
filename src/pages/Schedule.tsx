@@ -13,14 +13,14 @@ const Schedule = (props: any) => {
     startDate: null,
     endDate: null,
   });
+  // handles the search bar being changed
   const handleValueChange = (newValue: any) => {
     setValue(newValue);
-    // console.log(value);
   };
 
   // returns all service records with customer info
   function getSchedule() {
-    console.log(value);
+    // console.log(value);
     axios({
       method: "POST",
       url: "http://127.0.0.1:3000/schedule/display",
@@ -30,18 +30,16 @@ const Schedule = (props: any) => {
       data: { startDate: value.startDate, endDate: value.endDate },
     })
       .then((response) => {
-        console.log(response.data.services);
-        if (response.data.services.length != 0)
-        {
+        // console.log(response.data.services);
+        if (response.data.services.length != 0) {
           setSchedule(sortArray(response.data.services));
           setEmployees(response.data.team);
-        }
-        else
-        {
-          toast.error("No Jobs Found From " + value.startDate + " to " + value.endDate)
+        } else {
+          setSchedule([]); // sets array to empty if no jobs are found
         }
       })
       .catch((error) => {
+        toast.error("Something Went Wrong");
         if (error.response) {
           console.log(error.response);
         }
@@ -63,6 +61,7 @@ const Schedule = (props: any) => {
 
   return (
     <>
+      <Toaster />
       <div className="flex justify-center mt-5">
         <div className="w-[700px] p-4 bg-slate-700 border-2 border-slate-500 shadow-md shadow-slate-700 mb-2 rounded-xl h-full transition-all duration-300 ease-in-out">
           <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
@@ -85,17 +84,23 @@ const Schedule = (props: any) => {
       </div>
       {/* schedule */}
       <div className="h-1 rounded-full w-[95%] mx-auto my-2 bg-slate-500" />
-      <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-[90%] m-auto">
-        {schedule.map((item: any, index: number) => (
-          <ServiceRecord
-            item={item}
-            key={index}
-            employees={employees}
-            token={props.token}
-            getSchedule={getSchedule}
-          />
-        ))}
-      </div>
+      {schedule.length > 0 ? (
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-[90%] m-auto">
+          {schedule.map((item: any, index: number) => (
+            <ServiceRecord
+              item={item}
+              key={index}
+              employees={employees}
+              token={props.token}
+              getSchedule={getSchedule}
+            />
+          ))}
+        </div>
+      ) : (
+        <h3 className="text-center text-[20px] text-gray-200 uppercase mt-4 mb-[100px]">
+          No jobs found
+        </h3>
+      )}
       <Footer />
     </>
   );
