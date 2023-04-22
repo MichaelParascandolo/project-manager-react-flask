@@ -37,25 +37,26 @@ with api.app_context():
     file.close()
 
 api.config["JWT_SECRET_KEY"] = "aosdflnasldfnaslndflnsdnlnlknlkgtudsrtstr"
-api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
 
-@api.after_request
-def refresh_expiring_jwts(response):
-    try:
-        exp_timestamp = get_jwt()["exp"]
-        now = datetime.now(timezone.utc)
-        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
-        if target_timestamp > exp_timestamp:
-            access_token = create_access_token(identity=get_jwt_identity())
-            data = response.get_json()
-            if type(data) is dict:
-                data["access_token"] = access_token 
-                response.data = json.dumps(data)
-        return response
-    except (RuntimeError, KeyError):
-        # Case where there is not a valid JWT. Just return the original response
-        return response
+# we might not need this code anymore
+# api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+# @api.after_request
+# def refresh_expiring_jwts(response):
+#     try:
+#         exp_timestamp = get_jwt()["exp"]
+#         now = datetime.now(timezone.utc)
+#         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+#         if target_timestamp > exp_timestamp:
+#             access_token = create_access_token(identity=get_jwt_identity())
+#             data = response.get_json()
+#             if type(data) is dict:
+#                 data["access_token"] = access_token 
+#                 response.data = json.dumps(data)
+#         return response
+#     except (RuntimeError, KeyError):
+#         # Case where there is not a valid JWT. Just return the original response
+#         return response
 
 
 #The login route
@@ -63,7 +64,8 @@ def refresh_expiring_jwts(response):
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
+    remember = request.json.get("remember", None)
+
     user = Employees.query.filter_by(Email=email).first()
     
     if user is None:
@@ -72,7 +74,12 @@ def create_token():
     if not bcrypt.check_password_hash(user.Password, password):
         return {"msg": "Invalid Password"}, 401
 
-    access_token = create_access_token(identity=email)
+    if remember:
+        expires_delta = timedelta(days=7)
+    else:
+        expires_delta = timedelta(minutes=30)
+
+    access_token = create_access_token(identity=email,expires_delta=expires_delta)
     response = {"access_token":access_token}
 
     return response
