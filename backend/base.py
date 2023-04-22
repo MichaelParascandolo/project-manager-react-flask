@@ -182,16 +182,18 @@ def create_employee():
         "Last Name": new_employee.LastName
         })
 
+
 #Deleting employees route
 @api.route("/employees/delete", methods=["POST"])
 @cross_origin()
 @jwt_required()
 def delete_employee():
-    reqs = request.get_json()
-    id1 = reqs.get("EmployeeID")
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    # only an admin can delete employees
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
+    if user.Admin == True:
+        reqs = request.get_json()
+        id1 = reqs.get("EmployeeID")
 
-    if user.Admin:
         employee_exists = Employees.query.filter_by(Employeeid = id1).first() is not None
 
         if not employee_exists:
