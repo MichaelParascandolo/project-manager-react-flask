@@ -37,7 +37,7 @@ with api.app_context():
     file.close()
 
 api.config["JWT_SECRET_KEY"] = "aosdflnasldfnaslndflnsdnlnlknlkgtudsrtstr"
-api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+# api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
 
 @api.after_request
@@ -63,7 +63,8 @@ def refresh_expiring_jwts(response):
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
+    remember = request.json.get("remember", None)
+
     user = Employees.query.filter_by(Email=email).first()
     
     if user is None:
@@ -72,7 +73,12 @@ def create_token():
     if not bcrypt.check_password_hash(user.Password, password):
         return {"msg": "Invalid Password"}, 401
 
-    access_token = create_access_token(identity=email)
+    if remember:
+        expires_delta = timedelta(days=7)
+    else:
+        expires_delta = timedelta(hours=1)
+
+    access_token = create_access_token(identity=email,expires_delta=expires_delta)
     response = {"access_token":access_token}
 
     return response

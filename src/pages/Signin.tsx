@@ -5,17 +5,18 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-{
-  /* SignIn function that will check the validity of the login information */
-}
+// SignIn function that will check the validity of the login information
 function Signin(props: any) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const navigate = useNavigate();
+
   function delay(ms = 1000): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   function logMeIn(e: any) {
+    // console.log(rememberMe);
     const toastId = toast.loading("Please wait...");
     e.preventDefault();
     axios({
@@ -24,6 +25,7 @@ function Signin(props: any) {
       data: {
         email: email,
         password: password,
+        remember: rememberMe,
       },
     })
       .then(async (response) => {
@@ -97,6 +99,7 @@ function Signin(props: any) {
                       <input
                         type="checkbox"
                         className="w-4 h-4 mr-2 mt-1 accent-blue-500"
+                        onChange={(e) => setRememberMe(e.target.checked)}
                       />
                       <p className="text-gray-300">Remember me</p>
                     </div>
