@@ -16,7 +16,7 @@ function Signin(props: any) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   function logMeIn(e: any) {
-    // console.log(rememberMe);
+    console.log("remember me " + rememberMe);
     const toastId = toast.loading("Please wait...");
     e.preventDefault();
     axios({
