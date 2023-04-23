@@ -9,16 +9,14 @@ const Team = (props: any) => {
   const [first, setFirst] = useState<string>("");
   const [last, setLast] = useState<string>("");
   const [num, setNum] = useState<string>("");
-  const [admin, setAdmin] = useState<boolean | undefined>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [teamMembers, setTeamMembers] = useState<any>([]);
   const [userID, setUserID] = useState<number | undefined>();
   const [access, setAccess] = useState<boolean | undefined>();
   const time = new Date();
-  {
-    /* gets the profile of team members as well as their information */
-  }
+
+  // Gets the profile of team members as well as their information
   function getProfile() {
     axios({
       method: "GET",
@@ -42,7 +40,7 @@ const Team = (props: any) => {
       });
   }
   {
-    /* Shows the team member page*/
+    // Shows the team member page
   }
   function getTeam() {
     axios({
@@ -62,9 +60,8 @@ const Team = (props: any) => {
         }
       });
   }
-  {
-    /* Creates new employee and asigns a random employee ID number*/
-  }
+
+  // Creates new employee and assigns a random employee ID number
   function addEmployee(e: any) {
     e.preventDefault();
     axios({
@@ -80,7 +77,7 @@ const Team = (props: any) => {
         "First Name": first.charAt(0).toUpperCase() + first.slice(1),
         "Last Name": last.charAt(0).toUpperCase() + last.slice(1),
         "Phone Number": num,
-        Admin: admin,
+        Admin: false, // all new accounts start as non-admin
         hiredDate:
           time.getMonth() + 1 + "/" + time.getDate() + "/" + time.getFullYear(),
       },
@@ -202,18 +199,10 @@ const Team = (props: any) => {
                             />
                             <div className="flex justify-center">
                               <button
-                                onClick={() => setAdmin(true)}
                                 type="submit"
-                                className="bg-blue-500 border-2 font-bold border-blue-800 text-lg mr-1 px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                                className="bg-blue-500 border-2 font-bold border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                               >
-                                Create Admin
-                              </button>
-                              <button
-                                onClick={() => setAdmin(false)}
-                                type="submit"
-                                className="bg-blue-500 border-2 font-bold border-blue-800 text-lg ml-1 px-4 py-2 rounded-lg my-4 w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
-                              >
-                                Create User
+                                Create User Profile
                               </button>
                             </div>
                           </form>
