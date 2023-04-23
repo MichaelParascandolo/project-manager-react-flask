@@ -335,53 +335,52 @@ const ServiceRecord = ({
                 Edit Job
               </button>
             </form>
-          ) : null}
-
-          {/* editing job menu */}
-          <div className="text-sm px-2 tracking-wider capitalize">
-            <p className="text-white uppercase font-bold text-center text-[16px]">
-              {item.service_type}
-            </p>
-            <p className="text-gray-300 mb-2 text-center tracking-wide font-semibold text-[14px]">
-              {item.generator_name}
-            </p>
-            <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-800/70 p-2 border-2 border-slate-600">
-              <div>
-                <p className="text-gray-200">{item.start_date}</p>
-                <p className="text-gray-400">{item.start_time}</p>
-              </div>
-              {item.finish_date && admin ? (
+          ) : (
+            <div className="text-sm px-2 tracking-wider capitalize">
+              <p className="text-white uppercase font-bold text-center text-[16px]">
+                {item.service_type}
+              </p>
+              <p className="text-gray-300 mb-2 text-center tracking-wide font-semibold text-[14px]">
+                {item.generator_name}
+              </p>
+              <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-800/70 p-2 border-2 border-slate-600">
                 <div>
-                  <p className="text-gray-300 text-[25px]">-</p>
-                  <button onClick={() => completeRecord()}>
-                    <IoMdCloseCircle
-                      className="hover:text-red-500 ease-in-out transition-all duration-300"
-                      size={20}
-                    />
-                  </button>
+                  <p className="text-gray-200">{item.start_date}</p>
+                  <p className="text-gray-400">{item.start_time}</p>
                 </div>
-              ) : (
-                <p className="text-gray-300 text-[25px] my-auto">-</p>
-              )}
-              <div>
-                {item.finish_date ? (
+                {item.finish_date && admin ? (
                   <div>
-                    <p className="text-gray-200">{item.finish_date}</p>
-                    <p className="text-gray-400">{item.finish_time}</p>
-                  </div>
-                ) : (
-                  <div>
+                    <p className="text-gray-300 text-[25px]">-</p>
                     <button onClick={() => completeRecord()}>
-                      <IoMdCheckmarkCircle
-                        className="hover:text-green-500 transition-all ease-in-out duration-300"
-                        size={35}
+                      <IoMdCloseCircle
+                        className="hover:text-red-500 ease-in-out transition-all duration-300"
+                        size={20}
                       />
                     </button>
                   </div>
+                ) : (
+                  <p className="text-gray-300 text-[25px] my-auto">-</p>
                 )}
+                <div>
+                  {item.finish_date ? (
+                    <div>
+                      <p className="text-gray-200">{item.finish_date}</p>
+                      <p className="text-gray-400">{item.finish_time}</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <button onClick={() => completeRecord()}>
+                        <IoMdCheckmarkCircle
+                          className="hover:text-green-500 transition-all ease-in-out duration-300"
+                          size={35}
+                        />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         {openMenu ? (
           <>
