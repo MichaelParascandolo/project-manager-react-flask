@@ -139,6 +139,16 @@ def check_code():
     else:
         return {"msg": "Invalid Code"}, 401
 
+@api.route("/recovery/display", methods=["POST"])
+@jwt_required()
+def see_code():
+    eid1 = request.json["EmployeeID"]
+    emp = Employees.query.filter_by(Employeeid = eid1).first()
+    recovery = Password_Recovery.query.filter_by(Email = emp.Email).first()
+    
+    return {"Code": recovery.Code}
+
+
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])
 @jwt_required()

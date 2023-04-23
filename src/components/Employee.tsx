@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RiAdminLine, RiUserLine, RiBarcodeFill } from "react-icons/ri";
+import { RiAdminLine, RiUserLine, RiBarcodeFill, RiLightbulbLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { formatNumber } from "./Customer";
 
@@ -98,6 +98,29 @@ const Employee = ({
       });
     };
 
+    const showCode = (id: number) => {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/recovery/display",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: {
+          EmployeeID: id,
+        },
+      })
+        .then((response) => {
+          toast.success("Recovery Code: " + response.data.Code);
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("Something Went Wrong");
+          if (error.response) {
+            console.log(error.response);
+          }
+        });
+      };
+    
   return (
     <>
       <div
@@ -107,6 +130,12 @@ const Employee = ({
       >
         <button onClick={() => createCode(item.id)}>
         <RiBarcodeFill
+          className="hover:text-red-500 ease-in-out transition-all duration-300"
+          size={30}
+        />
+      </button>
+      <button onClick={() => showCode(item.id)}>
+        <RiLightbulbLine
           className="hover:text-red-500 ease-in-out transition-all duration-300"
           size={30}
         />
