@@ -43,8 +43,6 @@ const ServiceRecord = ({
     setTime(item.set_time);
   };
 
-  
-
   const serviceTypes: string[] = [
     "Installation",
     "Maintenance",
@@ -142,8 +140,8 @@ const ServiceRecord = ({
         },
       })
         .then((response) => {
-            toast.success("Record Edited");
-            getSchedule();
+          toast.success("Record Edited");
+          getSchedule();
           console.log(response);
         })
         .catch((error) => {
@@ -240,29 +238,34 @@ const ServiceRecord = ({
               </p>
             </div>
             {!menu ? (
-            <button
-            className="mr-4"
-              onClick={() => setMenu(true)}
-            >
-              <IoMdClipboard size={30} />
-            </button>
+              <button className="mr-4" onClick={() => setMenu(true)}>
+                <IoMdClipboard size={30} />
+              </button>
             ) : (
-              <button
-              className="mr-4"
-                onClick={() => setMenu(false)}
-              >
+              <button className="mr-4" onClick={() => setMenu(false)}>
                 <IoMdCloseCircle size={30} />
               </button>
             )}
             <div
-            className={
-              menu
-                ? "opacity-1 transition-all ease-in-out duration-500"
-                : "opacity-0 transition-all ease-in-out duration-500"
-            }
+              className={
+                menu
+                  ? "opacity-1 transition-all ease-in-out duration-500"
+                  : "opacity-0 transition-all ease-in-out duration-500"
+              }
             ></div>
-            {menu ? (
-            <>
+            {admin ? (
+              <button onClick={() => deleteRecord()} className="mr-4">
+                <IoMdTrash
+                  className="hover:text-red-500 ease-in-out transition-all duration-300"
+                  size={30}
+                />
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="bg-slate-600 text-white p-4 mt-2">
+          {/* editing job menu */}
+          {menu ? (
             <form onSubmit={editRecord}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
@@ -332,19 +335,9 @@ const ServiceRecord = ({
                 Edit Job
               </button>
             </form>
-                        </>
-                      ) : null}
-            {admin ? (
-              <button onClick={() => deleteRecord()} className="mr-4">
-                <IoMdTrash
-                  className="hover:text-red-500 ease-in-out transition-all duration-300"
-                  size={30}
-                />
-              </button>
-            ) : null}
-          </div>
-        </div>
-        <div className="bg-slate-600 text-white p-4 mt-2">
+          ) : null}
+
+          {/* editing job menu */}
           <div className="text-sm px-2 tracking-wider capitalize">
             <p className="text-white uppercase font-bold text-center text-[16px]">
               {item.service_type}
