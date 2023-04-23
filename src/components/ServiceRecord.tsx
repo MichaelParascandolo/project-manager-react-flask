@@ -3,7 +3,7 @@ import {
   IoMdCheckmarkCircle,
   IoMdCloseCircle,
 } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 const ServiceRecord = ({
@@ -12,12 +12,14 @@ const ServiceRecord = ({
   token,
   getSchedule,
   admin,
+  techs,
 }: {
   item: any;
   employees: any;
   token: string;
   getSchedule: any;
   admin: boolean;
+  techs: any;
 }) => {
   const time = new Date();
   const [currentFEmpID, setCurrentFEmpID] = useState<any>("default");
@@ -118,6 +120,10 @@ const ServiceRecord = ({
         }
       });
   };
+  useEffect(() => {
+    console.log(techs);
+    console.log(item.service_id);
+  }, []);
 
   return (
     <>
@@ -187,9 +193,11 @@ const ServiceRecord = ({
                 )}
               </div>
             </div>
-            {/* <div className="flex justify-center">
-              <MdExpandMore size={20} className="text-white -mt-1 -mb-10" />
-            </div> */}
+            {techs.map((tech: any, index: number) =>
+              tech.service_id === item.service_id ? (
+                <span key={index}>{tech.employee_first_name}</span>
+              ) : null
+            )}
           </div>
         </div>
         <div className="h-[80px] overflow-y-auto">

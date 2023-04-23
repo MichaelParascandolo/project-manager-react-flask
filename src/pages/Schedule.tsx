@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
+  const [techs, setTechs] = useState<any>([]);
   const [admin, setAdmin] = useState<boolean>(false);
   const [value, setValue] = useState<any>({
     startDate: null,
@@ -31,7 +32,8 @@ const Schedule = (props: any) => {
       data: { startDate: value.startDate, endDate: value.endDate },
     })
       .then((response) => {
-        // console.log(response.data);
+        // console.log(response.data.techs);
+        setTechs(response.data.techs);
         if (response.data.services.length != 0) {
           setSchedule(sortArray(response.data.services));
           setEmployees(response.data.team);
@@ -93,6 +95,7 @@ const Schedule = (props: any) => {
               item={item}
               key={index}
               employees={employees}
+              techs={techs}
               token={props.token}
               getSchedule={getSchedule}
               admin={admin}
