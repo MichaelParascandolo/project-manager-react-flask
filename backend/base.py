@@ -458,9 +458,8 @@ def edit_Job():
     notes = reqs.get("Notes")
 
     if user.Admin == True:
-        generator = Generators.query.filter(Generators.Name.like('%' + generatorname + '%')).first()
         service = ServiceRecords.query.filter_by(Serviceid = sid).first()
-        service.Generatorid = generator.Generatorid
+        service.Generatorid = generatorname
         service.StartDate = startdate
         service.StartTime = starttime
         service.ServiceType = servicetype
