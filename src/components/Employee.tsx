@@ -1,7 +1,9 @@
 import axios from "axios";
-import { RiAdminLine, RiUserLine } from "react-icons/ri";
+import { RiAdminLine, RiUserLine, RiBarcodeFill } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { formatNumber } from "./Customer";
+
+const time = new Date();
 
 const Employee = ({
   item,
@@ -67,6 +69,35 @@ const Employee = ({
         });
     }
   };
+  const createCode = (id: number) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/recovery/create",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: {
+        EmployeeID: id,
+        creationDate:
+            time.getFullYear() +
+            "-" +
+            (time.getMonth() + 1) +
+            "-" +
+            time.getDate(),
+      },
+    })
+      .then((response) => {
+        toast.success("Recovery Code Created");
+        console.log(response);
+      })
+      .catch((error) => {
+        toast.error("Something Went Wrong");
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+    };
+
   return (
     <>
       <div
@@ -74,6 +105,12 @@ const Employee = ({
           "bg-slate-700 text-white p-4 w-full rounded-lg border-2 border-slate-500 shadow-md shadow-slate-700 hover:scale-105 duration-300 ease-in-out transition-all"
         }
       >
+        <button onClick={() => createCode(item.id)}>
+        <RiBarcodeFill
+          className="hover:text-red-500 ease-in-out transition-all duration-300"
+          size={30}
+        />
+      </button>
         <div className="flex justify-evenly">
           <div className="my-auto hidden sm:block">
             <div className="bg-slate-500 border-2 text-white border-slate-500 p-3 m-4 rounded-full">

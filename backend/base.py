@@ -9,9 +9,7 @@ from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
 from models import db, Employees, Customers, Generators, ServiceRecords, Service_Employee_Int, Password_Recovery
-import csv
-import secrets
-import string
+import csv, secrets, string, random
 
 
 
@@ -63,28 +61,18 @@ def refresh_expiring_jwts(response):
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    forgot = request.json.get("forgot", None)
 
     user = Employees.query.filter_by(Email=email).first()
-
-    if forgot == True:
-        code = Password_Recovery.query.filter_by(Email=email).first()
-        if code.Code == password:
-            user = Employees.query.filter_by(Email=email).first()
-            pword = None
-            access_token = create_access_token(identity=email)
-            response = {"access_token":access_token, "Password": code.Password}
-    else:
-        if user is None:
-            return {"msg": "User Not Found"}, 401
-        
-        if not bcrypt.check_password_hash(user.Password, password):
-            return {"msg": "Invalid Password"}, 401
-
-        access_token = create_access_token(identity=email)
-        response = {"access_token":access_token}
+    user = Employees.query.filter_by(Email=email).first()
+    access_token = create_access_token(identity=email)
+    if user is None:
+        return {"msg": "User Not Found"}, 401
     
-    
+    if not bcrypt.check_password_hash(user.Password, password):
+        return {"msg": "Invalid Password"}, 401
+
+    access_token = create_access_token(identity=email)
+    response = {"access_token":access_token}
 
     return response
 
@@ -120,39 +108,36 @@ def team():
 #Password Recovery Route, creates a new code for the user
 @api.route("/recovery/create", methods=["POST"])
 def create_code():
-    email = request.json["Email"]
-    datemade = request.json["DateCreated"]
+    eid1 = request.json["EmployeeID"]
+    datemade = request.json["creationDate"]
 
-    user = Employees.query.filter_by(Email = email).first()
-    for i in Password_Recovery.query.filter_by(Email = email).all():
-        db.delete(i)
-    
+    user = Employees.query.filter_by(Employeeid = eid1).first()
+    for i in Password_Recovery.query.filter_by(Email = user.Email).all():
+        db.session.delete(i)
 
-    code = ("".join(secrets.choice(string.ascii_upper + string.ascii_lowercase + string.digits, k =10)))
-    new_recovery = Password_Recovery(Code = code, Email = email, Password = user.Password, DateMade = datemade)
-    db.add(new_recovery)
+    code = ("".join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=10)))
+    new_recovery = Password_Recovery(Code = code, Email = user.Email, Password = user.Password, DateMade = datemade)
+    db.session.add(new_recovery)
     
-    db.commit()
+    db.session.commit()
+    return {"Code": new_recovery.Code}
 
 #Password Recovery Route, checks that the code is correct and displays your password
 @api.route("/recovery/check", methods=["POST"])
 def check_code():
-    email = request.json["Email"]
-    code = request.json["Code"]
+    email = request.json["email"]
+    code = request.json["code"]
+    new_password = request.json["new_password"]
 
     recovery = Password_Recovery.query.filter_by(Email = email).first()
     if recovery.Code == code:
-        password = recovery.Password
-        db.delete(recovery)
-        db.commit()
-        return password
+        emp = Employees.query.filter_by(Email = email).first()
+        emp.Password = bcrypt.generate_password_hash(new_password)
+        db.session.delete(recovery)
+        db.session.commit()
+        return {"msg": "New Password Created"}
     else:
         return {"msg": "Invalid Code"}, 401
-    
-@api.route("/recovery/newpass", methods=["POST"])
-def new_password():
-    newpword = request.json["Password"]
-    
 
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])
