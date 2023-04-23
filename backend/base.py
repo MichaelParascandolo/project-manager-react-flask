@@ -63,17 +63,28 @@ def refresh_expiring_jwts(response):
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
-    user = Employees.query.filter_by(Email=email).first()
-    
-    if user is None:
-        return {"msg": "User Not Found"}, 401
-    
-    if not bcrypt.check_password_hash(user.Password, password):
-        return {"msg": "Invalid Password"}, 401
+    forgot = request.json.get("forgot", None)
 
-    access_token = create_access_token(identity=email)
-    response = {"access_token":access_token}
+    user = Employees.query.filter_by(Email=email).first()
+
+    if forgot == True:
+        code = Password_Recovery.query.filter_by(Email=email).first()
+        if code.Code == password:
+            user = Employees.query.filter_by(Email=email).first()
+            pword = None
+            access_token = create_access_token(identity=email)
+            response = {"access_token":access_token, "Password": code.Password}
+    else:
+        if user is None:
+            return {"msg": "User Not Found"}, 401
+        
+        if not bcrypt.check_password_hash(user.Password, password):
+            return {"msg": "Invalid Password"}, 401
+
+        access_token = create_access_token(identity=email)
+        response = {"access_token":access_token}
+    
+    
 
     return response
 
@@ -137,6 +148,11 @@ def check_code():
         return password
     else:
         return {"msg": "Invalid Code"}, 401
+    
+@api.route("/recovery/newpass", methods=["POST"])
+def new_password():
+    newpword = request.json["Password"]
+    
 
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])

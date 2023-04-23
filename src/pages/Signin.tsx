@@ -23,6 +23,7 @@ function Signin(props: any) {
       data: {
         email: email,
         password: password,
+        forgot: forgot,
       },
     })
       .then(async (response) => {
@@ -74,7 +75,11 @@ function Signin(props: any) {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                  <label>Password</label>
+                  {!forgot ? (
+                    <label>Password</label>
+                  ) : (
+                    <label>Recovery Code</label>
+                  )}
                   <input
                     type="password"
                     value={password}
@@ -100,23 +105,29 @@ function Signin(props: any) {
                     </button>
                   </div>
                   {!forgot ? (
-                    null
+                    <div className="flex justify-center">
+                      <button
+                        type="submit"
+                        className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                      >
+                        Login to your account
+                      </button>
+                    </div>
                   ) : (
-                    null
-                  )}
-                  </div>
                   <div className="flex justify-center">
                     <button
                       type="submit"
                       className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                     >
-                      Login to your account
+                      Enter Recovery Code
                     </button>
+                  </div>
+                  )}
                   </div>
                 </form>
                 <div className="mt-4">
                   <p className="text-center text-gray-300 text-md">
-                    Contact your admin for registration.
+                    Contact your admin for registration or a recovery code.
                   </p>
                 </div>
               </div>
