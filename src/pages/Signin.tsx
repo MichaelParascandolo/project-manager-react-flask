@@ -99,6 +99,11 @@ function Signin(props: any) {
                       Forgot password?
                     </button>
                   </div>
+                  {!forgot ? (
+                    null
+                  ) : (
+                    null
+                  )}
                   </div>
                   <div className="flex justify-center">
                     <button
