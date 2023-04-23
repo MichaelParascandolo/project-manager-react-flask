@@ -3,49 +3,27 @@ import {
   IoMdCheckmarkCircle,
   IoMdCloseCircle,
 } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { MdExpandMore } from "react-icons/md";
 const ServiceRecord = ({
   item,
   employees,
   token,
   getSchedule,
+  admin,
 }: {
   item: any;
   employees: any;
   token: string;
   getSchedule: any;
+  admin: boolean;
 }) => {
   const time = new Date();
   const [currentFEmpID, setCurrentFEmpID] = useState<any>("default");
   const [currentSEmpID, setCurrentSEmpID] = useState<any>("default");
   const [currentTEmpID, setCurrentTEmpID] = useState<any>("default");
   const [currentFoEmpID, setCurrentFoEmpID] = useState<any>("default");
-  const [admin, setAdmin] = useState<Boolean>();
-
-  function getData() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/profile",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
-        res.access_token;
-        setAdmin(Boolean(res.Admin));
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
 
   const deleteRecord = () => {
     if (
@@ -140,10 +118,6 @@ const ServiceRecord = ({
         }
       });
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <>

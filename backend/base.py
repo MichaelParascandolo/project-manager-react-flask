@@ -624,7 +624,7 @@ def get_all_services():
                         'notes': service.Notes
                     })
 
-    return jsonify({'services': services, 'techs': techs, 'team': team(),})
+    return jsonify({'services': services, 'techs': techs, 'team': team(), 'admin': user.Admin})
 
 #Deletes Jobs from the schedule page
 #Doable by Admins
