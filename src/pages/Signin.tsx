@@ -9,6 +9,7 @@ import Logo from "../components/Logo";
 function Signin(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
   function delay(ms = 1000): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -75,7 +76,7 @@ function Signin(props: any) {
                   />
                   <label>Password</label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                     onChange={(e) => setPassword(e.target.value)}
@@ -83,17 +84,19 @@ function Signin(props: any) {
                   />
                   <div className="flex justify-between mt-4">
                     <div className="flex">
-                      <input type="checkbox" className="mr-2 mt-1" />
+                      <input type="checkbox" className="mr-2 my-auto" />
                       <p className="text-gray-300">Remember me</p>
                     </div>
-                    <a
-                      href="#"
-                      className={
-                        "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300"
-                      }
-                    >
-                      Forgot password?
-                    </a>
+                    <div className="flex">
+                      <input
+                        type="checkbox"
+                        className="mr-2 my-auto"
+                        onChange={() => setShowPassword(!showPassword)}
+                      />
+                      <p className="text-gray-300">
+                        {showPassword ? "Hide" : "Show"} password
+                      </p>
+                    </div>
                   </div>
                   <div className="flex justify-center">
                     <button
@@ -107,6 +110,16 @@ function Signin(props: any) {
                 <div className="mt-4">
                   <p className="text-center text-gray-300 text-md">
                     Contact your admin for registration.
+                  </p>
+                  <p className="text-center text-gray-300 text-md">
+                    <a
+                      href="#"
+                      className={
+                        "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300"
+                      }
+                    >
+                      Forgot your password?
+                    </a>
                   </p>
                 </div>
               </div>
