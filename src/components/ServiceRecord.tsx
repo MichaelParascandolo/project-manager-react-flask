@@ -35,14 +35,6 @@ const ServiceRecord = ({
   const [generators, setGenerators] = useState<any[]>([]);
   const [admin, setAdmin] = useState<Boolean>();
 
-  const setFields = () => {
-    setGeneratorName(item.generator_name);
-    setServiceType(item.service_type);
-    setJobNotes(item.jobNotes);
-    setDate(item.start_date);
-    setTime(item.set_time);
-  };
-
   const serviceTypes: string[] = [
     "Installation",
     "Maintenance",
@@ -229,7 +221,6 @@ const ServiceRecord = ({
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
             <div className="text-[15px] w-[150px]">
-              {/* <CgProfile size={20} /> */}
               <p className="my-auto">
                 {item.customer_first_name} {item.customer_last_name}
               </p>
@@ -237,22 +228,21 @@ const ServiceRecord = ({
                 {item.street}, {item.city}
               </p>
             </div>
-            {!menu ? (
-              <button className="mr-4" onClick={() => setMenu(true)}>
-                <IoMdClipboard size={30} />
+            {!menu && admin ? (
+              <button onClick={() => setMenu(true)}>
+                <IoMdClipboard
+                  size={30}
+                  className="hover:text-blue-500 ease-in-out transition-all duration-300"
+                />
               </button>
-            ) : (
-              <button className="mr-4" onClick={() => setMenu(false)}>
-                <IoMdCloseCircle size={30} />
+            ) : admin ? (
+              <button onClick={() => setMenu(false)}>
+                <IoMdCloseCircle
+                  size={30}
+                  className="hover:text-red-500 ease-in-out transition-all duration-300"
+                />
               </button>
-            )}
-            <div
-              className={
-                menu
-                  ? "opacity-1 transition-all ease-in-out duration-500"
-                  : "opacity-0 transition-all ease-in-out duration-500"
-              }
-            ></div>
+            ) : null}
             {admin ? (
               <button onClick={() => deleteRecord()} className="mr-4">
                 <IoMdTrash
