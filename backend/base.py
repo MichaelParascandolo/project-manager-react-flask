@@ -66,13 +66,23 @@ def create_token():
     password = request.json.get("password", None)
     remember = request.json.get("remember", None)
 
+    forgot = request.json.get("forgot", None)
+
     user = Employees.query.filter_by(Email=email).first()
-    
-    if user is None:
-        return {"msg": "User Not Found"}, 401
-    
-    if not bcrypt.check_password_hash(user.Password, password):
-        return {"msg": "Invalid Password"}, 401
+
+    if forgot == True:
+        code = Password_Recovery.query.filter_by(Email=email).first()
+        if code.Code == password:
+            user = Employees.query.filter_by(Email=email).first()
+            pword = None
+            access_token = create_access_token(identity=email)
+            response = {"access_token":access_token, "Password": code.Password}
+    else:
+        if user is None:
+            return {"msg": "User Not Found"}, 401
+        
+        if not bcrypt.check_password_hash(user.Password, password):
+            return {"msg": "Invalid Password"}, 401
 
     if remember:
         expires_delta = timedelta(days=7)
@@ -144,6 +154,11 @@ def check_code():
         return password
     else:
         return {"msg": "Invalid Code"}, 401
+    
+@api.route("/recovery/newpass", methods=["POST"])
+def new_password():
+    newpword = request.json["Password"]
+    
 
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])
@@ -457,33 +472,35 @@ def retrieve_services():
 @jwt_required()
 def edit_Job():
     #Checking that user is Admin
-    empID = request.json.get("EmployeeID", None)
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
+    reqs = request.get_json()
+    sid = reqs.get("ServiceID")
+    generatorname = reqs.get("GeneratorName")
+    startdate = reqs.get("Date")
+    starttime = reqs.get("Time")
+    servicetype = reqs.get("ServiceType")
+    notes = reqs.get("Notes")
 
     if user.Admin == True:
-        reqs = request.get_json()
-        sid = reqs.get("ServiceID")
-        generatorid = request.json["GeneratorID"]
-        startdate = request.json["Date"]
-        starttime = request.json["Time"]
-        servicetype = request.json["ServiceType"]
-        notes = request.json["Notes"]
         service = ServiceRecords.query.filter_by(Serviceid = sid).first()
-        service.Generatorid = generatorid
+        service.Generatorid = generatorname
         service.StartDate = startdate
         service.StartTime = starttime
         service.ServiceType = servicetype
         service.Notes = notes
+        
         db.session.commit()
-    
-    return jsonify({
-        "ServiceID": service.Serviceid,
-        "Customer Name": service.Customerid,
-        "Generator Type": service.Generatorid,
-        "Start Date": service.StartDate,
-        "Start Time": service.StartTime,
-        "Notes": service.Notes
-        })
+        
+        return jsonify({
+        "service_id": sid,
+        "generator_name": generatorname,
+        "start_date": startdate,
+        "start_time": starttime,
+        "service_type": servicetype,
+        "notes": notes,
+    })
+
+    return
     
 #Adds technicians to jobs
 #Doable by admins
@@ -520,8 +537,6 @@ def add_techs():
             "Third_Employee_ID": tech_id[2],
             "Fourth_Employee_ID": tech_id[3],
         })
-
-
 
 # Completes a job from the schedule page and sets the finish date/time 
 # Doable by everyone who this shows up for
