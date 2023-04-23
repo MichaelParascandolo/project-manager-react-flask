@@ -448,34 +448,36 @@ def retrieve_services():
 @jwt_required()
 def edit_Job():
     #Checking that user is Admin
-    empID = request.json.get("EmployeeID", None)
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
+    reqs = request.get_json()
+    sid = reqs.get("ServiceID")
+    generatorname = reqs.get("GeneratorName")
+    startdate = reqs.get("Date")
+    starttime = reqs.get("Time")
+    servicetype = reqs.get("ServiceType")
+    notes = reqs.get("Notes")
 
     if user.Admin == True:
-        reqs = request.get_json()
-        sid = reqs.get("ServiceID")
-        generatorname = request.json["GeneratorName"]
-        startdate = request.json["Date"]
-        starttime = request.json["Time"]
-        servicetype = request.json["ServiceType"]
-        notes = request.json["Notes"]
-        generator = Generators.query.filter_by(Name = generatorname).first()
+        generator = Generators.query.filter(Generators.Name.like('%' + generatorname + '%')).first()
         service = ServiceRecords.query.filter_by(Serviceid = sid).first()
         service.Generatorid = generator.Generatorid
         service.StartDate = startdate
         service.StartTime = starttime
         service.ServiceType = servicetype
         service.Notes = notes
+        
         db.session.commit()
-    
-    return jsonify({
-        "ServiceID": service.Serviceid,
-        "Customer Name": service.Customerid,
-        "Generator Type": service.Generatorid,
-        "Start Date": service.StartDate,
-        "Start Time": service.StartTime,
-        "Notes": service.Notes
-        })
+        
+        return jsonify({
+        "service_id": sid,
+        "generator_name": generatorname,
+        "start_date": startdate,
+        "start_time": starttime,
+        "service_type": servicetype,
+        "notes": notes,
+    })
+
+    return
     
 #Adds technicians to jobs
 #Doable by admins
@@ -512,22 +514,6 @@ def add_techs():
             "Third_Employee_ID": tech_id[2],
             "Fourth_Employee_ID": tech_id[3],
         })
-
-@api.route("/schedule/workers", methods = ["POST"])
-@jwt_required()
-def get_workers():
-    reqs = request.get_json()
-    sid = reqs.get("ServiceID")
-    workers = []
-    for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
-        emp = Employees.query.filter_by(Employeeid = i.Employeeid).first()
-        workers.append({
-            "EmployeeID": emp.Employeeid,
-            "FirstName": emp.FirstName,
-        })
-
-    return workers
-
 
 # Completes a job from the schedule page and sets the finish date/time 
 # Doable by everyone who this shows up for

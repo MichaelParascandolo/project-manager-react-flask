@@ -33,15 +33,14 @@ const ServiceRecord = ({
   const [jobNotes, setJobNotes] = useState<any>();
   const [serviceType, setServiceType] = useState<any>([]);
   const [generators, setGenerators] = useState<any[]>([]);
-  const [workers, setWorkers] = useState<any[]>([]);
   const [admin, setAdmin] = useState<Boolean>();
 
   const setFields = () => {
     setGeneratorName(item.generator_name);
-  setServiceType(item.service_type);
-  setJobNotes(item.jobNotes);
-  setDate(item.start_date);
-  setTime(item.set_time);
+    setServiceType(item.service_type);
+    setJobNotes(item.jobNotes);
+    setDate(item.start_date);
+    setTime(item.set_time);
   };
 
   
@@ -64,30 +63,6 @@ const ServiceRecord = ({
     })
       .then((response) => {
         setGenerators(response.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
-  };
-
-  const getWorkers = () => {
-    axios({
-      method: "POST",
-      url: "http://127.0.0.1:3000/schedule/workers",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      data: {
-        ServiceID: item.service_id,
-      },
-    })
-      .then((response) => {
-        if (response.data.length() < 4){
-          response.data[0];
-        }
-        setWorkers(response.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -148,8 +123,9 @@ const ServiceRecord = ({
         });
     }
   };
-  const editRecord = () => {
+  const editRecord = (e: any) => {
     {
+      e.preventDefault();
       axios({
         method: "POST",
         url: "http://localhost:3000/schedule/edit",
@@ -166,8 +142,8 @@ const ServiceRecord = ({
         },
       })
         .then((response) => {
-            toast.success("Record Completed");
-          getSchedule();
+            toast.success("Record Edited");
+            getSchedule();
           console.log(response);
         })
         .catch((error) => {
@@ -235,7 +211,6 @@ const ServiceRecord = ({
       .then((response) => {
         toast.success("Tech Added");
         console.log(response);
-        getWorkers();
       })
       .catch((error) => {
         toast.error("Something Went Wrong");
@@ -247,7 +222,6 @@ const ServiceRecord = ({
   useEffect(() => {
     getData();
     getGenerators();
-    getWorkers();
   }, []);
 
   return (
@@ -266,30 +240,30 @@ const ServiceRecord = ({
               </p>
             </div>
             {!menu ? (
-                        <button
-                        className="mr-4"
-                          onClick={() => setMenu(true)}
-                        >
-                          <IoMdClipboard size={30} />
-                        </button>
-                      ) : (
-                        <button
-                        className="mr-4"
-                          onClick={() => setMenu(false)}
-                        >
-                          <IoMdCloseCircle size={30} />
-                        </button>
-                      )}
-                      <div
-                      className={
-                        menu
-                          ? "opacity-1 transition-all ease-in-out duration-500"
-                          : "opacity-0 transition-all ease-in-out duration-500"
-                      }
-                    ></div>
+            <button
+            className="mr-4"
+              onClick={() => setMenu(true)}
+            >
+              <IoMdClipboard size={30} />
+            </button>
+            ) : (
+              <button
+              className="mr-4"
+                onClick={() => setMenu(false)}
+              >
+                <IoMdCloseCircle size={30} />
+              </button>
+            )}
+            <div
+            className={
+              menu
+                ? "opacity-1 transition-all ease-in-out duration-500"
+                : "opacity-0 transition-all ease-in-out duration-500"
+            }
+            ></div>
             {menu ? (
-                        <>
-                          <form onSubmit={editRecord}>
+            <>
+            <form onSubmit={editRecord}>
               <div className="grid md:grid-cols-4 gap-2">
                 <div className="col-span-2">
                   <label>Date:</label>
@@ -429,7 +403,7 @@ const ServiceRecord = ({
                     setCurrentFEmpID(e.target.value);
                   }}
                 >
-                  <option value={"default"}>{workers[0]}</option>
+                  <option value={"default"}>Employee 1</option>
                   {employees.map((item: any, index: number) => (
                     <option key={index} value={item.id}>
                       {item.fN}

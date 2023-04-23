@@ -9,6 +9,7 @@ import Logo from "../components/Logo";
 function Signin(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [forgot, setForgotStatus] = useState<boolean>(false);
   const navigate = useNavigate();
   function delay(ms = 1000): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -89,14 +90,15 @@ function Signin(props: any) {
                       />
                       <p className="text-gray-300">Remember me</p>
                     </div>
-                    <a
-                      href="#"
+                    <div className="flex justify-center">
+                    <button
                       className={
                         "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300"
                       }
-                    >
+                    onClick={() => setForgotStatus(!forgot)}>
                       Forgot password?
-                    </a>
+                    </button>
+                  </div>
                   </div>
                   <div className="flex justify-center">
                     <button
