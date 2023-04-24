@@ -4,7 +4,7 @@ import {
   IoMdCloseCircle,
   IoMdClipboard,
 } from "react-icons/io";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 const ServiceRecord = ({
@@ -13,6 +13,7 @@ const ServiceRecord = ({
   token,
   getSchedule,
   admin,
+  generators,
   techs,
 }: {
   item: any;
@@ -21,6 +22,7 @@ const ServiceRecord = ({
   getSchedule: any;
   admin: boolean;
   techs: any;
+  generators?: any;
 }) => {
   const time = new Date();
   const containerRef = useRef<any>(null);
@@ -34,8 +36,6 @@ const ServiceRecord = ({
   const [startTime, setTime] = useState<any>();
   const [jobNotes, setJobNotes] = useState<any>();
   const [serviceType, setServiceType] = useState<any>([]);
-  const [generators, setGenerators] = useState<any[]>([]);
-  // const [admin, setAdmin] = useState<Boolean>();
 
   const serviceTypes: string[] = [
     "Installation",
@@ -44,24 +44,6 @@ const ServiceRecord = ({
     "Troubleshoot",
     "Other",
   ];
-
-  const getGenerators = () => {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/generators/details",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((response) => {
-        setGenerators(response.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
-  };
   const deleteRecord = () => {
     if (
       confirm(
@@ -179,6 +161,8 @@ const ServiceRecord = ({
     })
       .then((response) => {
         toast.success("Tech Added");
+        getSchedule();
+        containerRef.current.scrollTo(0, 0);
         console.log(response);
       })
       .catch((error) => {
@@ -188,9 +172,6 @@ const ServiceRecord = ({
         }
       });
   };
-  useEffect(() => {
-    getGenerators();
-  }, []);
 
   return (
     <>
@@ -269,7 +250,7 @@ const ServiceRecord = ({
                     }}
                   >
                     <option value={"default"}>(Please Select a Value)</option>
-                    {generators.map((gen, index) => (
+                    {generators.map((gen: any, index: number) => (
                       <option key={index} value={[gen.gNotes, gen.gID]}>
                         {gen.gName}
                       </option>
@@ -309,14 +290,14 @@ const ServiceRecord = ({
               </button>
             </form>
           ) : (
-            <div className="text-sm px-2 tracking-wider capitalize">
+            <div className="text-sm -mt-2 h-[120px] px-2 tracking-wider capitalize">
               <p className="text-white uppercase font-bold text-center text-[16px]">
                 {item.service_type}
               </p>
               <p className="text-gray-300 mb-2 text-center tracking-wide font-semibold text-[14px]">
                 {item.generator_name}
               </p>
-              <div className="flex select-none justify-evenly text-center rounded-lg bg-slate-800/70 p-2 border-2 border-slate-600">
+              <div className="flex select-none -mt-1 justify-evenly text-center rounded-lg bg-slate-800/70 p-2 border-2 border-slate-600">
                 <div>
                   <p className="text-gray-200">{item.start_date}</p>
                   <p className="text-gray-400">{item.start_time}</p>
@@ -351,6 +332,16 @@ const ServiceRecord = ({
                     </div>
                   )}
                 </div>
+              </div>
+              {/* showing scheduled techs */}
+              <div className="flex justify-evenly">
+                {techs.map((techs: any, index: number) =>
+                  techs.service_id == item.service_id ? (
+                    <p key={index} className="text-gray-200">
+                      {techs.employee_first_name}
+                    </p>
+                  ) : null
+                )}
               </div>
             </div>
           )}

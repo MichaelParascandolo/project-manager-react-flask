@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 const Schedule = (props: any) => {
   const [schedule, setSchedule] = useState<any>([]);
   const [employees, setEmployees] = useState<any>([]);
+  const [generators, setGenerators] = useState<any>([]);
   const [techs, setTechs] = useState<any>([]);
   const [admin, setAdmin] = useState<boolean>(false);
   const [value, setValue] = useState<any>({
@@ -32,12 +33,13 @@ const Schedule = (props: any) => {
       data: { startDate: value.startDate, endDate: value.endDate },
     })
       .then((response) => {
-        // console.log(response.data.techs);
-        setTechs(response.data.techs);
+        // console.log(response.data);
         if (response.data.services.length != 0) {
           setSchedule(sortArray(response.data.services));
           setEmployees(response.data.team);
+          setTechs(response.data.techs);
           setAdmin(response.data.admin);
+          setGenerators(response.data.generators);
         } else {
           setSchedule([]); // sets array to empty if no jobs are found
         }
@@ -71,9 +73,6 @@ const Schedule = (props: any) => {
           <h2 className="text-white cap font-roboto text-center text-4xl tracking-wide">
             Job Schedule
           </h2>
-          {/* <h3 className="text-gray-300 uppercase text-sm my-1 text-center tracking-wider">
-            {schedule.length} upcoming jobs
-          </h3> */}
           <Datepicker
             useRange={false}
             placeholder="DISPLAYING ALL JOBS"
@@ -99,6 +98,7 @@ const Schedule = (props: any) => {
               token={props.token}
               getSchedule={getSchedule}
               admin={admin}
+              generators={generators}
             />
           ))}
         </div>
