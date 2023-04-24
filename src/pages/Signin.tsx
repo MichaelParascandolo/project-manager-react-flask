@@ -75,7 +75,7 @@ function Signin(props: any) {
           toast.error(error.response.data.msg, {
             id: toastId,
           });
-          if (error.response.data.msg == "Invalid Password") {
+          if (error.response.data.msg == "Invalid Code or Email") {
             setPassword("");
           } else {
             setPassword("");
@@ -160,7 +160,7 @@ function Signin(props: any) {
                   />
                   <label>Recovery Code</label>
                   <input
-                    type="code"
+                    type="password"
                     value={code}
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                     onChange={(e) => setCode(e.target.value)}
@@ -168,7 +168,7 @@ function Signin(props: any) {
                   />
                   <label>New Password</label>
                   <input
-                    type="new password"
+                    type="password"
                     value={newPassword}
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                     onChange={(e) => setNewPassword(e.target.value)}
@@ -183,14 +183,7 @@ function Signin(props: any) {
                       <p className="text-gray-300">Remember me</p>
                     </div>
                     <div className="flex justify-center">
-                    <button
-                      className={
-                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
-                      }
-                    onClick={() => setForgotStatus(!forgot)}>
-                      Forgot password?
-                    </button>
-                  </div>
+                    </div>
                     <div className="flex justify-center">
                       <button
                         type="submit"
@@ -200,6 +193,14 @@ function Signin(props: any) {
                       </button>
                     </div>
                   </div>
+                    <button
+                      className={
+                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
+                      }
+                    onClick={() => setForgotStatus(!forgot)}>
+                      Forgot password?
+                    </button>
+                  
                   </form>
                 )}
                 <div className="mt-4">
