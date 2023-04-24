@@ -340,29 +340,6 @@ def delete_customer():
     return jsonify({"ID": id1})
 
 
-#Should be able to delete all of this route. Just not doing it yet until cleared with team
-#Creating generator route
-@api.route("/generator/create", methods=["POST"])
-@jwt_required()
-def create_generator():
-    id1 = request.json["GeneratorID"]
-    name1 = request.json["Name"]
-    cost1 = request.json["Price"]
-    notes1 = request.json["Notes"]
-    
-    generator_exists = Generators.query.filter_by(Generatorid = id1).first() is not None
-
-    if generator_exists:
-       return {"msg": "Generator already exists"}, 401
-
-    new_generator = Generators(Generatorid = id1, Name = name1, Cost = cost1, Notes = notes1)
-    db.session.add(new_generator)
-    db.session.commit()
-
-    return {"msg": "Generator added"}, 401
-
-
-
 #Creates a new service record in the database, checks for errors while creating
 @api.route("/service/create", methods=["POST"])
 @jwt_required()
