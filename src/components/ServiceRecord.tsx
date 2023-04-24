@@ -182,7 +182,7 @@ const ServiceRecord = ({
       >
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
-            <div className="text-[15px] w-[150px]">
+            <div className="text-[15px] w-[250px]">
               <p className="my-auto">
                 {item.customer_first_name} {item.customer_last_name}
               </p>
