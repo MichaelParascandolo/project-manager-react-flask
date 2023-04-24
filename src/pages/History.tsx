@@ -24,6 +24,7 @@ const History = (props: any) => {
     setDate("");
     setTime("");
     setGenerators([]);
+    getGenerators();
     setServiceType([]); // does not reset for some reason
     setJobNotes("");
   };

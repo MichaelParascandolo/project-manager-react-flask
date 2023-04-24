@@ -10,6 +10,8 @@ function Signin(props: any) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [code, setCode] = useState("");
   const [forgot, setForgotStatus] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -51,6 +53,42 @@ function Signin(props: any) {
         }
       });
   }
+
+  function checkRecovery(e: any) {
+    const toastId = toast.loading("Please wait...");
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: "http://127.0.0.1:3000/recovery/check",
+      data: {
+        email: email,
+        code: code,
+        new_password: newPassword,
+      },
+    })
+      .then(async (response) => {
+        toast.success("Login Successful", {
+          id: toastId,
+        });
+        await delay();
+        props.setToken(response.data.access_token);
+      })
+      .catch(async (error) => {
+        if (error.response) {
+          await delay();
+          toast.error(error.response.data.msg, {
+            id: toastId,
+          });
+          if (error.response.data.msg == "Invalid Code or Email") {
+            setPassword("");
+          } else {
+            setPassword("");
+            setEmail("");
+          }
+        }
+      });
+  }
+
   useEffect(() => {
     navigate("/"); // resets browser path back to /
   }, []);
@@ -63,53 +101,40 @@ function Signin(props: any) {
           <div className="-mb-6">
             <Logo />
           </div>
-          <div className="mt-10 bg-slate-700 shadow-xl shadow-slate-700 rounded-xl border-2 border-slate-500 h-[400px]">
+          <div className="mt-10 bg-slate-700 shadow-xl shadow-slate-700 rounded-xl border-2 border-slate-500 h-[500px]">
             <div className="flex justify-center">
               <div className="w-[500px] p-8">
                 <h2 className="text-white cap font-bold text-center text-xl tracking-wide">
                   Sign in to your account
                 </h2>
-                <form onSubmit={logMeIn}>
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={email}
-                    placeholder="name@company.com"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  {!forgot ? (
+                {!forgot ? (
+                  <form onSubmit={logMeIn}>
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      value={email}
+                      placeholder="name@company.com"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
                     <label>Password</label>
-                  ) : (
-                    <label>Recovery Code</label>
-                  )}
-                  <input
-                    type="password"
-                    value={password}
-                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <div className="flex justify-between mt-4">
-                    <div className="flex">
-                      <input
-                        type="checkbox"
-                        className="w-4 h-4 mr-2 mt-1 accent-blue-500"
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                      />
-                      <p className="text-gray-300">Remember me</p>
-                    </div>
-                    <div className="flex justify-center">
-                      <button
-                        className={
-                          "text-blue-500 border-b-2 border-transparent hover:border-blue-500 ease-in-out transition-all duration-300"
-                        }
-                        onClick={() => setForgotStatus(!forgot)}
-                      >
-                        Forgot password?
-                      </button>
-                    </div>
-                    {!forgot ? (
+                    <input
+                      type="password"
+                      value={password}
+                      placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <div className="flex justify-between mt-4">
+                      <div className="flex">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 mr-2 mt-1 accent-blue-500"
+                          onChange={(e) => setRememberMe(e.target.checked)}
+                        />
+                        <p className="text-gray-300">Remember me</p>
+                      </div>
+                      <div className="flex justify-center"></div>
                       <div className="flex justify-center">
                         <button
                           type="submit"
@@ -118,18 +143,70 @@ function Signin(props: any) {
                           Login to your account
                         </button>
                       </div>
-                    ) : (
+                    </div>
+                    <button
+                      className={
+                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
+                      }
+                      onClick={() => setForgotStatus(!forgot)}
+                    >
+                      Forgot password?
+                    </button>
+                  </form>
+                ) : (
+                  <form onSubmit={checkRecovery}>
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      value={email}
+                      placeholder="name@company.com"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <label>Recovery Code</label>
+                    <input
+                      type="password"
+                      value={code}
+                      placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                      onChange={(e) => setCode(e.target.value)}
+                      required
+                    />
+                    <label>New Password</label>
+                    <input
+                      type="password"
+                      value={newPassword}
+                      placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
+                    />
+                    <div className="flex justify-between mt-4">
+                      <div className="flex">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 mr-2 mt-1 accent-blue-500"
+                        />
+                        <p className="text-gray-300">Remember me</p>
+                      </div>
+                      <div className="flex justify-center"></div>
                       <div className="flex justify-center">
                         <button
                           type="submit"
                           className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                         >
-                          Enter Recovery Code
+                          Create New Password
                         </button>
                       </div>
-                    )}
-                  </div>
-                </form>
+                    </div>
+                    <button
+                      className={
+                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
+                      }
+                      onClick={() => setForgotStatus(!forgot)}
+                    >
+                      Forgot password?
+                    </button>
+                  </form>
+                )}
                 <div className="mt-4">
                   <p className="text-center text-gray-300 text-md">
                     Contact your admin for registration or a recovery code.
