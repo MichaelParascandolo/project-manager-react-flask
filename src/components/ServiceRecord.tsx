@@ -4,7 +4,7 @@ import {
   IoMdCloseCircle,
   IoMdClipboard,
 } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 const ServiceRecord = ({
@@ -22,9 +22,8 @@ const ServiceRecord = ({
   admin: boolean;
   techs: any;
 }) => {
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [adminMenu, setAdminMenu] = useState<boolean>(false);
   const time = new Date();
+  const containerRef = useRef<any>(null);
   const [currentFEmpID, setCurrentFEmpID] = useState<any>("default");
   const [currentSEmpID, setCurrentSEmpID] = useState<any>("default");
   const [currentTEmpID, setCurrentTEmpID] = useState<any>("default");
@@ -36,7 +35,7 @@ const ServiceRecord = ({
   const [jobNotes, setJobNotes] = useState<any>();
   const [serviceType, setServiceType] = useState<any>([]);
   const [generators, setGenerators] = useState<any[]>([]);
-  const [admin, setAdmin] = useState<Boolean>();
+  // const [admin, setAdmin] = useState<Boolean>();
 
   const serviceTypes: string[] = [
     "Installation",
@@ -63,30 +62,6 @@ const ServiceRecord = ({
         }
       });
   };
-
-  function getData() {
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:3000/profile",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
-        res.access_token;
-        setAdmin(Boolean(res.Admin));
-        setAdminMenu(Boolean(res.Admin));
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
-
   const deleteRecord = () => {
     if (
       confirm(
@@ -136,6 +111,8 @@ const ServiceRecord = ({
       })
         .then((response) => {
           toast.success("Record Edited");
+          setMenu(false);
+          containerRef.current.scrollTo(0, 0);
           getSchedule();
           console.log(response);
         })
@@ -212,14 +189,16 @@ const ServiceRecord = ({
       });
   };
   useEffect(() => {
-    console.log(techs);
-    console.log(item.service_id);
+    getGenerators();
   }, []);
 
   return (
     <>
       <Toaster />
-      <div className="bg-slate-800/80 h-[225px] overflow-y-scroll pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-700">
+      <div
+        ref={containerRef}
+        className="bg-slate-800/80 h-[225px] overflow-y-scroll pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-800"
+      >
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
             <div className="text-[15px] w-[150px]">
@@ -230,29 +209,31 @@ const ServiceRecord = ({
                 {item.street}, {item.city}
               </p>
             </div>
-            {!menu && admin ? (
-              <button onClick={() => setMenu(true)}>
-                <IoMdClipboard
-                  size={30}
-                  className="hover:text-blue-500 ease-in-out transition-all duration-300"
-                />
-              </button>
-            ) : admin ? (
-              <button onClick={() => setMenu(false)}>
-                <IoMdCloseCircle
-                  size={30}
-                  className="hover:text-red-500 ease-in-out transition-all duration-300"
-                />
-              </button>
-            ) : null}
-            {admin ? (
-              <button onClick={() => deleteRecord()} className="mr-4">
-                <IoMdTrash
-                  className="hover:text-red-500 ease-in-out transition-all duration-300"
-                  size={30}
-                />
-              </button>
-            ) : null}
+            <div className="flex w-[100px] justify-between">
+              {!menu && admin ? (
+                <button onClick={() => setMenu(true)}>
+                  <IoMdClipboard
+                    size={30}
+                    className="hover:text-blue-500 ease-in-out transition-all duration-300"
+                  />
+                </button>
+              ) : admin ? (
+                <button onClick={() => setMenu(false)}>
+                  <IoMdCloseCircle
+                    size={30}
+                    className="hover:text-red-500 ease-in-out transition-all duration-300"
+                  />
+                </button>
+              ) : null}
+              {admin ? (
+                <button onClick={() => deleteRecord()} className="mr-4">
+                  <IoMdTrash
+                    className="hover:text-red-500 ease-in-out transition-all duration-300"
+                    size={30}
+                  />
+                </button>
+              ) : null}
+            </div>
           </div>
         </div>
         <div className="bg-slate-600 text-white p-4 mt-2">
@@ -374,10 +355,12 @@ const ServiceRecord = ({
             </div>
           )}
         </div>
-        <div className="h-[80px] overflow-y-auto">
-          <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
-        </div>
-        {admin ? (
+        {!menu ? (
+          <div className="h-[80px] overflow-y-auto">
+            <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
+          </div>
+        ) : null}
+        {admin && !menu ? (
           <>
             <div className="h-0.5 rounded-full w-[95%] mx-auto my-2 bg-slate-500" />
             <div className="grid grid-cols-2 mt-2 px-2 gap-2">

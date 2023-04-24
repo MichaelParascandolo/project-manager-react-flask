@@ -89,7 +89,7 @@ const Schedule = (props: any) => {
       {/* schedule */}
       <div className="h-1 rounded-full w-[95%] mx-auto my-2 bg-slate-500" />
       {schedule.length > 0 ? (
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-[90%] m-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 w-[90%] m-auto">
           {schedule.map((item: any, index: number) => (
             <ServiceRecord
               item={item}
