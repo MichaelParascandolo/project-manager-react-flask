@@ -165,7 +165,7 @@ def my_profile():
 #Creating employees route
 @api.route("/employees/create", methods=["POST"])
 @cross_origin()
-@jwt_required()
+#@jwt_required()
 def create_employee():
     id1 = request.json["EmployeeID"]
     email1 = request.json["Email"]
