@@ -130,14 +130,7 @@ function Signin(props: any) {
                       <p className="text-gray-300">Remember me</p>
                     </div>
                     <div className="flex justify-center">
-                    <button
-                      className={
-                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
-                      }
-                    onClick={() => setForgotStatus(!forgot)}>
-                      Forgot password?
-                    </button>
-                  </div>
+                    </div>
                     <div className="flex justify-center">
                       <button
                         type="submit"
@@ -147,6 +140,14 @@ function Signin(props: any) {
                       </button>
                     </div>
                   </div>
+                    <button
+                      className={
+                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
+                      }
+                    onClick={() => setForgotStatus(!forgot)}>
+                      Forgot password?
+                    </button>
+                  
                   </form>
                 ) : (
                   <form onSubmit={checkRecovery}>
