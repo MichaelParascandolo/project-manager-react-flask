@@ -178,11 +178,11 @@ const ServiceRecord = ({
       <Toaster />
       <div
         ref={containerRef}
-        className="bg-slate-800/80 h-[225px] overflow-y-scroll pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-800"
+        className="bg-slate-800/80 h-[480px] pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-800"
       >
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
-            <div className="text-[15px] w-[250px]">
+            <div className="text-[15px] w-[250px] h-[75px]">
               <p className="my-auto">
                 {item.customer_first_name} {item.customer_last_name}
               </p>
@@ -217,11 +217,11 @@ const ServiceRecord = ({
             </div>
           </div>
         </div>
-        <div className="bg-slate-600 text-white p-4 mt-2">
+        <div className="bg-slate-600 text-white p-4 mt-2 rounded-b-xl">
           {/* editing job menu */}
           {menu ? (
             <form onSubmit={editRecord}>
-              <div className="grid md:grid-cols-4 gap-2">
+              <div className="grid md:grid-cols-4 gap-2 -mt-4">
                 <div className="col-span-2">
                   <label>Date:</label>
                   <input
@@ -276,7 +276,7 @@ const ServiceRecord = ({
                 <div className="col-span-4">
                   <label>Notes:</label>
                   <textarea
-                    className="w-full h-[100px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
+                    className="w-full h-[80px] rounded-lg border-2 tracking-wider border-slate-900 p-2 bg-slate-700 text-white"
                     onChange={(e) => setJobNotes(e.target.value)}
                     value={jobNotes}
                   />
@@ -284,7 +284,7 @@ const ServiceRecord = ({
               </div>
               <button
                 type="submit"
-                className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-2 rounded-lg my-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
+                className="bg-blue-500 border-2 text-black border-blue-800 text-lg px-4 py-1 rounded-lg mt-4 w-full col-span-2 hover:bg-blue-700 transition-all ease-in-out duration-300"
               >
                 Edit Job
               </button>
@@ -347,7 +347,7 @@ const ServiceRecord = ({
           )}
         </div>
         {!menu ? (
-          <div className="h-[80px] overflow-y-auto">
+          <div className="h-[70px] overflow-y-scroll">
             <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
           </div>
         ) : null}
