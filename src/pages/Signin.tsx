@@ -68,7 +68,7 @@ function Signin(props: any) {
       },
     })
       .then(async (response) => {
-        toast.success("Login Successful", {
+        toast.success("Password Changed", {
           id: toastId,
         });
         await delay();

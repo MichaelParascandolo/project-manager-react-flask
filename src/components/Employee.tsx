@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  RiAdminLine,
-  RiUserLine,
-  RiBarcodeFill,
-  RiLightbulbLine,
-} from "react-icons/ri";
+import { RiAdminLine, RiUserLine, RiLockPasswordLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { formatNumber } from "./Customer";
 
@@ -92,7 +87,8 @@ const Employee = ({
       },
     })
       .then((response) => {
-        toast.success("Recovery Code Created");
+        // toast.success("Recovery Code Created");
+        showCode(id);
         console.log(response);
       })
       .catch((error) => {
@@ -115,7 +111,9 @@ const Employee = ({
       },
     })
       .then((response) => {
-        toast.success("Recovery Code: " + response.data.Code);
+        toast.success("Recovery Code: " + response.data.Code, {
+          duration: 5000, // toast will stay on the screen longer
+        });
         console.log(response);
       })
       .catch((error) => {
@@ -133,18 +131,6 @@ const Employee = ({
           "bg-slate-700 text-white p-4 w-full rounded-lg border-2 border-slate-500 shadow-md shadow-slate-700 hover:scale-105 duration-300 ease-in-out transition-all"
         }
       >
-        {/* <button onClick={() => createCode(item.id)}>
-        <RiBarcodeFill
-          className="hover:text-red-500 ease-in-out transition-all duration-300"
-          size={30}
-        />
-      </button>
-      <button onClick={() => showCode(item.id)}>
-        <RiLightbulbLine
-          className="hover:text-red-500 ease-in-out transition-all duration-300"
-          size={30}
-        />
-      </button> */}
         <div className="flex justify-evenly">
           <div className="my-auto hidden sm:block">
             <div className="bg-slate-500 border-2 text-white border-slate-500 p-3 m-4 rounded-full">
@@ -157,20 +143,6 @@ const Employee = ({
             <p className="text-lg text-center text-gray-400 tracking-wide font-bold">
               {item.admin ? "ADMIN" : "USER"}
             </p>
-            <div className="flex justify-around">
-              <button onClick={() => createCode(item.id)}>
-                <RiBarcodeFill
-                  className="hover:text-red-500 ease-in-out transition-all duration-300"
-                  size={30}
-                />
-              </button>
-              <button onClick={() => showCode(item.id)}>
-                <RiLightbulbLine
-                  className="hover:text-red-500 ease-in-out transition-all duration-300"
-                  size={30}
-                />
-              </button>
-            </div>
           </div>
           <div>
             <div className="flex justify-between">
@@ -199,18 +171,26 @@ const Employee = ({
             </p>
             {userID !== item.id ? (
               <div className="flex mt-2">
-                <button
-                  onClick={() => changePermission(item.id)}
-                  className="bg-blue-500 border-2 uppercase border-blue-800 mr-1 text-sm text-black tracking-wider px-4 py-2 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
-                >
-                  {item.admin ? "Make User" : "Make Admin"}
-                </button>
-                <button
-                  onClick={() => deleteEmployee(item.id)}
-                  className="bg-red-500 border-2 uppercase border-red-800 ml-1 text-sm text-black tracking-wider px-4 py-2 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300"
-                >
-                  Delete User
-                </button>
+                <div className="flex justify-evenly gap-2">
+                  <button
+                    onClick={() => createCode(item.id)}
+                    className="bg-blue-500 border-2 uppercase border-blue-800 text-sm text-black tracking-wider px-4 py-1 rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-300"
+                  >
+                    <RiLockPasswordLine size={25} />
+                  </button>
+                  <button
+                    onClick={() => changePermission(item.id)}
+                    className="bg-green-500 border-2 uppercase border-green-800 text-sm text-black tracking-wider px-4 py-1 rounded-lg hover:bg-green-700 transition-all ease-in-out duration-300"
+                  >
+                    {item.admin ? "Make User" : "Make Admin"}
+                  </button>
+                  <button
+                    onClick={() => deleteEmployee(item.id)}
+                    className="bg-red-500 border-2 uppercase border-red-800 text-sm text-black tracking-wider px-4 py-1 rounded-lg hover:bg-red-700 transition-all ease-in-out duration-300"
+                  >
+                    {item.admin ? "Delete Admin" : "Delete User"}
+                  </button>
+                </div>
               </div>
             ) : (
               <p className=" text-gray-400">Currently Signed-In</p>
