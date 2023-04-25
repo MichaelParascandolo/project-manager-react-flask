@@ -347,7 +347,7 @@ const ServiceRecord = ({
           )}
         </div>
         {!menu ? (
-          <div className="h-[70px] overflow-y-scroll">
+          <div className="h-[70px] overflow-y-auto">
             <p className="m-2 text-gray-300 tracking-wide">{item.notes}</p>
           </div>
         ) : null}
