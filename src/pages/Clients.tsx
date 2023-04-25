@@ -221,7 +221,7 @@ const Clients = (props: any) => {
           {/* displays customers */}
           {customers.length > 0 ? (
             <>
-              <p className="text-gray-300 text-[15px] uppercase text-center pt-4">
+              <p className="text-gray-100 text-[15px] uppercase text-center pt-4">
                 {showSearch}
               </p>
 
