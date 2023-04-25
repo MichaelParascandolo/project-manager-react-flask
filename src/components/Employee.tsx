@@ -1,5 +1,10 @@
 import axios from "axios";
-import { RiAdminLine, RiUserLine, RiBarcodeFill, RiLightbulbLine } from "react-icons/ri";
+import {
+  RiAdminLine,
+  RiUserLine,
+  RiBarcodeFill,
+  RiLightbulbLine,
+} from "react-icons/ri";
 import toast from "react-hot-toast";
 import { formatNumber } from "./Customer";
 
@@ -79,11 +84,11 @@ const Employee = ({
       data: {
         EmployeeID: id,
         creationDate:
-            time.getFullYear() +
-            "-" +
-            (time.getMonth() + 1) +
-            "-" +
-            time.getDate(),
+          time.getFullYear() +
+          "-" +
+          (time.getMonth() + 1) +
+          "-" +
+          time.getDate(),
       },
     })
       .then((response) => {
@@ -96,31 +101,31 @@ const Employee = ({
           console.log(error.response);
         }
       });
-    };
+  };
 
-    const showCode = (id: number) => {
-      axios({
-        method: "POST",
-        url: "http://localhost:3000/recovery/display",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-        data: {
-          EmployeeID: id,
-        },
+  const showCode = (id: number) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/recovery/display",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: {
+        EmployeeID: id,
+      },
+    })
+      .then((response) => {
+        toast.success("Recovery Code: " + response.data.Code);
+        console.log(response);
       })
-        .then((response) => {
-          toast.success("Recovery Code: " + response.data.Code);
-          console.log(response);
-        })
-        .catch((error) => {
-          toast.error("Something Went Wrong");
-          if (error.response) {
-            console.log(error.response);
-          }
-        });
-      };
-    
+      .catch((error) => {
+        toast.error("Something Went Wrong");
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
+
   return (
     <>
       <div
@@ -128,7 +133,7 @@ const Employee = ({
           "bg-slate-700 text-white p-4 w-full rounded-lg border-2 border-slate-500 shadow-md shadow-slate-700 hover:scale-105 duration-300 ease-in-out transition-all"
         }
       >
-        <button onClick={() => createCode(item.id)}>
+        {/* <button onClick={() => createCode(item.id)}>
         <RiBarcodeFill
           className="hover:text-red-500 ease-in-out transition-all duration-300"
           size={30}
@@ -139,7 +144,7 @@ const Employee = ({
           className="hover:text-red-500 ease-in-out transition-all duration-300"
           size={30}
         />
-      </button>
+      </button> */}
         <div className="flex justify-evenly">
           <div className="my-auto hidden sm:block">
             <div className="bg-slate-500 border-2 text-white border-slate-500 p-3 m-4 rounded-full">
@@ -152,6 +157,20 @@ const Employee = ({
             <p className="text-lg text-center text-gray-400 tracking-wide font-bold">
               {item.admin ? "ADMIN" : "USER"}
             </p>
+            <div className="flex justify-around">
+              <button onClick={() => createCode(item.id)}>
+                <RiBarcodeFill
+                  className="hover:text-red-500 ease-in-out transition-all duration-300"
+                  size={30}
+                />
+              </button>
+              <button onClick={() => showCode(item.id)}>
+                <RiLightbulbLine
+                  className="hover:text-red-500 ease-in-out transition-all duration-300"
+                  size={30}
+                />
+              </button>
+            </div>
           </div>
           <div>
             <div className="flex justify-between">

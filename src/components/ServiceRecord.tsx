@@ -178,7 +178,7 @@ const ServiceRecord = ({
       <Toaster />
       <div
         ref={containerRef}
-        className="bg-slate-800/80 h-[480px] pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-800"
+        className="bg-slate-800/80 h-full pb-2 pt-2 mt-2 rounded-xl shadow-lg border-2 border-slate-500 shadow-slate-800"
       >
         <div className="text-white tracking-widest ml-4">
           <div className="flex justify-between">
