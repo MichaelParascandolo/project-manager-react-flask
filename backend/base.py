@@ -497,6 +497,7 @@ def add_techs():
 
         for i in Service_Employee_Int.query.filter_by(Serviceid = sid).all():
             db.session.delete(i)
+            db.session.commit()
 
         for k in tech_id:
             if k != "default":
