@@ -9,6 +9,7 @@ import Logo from "../components/Logo";
 function Signin(props: any) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [newPassword, setNewPassword] = useState("");
   const [code, setCode] = useState("");
@@ -101,7 +102,11 @@ function Signin(props: any) {
           <div className="-mb-6">
             <Logo />
           </div>
-          <div className="mt-10 bg-slate-700 shadow-xl shadow-slate-700 rounded-xl border-2 border-slate-500 h-[500px]">
+          <div
+            className={`mt-10 bg-slate-700 shadow-xl shadow-slate-700 rounded-xl border-2 border-slate-500 ${
+              forgot ? "h-[450px]" : "h-[400px]"
+            }`}
+          >
             <div className="flex justify-center">
               <div className="w-[500px] p-8">
                 <h2 className="text-white cap font-bold text-center text-xl tracking-wide">
@@ -119,7 +124,7 @@ function Signin(props: any) {
                     />
                     <label>Password</label>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       value={password}
                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                       onChange={(e) => setPassword(e.target.value)}
@@ -134,24 +139,25 @@ function Signin(props: any) {
                         />
                         <p className="text-gray-300">Remember me</p>
                       </div>
-                      <div className="flex justify-center"></div>
-                      <div className="flex justify-center">
-                        <button
-                          type="submit"
-                          className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
-                        >
-                          Login to your account
-                        </button>
+                      <div className="flex">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 mr-2 mt-1 accent-blue-500"
+                          onChange={() => setShowPassword(!showPassword)}
+                        />
+                        <p className="text-gray-300">
+                          {showPassword ? "Hide" : "Show"} Password
+                        </p>
                       </div>
                     </div>
-                    <button
-                      className={
-                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
-                      }
-                      onClick={() => setForgotStatus(!forgot)}
-                    >
-                      Forgot password?
-                    </button>
+                    <div className="flex justify-center">
+                      <button
+                        type="submit"
+                        className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
+                      >
+                        Login to your account
+                      </button>
+                    </div>
                   </form>
                 ) : (
                   <form onSubmit={checkRecovery}>
@@ -179,35 +185,25 @@ function Signin(props: any) {
                       onChange={(e) => setNewPassword(e.target.value)}
                       required
                     />
-                    <div className="flex justify-between mt-4">
-                      <div className="flex">
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4 mr-2 mt-1 accent-blue-500"
-                        />
-                        <p className="text-gray-300">Remember me</p>
-                      </div>
-                      <div className="flex justify-center"></div>
-                      <div className="flex justify-center">
-                        <button
-                          type="submit"
-                          className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
-                        >
-                          Create New Password
-                        </button>
-                      </div>
-                    </div>
                     <button
-                      className={
-                        "text-blue-100 border-b-2 border-transparent hover:border-blue-100 ease-in-out transition-all duration-300"
-                      }
-                      onClick={() => setForgotStatus(!forgot)}
+                      type="submit"
+                      className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                     >
-                      Forgot password?
+                      Create New Password
                     </button>
                   </form>
                 )}
-                <div className="mt-4">
+                <div className="flex justify-center mt-2">
+                  <button
+                    className={
+                      "text-white border-b-2 tracking-wide border-transparent hover:border-blue-500 ease-in-out transition-all duration-300"
+                    }
+                    onClick={() => setForgotStatus(!forgot)}
+                  >
+                    {!forgot ? "Forgot password?" : "Cancel Reset"}
+                  </button>
+                </div>
+                <div className="tracking-wide">
                   <p className="text-center text-gray-300 text-md">
                     Contact your admin for registration or a recovery code.
                   </p>
