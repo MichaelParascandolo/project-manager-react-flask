@@ -9,9 +9,7 @@ from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
 from models import db, Employees, Customers, Generators, ServiceRecords, Service_Employee_Int, Password_Recovery
-import csv
-import secrets
-import string
+import csv, secrets, string, random
 
 
 
@@ -37,25 +35,26 @@ with api.app_context():
     file.close()
 
 api.config["JWT_SECRET_KEY"] = "aosdflnasldfnaslndflnsdnlnlknlkgtudsrtstr"
-api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
 
-@api.after_request
-def refresh_expiring_jwts(response):
-    try:
-        exp_timestamp = get_jwt()["exp"]
-        now = datetime.now(timezone.utc)
-        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
-        if target_timestamp > exp_timestamp:
-            access_token = create_access_token(identity=get_jwt_identity())
-            data = response.get_json()
-            if type(data) is dict:
-                data["access_token"] = access_token 
-                response.data = json.dumps(data)
-        return response
-    except (RuntimeError, KeyError):
-        # Case where there is not a valid JWT. Just return the original response
-        return response
+# we might not need this code anymore
+# api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+# @api.after_request
+# def refresh_expiring_jwts(response):
+#     try:
+#         exp_timestamp = get_jwt()["exp"]
+#         now = datetime.now(timezone.utc)
+#         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+#         if target_timestamp > exp_timestamp:
+#             access_token = create_access_token(identity=get_jwt_identity())
+#             data = response.get_json()
+#             if type(data) is dict:
+#                 data["access_token"] = access_token 
+#                 response.data = json.dumps(data)
+#         return response
+#     except (RuntimeError, KeyError):
+#         # Case where there is not a valid JWT. Just return the original response
+#         return response
 
 
 #The login route
@@ -63,16 +62,25 @@ def refresh_expiring_jwts(response):
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
+    remember = request.json.get("remember", None)
+
+    forgot = request.json.get("forgot", None)
+
     user = Employees.query.filter_by(Email=email).first()
-    
+    user = Employees.query.filter_by(Email=email).first()
+    access_token = create_access_token(identity=email)
     if user is None:
         return {"msg": "User Not Found"}, 401
     
     if not bcrypt.check_password_hash(user.Password, password):
         return {"msg": "Invalid Password"}, 401
 
-    access_token = create_access_token(identity=email)
+    if remember:
+        expires_delta = timedelta(days=7)
+    else:
+        expires_delta = timedelta(minutes=30)
+
+    access_token = create_access_token(identity=email,expires_delta=expires_delta)
     response = {"access_token":access_token}
 
     return response
@@ -109,34 +117,46 @@ def team():
 #Password Recovery Route, creates a new code for the user
 @api.route("/recovery/create", methods=["POST"])
 def create_code():
-    email = request.json["Email"]
-    datemade = request.json["DateCreated"]
+    eid1 = request.json["EmployeeID"]
+    datemade = request.json["creationDate"]
 
-    user = Employees.query.filter_by(Email = email).first()
-    for i in Password_Recovery.query.filter_by(Email = email).all():
-        db.delete(i)
-    
+    user = Employees.query.filter_by(Employeeid = eid1).first()
+    for i in Password_Recovery.query.filter_by(Email = user.Email).all():
+        db.session.delete(i)
 
-    code = ("".join(secrets.choice(string.ascii_upper + string.ascii_lowercase + string.digits, k =10)))
-    new_recovery = Password_Recovery(Code = code, Email = email, Password = user.Password, DateMade = datemade)
-    db.add(new_recovery)
+    code = ("".join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=10)))
+    new_recovery = Password_Recovery(Code = code, Email = user.Email, Password = user.Password, DateMade = datemade)
+    db.session.add(new_recovery)
     
-    db.commit()
+    db.session.commit()
+    return {"Code": new_recovery.Code}
 
 #Password Recovery Route, checks that the code is correct and displays your password
 @api.route("/recovery/check", methods=["POST"])
 def check_code():
-    email = request.json["Email"]
-    code = request.json["Code"]
+    email = request.json["email"]
+    code = request.json["code"]
+    new_password = request.json["new_password"]
 
     recovery = Password_Recovery.query.filter_by(Email = email).first()
     if recovery.Code == code:
-        password = recovery.Password
-        db.delete(recovery)
-        db.commit()
-        return password
+        emp = Employees.query.filter_by(Email = email).first()
+        emp.Password = bcrypt.generate_password_hash(new_password)
+        db.session.delete(recovery)
+        db.session.commit()
+        return {"msg": "New Password Created"}
     else:
         return {"msg": "Invalid Code"}, 401
+
+@api.route("/recovery/display", methods=["POST"])
+@jwt_required()
+def see_code():
+    eid1 = request.json["EmployeeID"]
+    emp = Employees.query.filter_by(Employeeid = eid1).first()
+    recovery = Password_Recovery.query.filter_by(Email = emp.Email).first()
+    
+    return {"Code": recovery.Code}
+
 
 #returns the currently logged in user's firstname and permission level
 @api.route("/profile", methods=["GET"])
@@ -331,29 +351,6 @@ def delete_customer():
     return jsonify({"ID": id1})
 
 
-#Should be able to delete all of this route. Just not doing it yet until cleared with team
-#Creating generator route
-@api.route("/generator/create", methods=["POST"])
-@jwt_required()
-def create_generator():
-    id1 = request.json["GeneratorID"]
-    name1 = request.json["Name"]
-    cost1 = request.json["Price"]
-    notes1 = request.json["Notes"]
-    
-    generator_exists = Generators.query.filter_by(Generatorid = id1).first() is not None
-
-    if generator_exists:
-       return {"msg": "Generator already exists"}, 401
-
-    new_generator = Generators(Generatorid = id1, Name = name1, Cost = cost1, Notes = notes1)
-    db.session.add(new_generator)
-    db.session.commit()
-
-    return {"msg": "Generator added"}, 401
-
-
-
 #Creates a new service record in the database, checks for errors while creating
 @api.route("/service/create", methods=["POST"])
 @jwt_required()
@@ -450,33 +447,35 @@ def retrieve_services():
 @jwt_required()
 def edit_Job():
     #Checking that user is Admin
-    empID = request.json.get("EmployeeID", None)
-    user = Employees.query.filter_by(Employeeid = empID).first()
+    user = Employees.query.filter_by(Email=get_jwt_identity()).first()
+    reqs = request.get_json()
+    sid = reqs.get("ServiceID")
+    generatorname = reqs.get("GeneratorName")
+    startdate = reqs.get("Date")
+    starttime = reqs.get("Time")
+    servicetype = reqs.get("ServiceType")
+    notes = reqs.get("Notes")
 
     if user.Admin == True:
-        reqs = request.get_json()
-        sid = reqs.get("ServiceID")
-        generatorid = request.json["GeneratorID"]
-        startdate = request.json["Date"]
-        starttime = request.json["Time"]
-        servicetype = request.json["ServiceType"]
-        notes = request.json["Notes"]
         service = ServiceRecords.query.filter_by(Serviceid = sid).first()
-        service.Generatorid = generatorid
+        service.Generatorid = generatorname
         service.StartDate = startdate
         service.StartTime = starttime
         service.ServiceType = servicetype
         service.Notes = notes
+        
         db.session.commit()
-    
-    return jsonify({
-        "ServiceID": service.Serviceid,
-        "Customer Name": service.Customerid,
-        "Generator Type": service.Generatorid,
-        "Start Date": service.StartDate,
-        "Start Time": service.StartTime,
-        "Notes": service.Notes
-        })
+        
+        return jsonify({
+        "service_id": sid,
+        "generator_name": generatorname,
+        "start_date": startdate,
+        "start_time": starttime,
+        "service_type": servicetype,
+        "notes": notes,
+    })
+
+    return
     
 #Adds technicians to jobs
 #Doable by admins
@@ -513,8 +512,6 @@ def add_techs():
             "Third_Employee_ID": tech_id[2],
             "Fourth_Employee_ID": tech_id[3],
         })
-
-
 
 # Completes a job from the schedule page and sets the finish date/time 
 # Doable by everyone who this shows up for
@@ -617,7 +614,7 @@ def get_all_services():
                         'notes': service.Notes
                     })
 
-    return jsonify({'services': services, 'techs': techs, 'team': team(),})
+    return jsonify({'services': services, 'techs': techs, 'team': team(), 'admin': user.Admin, 'generators': retrieve_generators()})
 
 #Deletes Jobs from the schedule page
 #Doable by Admins

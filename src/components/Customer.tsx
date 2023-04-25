@@ -92,7 +92,9 @@ const Customer = ({
             <div className="flex justify-around w-full">
               <div className="flex">
                 <div className="my-auto mx-8">
-                  <CgProfile size={70} />
+                  <div className="flex justify-center">
+                    <CgProfile size={70} />
+                  </div>
                   <p className="mt-2 text-center text-lg font-bold tracking-wider">
                     {item.FirstName} <br /> {item.LastName}
                   </p>
