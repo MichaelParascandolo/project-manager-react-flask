@@ -146,7 +146,7 @@ function Signin(props: any) {
                           onChange={() => setShowPassword(!showPassword)}
                         />
                         <p className="text-gray-300">
-                          {showPassword ? "Hide" : "Show"} Password
+                          {showPassword ? "Hide" : "Show"} password
                         </p>
                       </div>
                     </div>
@@ -155,7 +155,7 @@ function Signin(props: any) {
                         type="submit"
                         className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                       >
-                        Login to your account
+                        Sign In
                       </button>
                     </div>
                   </form>
@@ -189,7 +189,7 @@ function Signin(props: any) {
                       type="submit"
                       className="bg-blue-500 border-2 border-blue-800 text-lg px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-all ease-in-out duration-300"
                     >
-                      Create New Password
+                      Change Password
                     </button>
                   </form>
                 )}
@@ -200,7 +200,7 @@ function Signin(props: any) {
                     }
                     onClick={() => setForgotStatus(!forgot)}
                   >
-                    {!forgot ? "Forgot password?" : "Cancel Reset"}
+                    {!forgot ? "Forgot Password?" : "Cancel Reset"}
                   </button>
                 </div>
                 <div className="tracking-wide">
