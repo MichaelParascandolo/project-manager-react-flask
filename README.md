@@ -71,66 +71,66 @@ properly use the system.
 
 ### Login
 
-![Signin](./docs/screenshots/signin.png)
+![Signin](./documents/screenshots/signin.png)
 
 ### Password Reset
 
-![Signin](./docs/screenshots/reset.png)
+![Signin](./documents/screenshots/reset.png)
 
 ### Home (Admin)
 
-![Signin](./docs/screenshots/admin-home.png)
+![Signin](./documents/screenshots/admin-home.png)
 
 ### Team / Accounts (Admin)
 
-![Signin](./docs/screenshots/team.png)
+![Signin](./documents/screenshots/team.png)
 
 ### Register (Admin)
 
-![Signin](./docs/screenshots/team-add.png)
+![Signin](./documents/screenshots/team-add.png)
 
 ### Clients Page
 
-![Signin](./docs/screenshots/clients.png)
+![Signin](./documents/screenshots/clients.png)
 
 ### Clients List (Admin)
 
-![Signin](./docs/screenshots/client-list.png)
+![Signin](./documents/screenshots/client-list.png)
 
 ### Client Job History (Admin)
 
-![Signin](./docs/screenshots/client-history.png)
+![Signin](./documents/screenshots/client-history.png)
 
 ### Job Schedule (Admin)
 
-![Signin](./docs/screenshots/schedule-admin.png)
+![Signin](./documents/screenshots/schedule-admin.png)
 
 ### Schedule Search
 
-![Signin](./docs/screenshots/schedule-search.png)
+![Signin](./documents/screenshots/schedule-search.png)
 
 ### Schedule Edit
 
-![Signin](./docs/screenshots/schedule-edit.png)
+![Signin](./documents/screenshots/schedule-edit.png)
 
 ## User Account Screenshots
 
 ### Home (User)
 
-![Signin](./docs/screenshots/user/user-home.png)
+![Signin](./documents/screenshots/user/user-home.png)
 
 ### Team / Accounts (Admin Only)
 
-![Signin](./docs/screenshots/user/team-user.png)
+![Signin](./documents/screenshots/user/team-user.png)
 
 ### Client Job History (User)
 
-![Signin](./docs/screenshots/user/clients-list.png)
+![Signin](./documents/screenshots/user/clients-list.png)
 
 ### Client Job History (User)
 
-![Signin](./docs/screenshots/user/client-history-user.png)
+![Signin](./documents/screenshots/user/client-history-user.png)
 
 ### Job Schedule (User)
 
-![Signin](./docs/screenshots/user/schedule-user.png)
+![Signin](./documents/screenshots/user/schedule-user.png)
