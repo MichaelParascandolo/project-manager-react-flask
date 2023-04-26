@@ -58,7 +58,7 @@ https://www.postman.com/downloads/ Not required but useful for testing the API
 
 # User Manual
 
-[User Manual](./docs/UserManual.pdf)
+[User Manual](./documents/UserManual.pdf)
 
 This manual is specifically designed for the use of Quality Electric Service
 employees. It will help you maintain, organize, and keep detailed records. In
